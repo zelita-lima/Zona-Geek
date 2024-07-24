@@ -1,0 +1,141 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>ZG | Zona Geek</title>
+   
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <!-- Title -->
+    
+
+    <!-- Font-Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="~/vendors/swiper/swiper.css" />
+
+    <!-- Magnific-Popup CSS -->
+    <link rel="stylesheet" href="~/vendors/magnific-popup/magnific-popup.css" />
+
+    <!-- Custom Stylesheets -->
+    <link rel="stylesheet" href="~/css/main.css" />
+    <link rel="stylesheet" href="~/css/submenu.css" />
+    <link rel="stylesheet" href="~/css/responsive.css" />
+
+    
+</head>
+<body>
+    <header class="header">
+
+        <!-- Logo -->
+        <a class="logo" href="#home" style="display: flex; align-items: center; text-decoration: none;">
+            <img src="~/images/homelogo.png" alt="About-Image"
+                 style="width: 100px; height: 100px; margin-right: 10px;  border-radius: 50%; ">
+            <h2 style="margin: 0; font-size: 35px;">Zona geek</h2>
+        </a>
+        <!-- Logo End -->
+        <!-- Navbar -->
+        <nav class="navbar" style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap;">
+            <span style="display: flex; align-items: center; margin-right: 20px;">
+                <i class="fas fa-home fa-lg" aria-hidden="true"></i>
+                <a href="#home" style="margin-left: 10px; font-size: 20px;">Inicio</a>
+            </span>
+
+            <span style="display: flex; align-items: center; margin-right: 20px;">
+                <i class="fas fa-info-circle fa-lg" aria-hidden="true"></i>
+                <a href="#about" style="margin-left: 10px; font-size: 20px;">sobre</a>
+            </span>
+
+            <span style="display: flex; align-items: center; margin-right: 20px;">
+                <i class="fas fa-gavel fa-lg" aria-hidden="true"></i>
+                <a href="#service" style="margin-left: 10px; font-size: 20px;">Serviço</a>
+            </span>
+
+            <span style="display: flex; align-items: center; margin-right: 20px;">
+                <i class="fas fa-window-restore fa-lg" aria-hidden="true"></i>
+                <a href="#portfolio" style="margin-left: 10px; font-size: 20px;">Portfolio</a>
+            </span>
+
+            <span style="display: flex; align-items: center; margin-right: 20px;">
+                <i class="fa fa-users fa-lg" aria-hidden="true"></i>
+                <a href="#testimonial" style="margin-left: 10px; font-size: 20px;">Feedback</a>
+            </span>
+
+            <span style="display: flex; align-items: center; margin-right: 20px;">
+                <i class="fa fa-file fa-lg" aria-hidden="true"></i>
+                <a href="#blog" style="margin-left: 10px; font-size: 20px;">Noticias</a>
+            </span>
+
+            <span style="display: flex; align-items: center; margin-right: 20px;">
+                <i class="fa fa-phone-square fa-lg" aria-hidden="true"></i>
+                <a href="#contact" style="margin-left: 10px; font-size: 20px;">Contato</a>
+            </span>
+            <div class="dropdown" style="position: relative; display: inline-block;">
+                <span style="display: flex; align-items: center; margin-right: 20px;">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                    <a href="/Usuario/Login" style="margin-left: 10px; font-size: 20px;">Login</a>
+                </span>
+                <div class="dropdown-content"
+                     style="display: none; position: absolute; background-color:#ffffff; width: 200px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); z-index: 1; padding: 8px; border-radius: 3%;">
+                    <a href="/Usuario/Usuarioindex"
+                       style="padding: 7px; text-decoration: none; display: flex; align-items: center; margin: 5px;">
+                        <i class="fa fa-users" aria-hidden="true" style="margin-right: 8px;"></i>
+                        Usuarios
+                    </a>
+                    <a href="AgendamentoIndex.html"
+                       style=" padding: 7px; text-decoration: none; display: flex; align-items: center; margin: 5px;">
+                        <i class="fa fa-address-book" aria-hidden="true" style="margin-right: 8px;"></i>
+                        Agendamento Admin
+                    </a>
+                    <a href="AgendamentoIUserIndex.html"
+                       style=" padding: 7px; text-decoration: none; display: flex; align-items: center; margin: 5px;">
+                        <i class="fa fa-calendar" aria-hidden="true" style="margin-right: 8px;"></i>
+                        Gerenciamento User
+                    </a>
+                    <a href="CadastroAgendamentoCliente.html"
+                       style="padding: 7px; text-decoration: none; display: flex; align-items: center; margin: 5px;">
+                        <i class="fa fa-bars" aria-hidden="true" style="margin-right: 8px;"></i>
+                        Cadastro Agendamento
+                    </a>
+                    <a href="ServicoIndex.html"
+                       style="padding: 7px; text-decoration: none; display: flex; align-items: center; margin: 5px;">
+                        <i class="fas fa-gavel fa-lg" aria-hidden="true" style="margin-right: 8px;"></i>
+                        Serviço
+                    </a>
+                    <a href="#logout"
+                       style=" padding: 7px; text-decoration: none; display: flex; align-items: center; margin: 5px;">
+                        <i class="fa fa-folder" aria-hidden="true" style="margin-right: 8px;"></i>
+                        Relatório
+                    </a>
+                </div>
+            </div>
+            <!-- Menubar -->
+            <div class="fas fa-bars" id="menu-btn"></div>
+        </nav>
+
+    
+     </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2024 - Zona_Geek - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Magnific-Popup JS -->
+    <script src="~/vendors/magnific-popup/jquery.magnific-popup.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

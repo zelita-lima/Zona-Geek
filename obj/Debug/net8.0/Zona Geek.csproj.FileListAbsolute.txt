@@ -1,0 +1,30 @@
+C:\Users\Aluno Noite\Desktop\Zona Geek\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\Aluno Noite\Desktop\Zona Geek\bin\Debug\net8.0\appsettings.json
+C:\Users\Aluno Noite\Desktop\Zona Geek\bin\Debug\net8.0\Zona Geek.staticwebassets.runtime.json
+C:\Users\Aluno Noite\Desktop\Zona Geek\bin\Debug\net8.0\Zona Geek.exe
+C:\Users\Aluno Noite\Desktop\Zona Geek\bin\Debug\net8.0\Zona Geek.deps.json
+C:\Users\Aluno Noite\Desktop\Zona Geek\bin\Debug\net8.0\Zona Geek.runtimeconfig.json
+C:\Users\Aluno Noite\Desktop\Zona Geek\bin\Debug\net8.0\Zona Geek.dll
+C:\Users\Aluno Noite\Desktop\Zona Geek\bin\Debug\net8.0\Zona Geek.pdb
+C:\Users\Aluno Noite\Desktop\Zona Geek\obj\Debug\net8.0\Zona Geek.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Aluno Noite\Desktop\Zona Geek\obj\Debug\net8.0\Zona Geek.AssemblyInfoInputs.cache
+C:\Users\Aluno Noite\Desktop\Zona Geek\obj\Debug\net8.0\Zona Geek.AssemblyInfo.cs
+C:\Users\Aluno Noite\Desktop\Zona Geek\obj\Debug\net8.0\Zona Geek.csproj.CoreCompileInputs.cache
+C:\Users\Aluno Noite\Desktop\Zona Geek\obj\Debug\net8.0\Zona Geek.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Aluno Noite\Desktop\Zona Geek\obj\Debug\net8.0\Zona Geek.RazorAssemblyInfo.cache
+C:\Users\Aluno Noite\Desktop\Zona Geek\obj\Debug\net8.0\Zona Geek.RazorAssemblyInfo.cs
+C:\Users\Aluno Noite\Desktop\Zona Geek\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\Aluno Noite\Desktop\Zona Geek\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\Aluno Noite\Desktop\Zona Geek\obj\Debug\net8.0\staticwebassets\msbuild.Zona Geek.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\Aluno Noite\Desktop\Zona Geek\obj\Debug\net8.0\staticwebassets\msbuild.build.Zona Geek.props
+C:\Users\Aluno Noite\Desktop\Zona Geek\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.Zona Geek.props
+C:\Users\Aluno Noite\Desktop\Zona Geek\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.Zona Geek.props
+C:\Users\Aluno Noite\Desktop\Zona Geek\obj\Debug\net8.0\staticwebassets.pack.json
+C:\Users\Aluno Noite\Desktop\Zona Geek\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+C:\Users\Aluno Noite\Desktop\Zona Geek\obj\Debug\net8.0\scopedcss\bundle\Zona Geek.styles.css
+C:\Users\Aluno Noite\Desktop\Zona Geek\obj\Debug\net8.0\scopedcss\projectbundle\Zona Geek.bundle.scp.css
+C:\Users\Aluno Noite\Desktop\Zona Geek\obj\Debug\net8.0\Zona Geek.dll
+C:\Users\Aluno Noite\Desktop\Zona Geek\obj\Debug\net8.0\refint\Zona Geek.dll
+C:\Users\Aluno Noite\Desktop\Zona Geek\obj\Debug\net8.0\Zona Geek.pdb
+C:\Users\Aluno Noite\Desktop\Zona Geek\obj\Debug\net8.0\Zona Geek.genruntimeconfig.cache
+C:\Users\Aluno Noite\Desktop\Zona Geek\obj\Debug\net8.0\ref\Zona Geek.dll
