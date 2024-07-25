@@ -4,25 +4,19 @@ using Zona_Geek.Models;
 
 namespace Zona_Geek.Controllers
 {
-    public class UsuarioController : Controller
+    public class CadastroController : Controller
     {
-        private readonly ILogger<UsuarioController> _logger;
+        private readonly ILogger<CadastroController> _logger;
 
-        public UsuarioController(ILogger<UsuarioController> logger)
+        public CadastroController(ILogger<CadastroController> logger)
         {
             _logger = logger;
         }
 
-        public IActionResult Login()
+        public IActionResult CadastroAgendamentoCliente()
         {
             return View();
         }
-
-        public IActionResult Cadastro()
-        {
-            return View();
-        }
-
         public IActionResult Index()
         {
             return View();

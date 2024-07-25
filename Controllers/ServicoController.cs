@@ -4,30 +4,21 @@ using Zona_Geek.Models;
 
 namespace Zona_Geek.Controllers
 {
-    public class UsuarioController : Controller
+    public class ServicoController : Controller
     {
-        private readonly ILogger<UsuarioController> _logger;
+        private readonly ILogger<ServicoController> _logger;
 
-        public UsuarioController(ILogger<UsuarioController> logger)
+        public ServicoController(ILogger<ServicoController> logger)
         {
             _logger = logger;
-        }
-
-        public IActionResult Login()
-        {
-            return View();
-        }
-
-        public IActionResult Cadastro()
-        {
-            return View();
         }
 
         public IActionResult Index()
         {
             return View();
         }
-       
+
+        
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

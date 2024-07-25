@@ -1,0 +1,329 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="~/lib/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <link href="~/lib/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/index.css">
+
+
+</head>
+
+<body style="background-color: #05102E;">
+
+    <section class="maneger-page-section">
+        <div class="container page-maneger" style="background-color: white">
+
+            <div class="add-user-button">
+                <h1 class="section-title cliente-title-maneger">Gerenciamento de Serviços</h1>
+                <br />
+            </div>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="input-group mb-4">
+                            <input id="filtro" type="text" class="form-control" placeholder="Pesquisar Serviços..."
+                                   aria-label="Filtrar" aria-describedby="basic-addon2">
+                        </div>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <!-- Alteração para "text-md-end" para alinhar à direita apenas em telas médias e maiores -->
+                        <button class="btn btn-success btn-lg" onclick="" data-bs-toggle="modal"
+                                data-bs-target="#InserirServico">
+                            <i class="fa fa-plus"></i> Adicionar Serviço
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-container table-responsive">
+                <table id="TbClientes" class="table">
+                    <colgroup>
+                        <col class="tc-nome">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>Serviços</th>
+                            <th>Valor dos Serviços</th>
+                            <th class="editar">Editar</th>
+                            <th class="excluir">Excluir</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr id=".Id">
+                            <td>Serviço</td>
+                            <td>Valor</td>
+                            <td>
+                                <button class="btn btn-default"
+                                        onclick="definirEdt('Serviço','Valor')"
+                                        data-bs-toggle="modal" data-bs-target="#EditarServico">
+                                    <i class="fa fa-edit"></i>
+                                </button>
+                            </td>
+                            <td>
+                                <button class="btn btn-default"
+                                        onclick="definirExc('Serviço', 'Valor')"
+                                        data-bs-toggle="modal" data-bs-target="#ExcluirServico">
+                                    <i class="fa fa-trash text-danger"></i>
+                                </button>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        <!--Butao Voltar-->
+
+        <section class="container text-center">
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <div>
+                    <button type="button" id="send-button2" class="nav-link active btn btn-danger btn-block"
+                            style="flex: 1; margin-left: 5px;" onclick="window.location.href = '/Home/Index';">
+                        Voltar
+                    </button>
+                </div>
+            </div>
+        </section>
+        <div class="modal fade" id="EditarServico" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: #05102e; color: white; border-color: #eea236;">
+                        <h1 class="modal-title" id="exampleModalLabel">Editar Serviço</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <form>
+                            <div class="mb-3 row">
+                                <div class="col-md-6">
+                                    <input id="EditServiço" type="text" class="form-control"
+                                           placeholder="Digite um Serviço">
+                                </div>
+                            </div>
+
+                            <div class="mb-3 row">
+                                <div class="col-md-7">
+                                    <input id="EditValor" type="number" class="form-control"
+                                           placeholder="Digite o valor do Serviço">
+                                </div>
+                            </div>
+
+                            <input type="hidden" id="IdEdt" value="" />
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        <button type="button" class="btn btn-primary" onclick=" AlterarServico()">Salvar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="ExcluirServico" tabindex="-1" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: #05102e; color: white; border-color: #eea236;">
+                        <h1 class="modal-title" id="exampleModalLabel">Excluir Serviço</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="mb-3">
+                                <label for="nome">Nome</label>
+                                <input type="text" id="ExcNome" class="form-control" placeholder="Digite o Serviço..."
+                                       readonly>
+                            </div>
+
+                            <input type="hidden" id="IdExc" class="form-control" placeholder="Digite seu nome..."
+                                   readonly>
+
+                        </form>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                            <button type="button" onclick="ExcluirServico()" class="btn btn-primary">Excluir</button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="InserirServico" tabindex="-1" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header" style="background-color: #05102e; color: white; border-color: #eea236;">
+                        <h1 class="modal-title" id="exampleModalLabel">Adicionar Serviço</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <form>
+                            <div class="mb-3 row">
+                                <div class="col-md-6">
+                                    <input id="Serviço" type="text" class="form-control"
+                                           placeholder="Digite o nome do Serviço">
+                                </div>
+                            </div>
+
+                            <div class="mb-3 row">
+                                <div class="col-md-6">
+                                    <input id="Valor" type="number" class="form-control" placeholder="Digite o Valor">
+                                </div>
+                            </div>
+
+                            <input type="hidden" id="IdEdt" value="" />
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        <button type="button" class="btn btn-primary" onclick="InserirServico()">Adicionar</button>
+                        <!--onclick para chamar a funcao de alteração-->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <script src="~/lib/swiper/swiper-bundle.min.js"></script>
+
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+
+            function definirEdt(Serviço, Valor) {
+
+                $('#EditServiço').val(Servico));
+                $('#EditValor').val(Valor);
+
+                var valorValue = "";
+                if (Valor) {
+                    $('#EditValor').val(Valor);
+                    valorValue = Valor;
+                }
+
+
+                if ($('#DropTipoServiçoEdit').length > 0) {
+                    $('#DropTipoServiçoEdit option').filter(function () {
+                        return $(this).val() === TipoServico;
+                    }).prop('selected', true);
+                }
+
+                if (tipoServico === "Escolha o Tipo de Serviço") {
+                    alert("Por favor, selecione o tipo de serviço");
+                    return;
+                }
+
+                var dados = {
+                    Servico: servico,
+                    Valor: valor,
+                    TipoServico: tipoServico
+                };
+
+                // Faça a chamada AJAX
+                $.ajax({
+                    url: '/Servico/InserirServico',
+                    type: "POST",
+                    dataType: "json",
+                    data: dados,
+                    success: function (resultado) {
+                        if (resultado.success) {
+                            alert(resultado.message);  // Exibe a mensagem de sucesso
+                            // Fecha o modal
+                            $('#InserirServico').modal('hide');
+                            // Recarrega a págInserirUsuarioina
+                            location.reload();
+                        } else {
+                            alert(resultado.message);  // Exibe a mensagem de falha
+                        }
+                    },
+                    error: function () {
+                        alert('Erro na requisição AJAX.');
+                    }
+                });
+            }
+
+            // Faça a chamada AJAX para o servidor
+            $.ajax({
+                type: "POST",
+                url: "/Servico/AlterarServico",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(dados),
+                success: function (response) {
+                    // Manipule a resposta do servidor
+                    if (response.success) {
+                        alert("Serviço alterado com sucesso");
+                        // Feche o modal de edição se necessário
+                        $('#FormEditar').modal('hide');
+                        // Recarregue a página se necessário
+                        location.reload();
+                    } else {
+                        alert("Falha ao alterar cliente.");
+                    }
+                },
+                error: function (error) {
+                    // Manipule erros de requisição AJAX
+                    console.error("Erro na chamada AJAX:", error);
+                }
+            });
+                        }
+
+            function ExcluirServico() {
+                // Obtenha o ID do usuário a ser excluído
+                var userId = $('#IdExc').val();
+
+                // Faça uma requisição AJAX
+                $.ajax({
+                    type: "POST",
+                    url: "/Servico/ExcluirServico", // Substitua "Usuario" pelo nome do seu controller
+                    data: { id: userId },
+                    dataType: "json",
+                    success: function (response) {
+                        // A resposta do servidor está em response.success
+                        if (response.success) {
+                            // Feche o modal de exclusão
+                            $('#ExcluirServico').modal('hide');
+                            alert("Cliente excluido com sucesso!");
+
+                            // Recarregue a página
+                            location.reload();
+                        } else {
+                            alert("Falha ao excluir Serviço.");
+                        }
+                    },
+                    error: function () {
+                        alert("Erro na requisição AJAX.");
+                    }
+                });
+            }
+
+
+
+        </script>
+
+    </section>
+
+</body>
+
+</html>
