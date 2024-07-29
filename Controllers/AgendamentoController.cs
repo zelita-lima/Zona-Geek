@@ -18,12 +18,12 @@ namespace Zona_Geek.Controllers
             return View();
         }
 
-        public IActionResult AgendamentoUserIndex()
+        public IActionResult GerencimentoAgendamentoUsuario()
         {
             return View();
         }
 
-        public IActionResult CadastroAgendamentoCliente()
+        public IActionResult CadastroAgendamento()
         {
             return View();
         }

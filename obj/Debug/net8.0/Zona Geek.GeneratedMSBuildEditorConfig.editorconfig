@@ -18,20 +18,16 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\Aluno Noite\Desktop\Zona Geek
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/Aluno Noite/Desktop/Zona Geek/Views/Agendamento/Agendamentoindex.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWdlbmRhbWVudG9cQWdlbmRhbWVudG9pbmRleC5jc2h0bWw=
+[C:/Users/Aluno Noite/Desktop/Zona Geek/Views/Agendamento/CadastroAgendamento.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWdlbmRhbWVudG9cQ2FkYXN0cm9BZ2VuZGFtZW50by5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Aluno Noite/Desktop/Zona Geek/Views/Agendamento/AgendamentoUserIndex.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWdlbmRhbWVudG9cQWdlbmRhbWVudG9Vc2VySW5kZXguY3NodG1s
+[C:/Users/Aluno Noite/Desktop/Zona Geek/Views/Agendamento/GerencimentoAgendamentoUsuario.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWdlbmRhbWVudG9cR2VyZW5jaW1lbnRvQWdlbmRhbWVudG9Vc3VhcmlvLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Aluno Noite/Desktop/Zona Geek/Views/Agendamento/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWdlbmRhbWVudG9cSW5kZXguY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/Aluno Noite/Desktop/Zona Geek/Views/Cadastro/CadastroAgendamentoCliente.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FkYXN0cm9cQ2FkYXN0cm9BZ2VuZGFtZW50b0NsaWVudGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Aluno Noite/Desktop/Zona Geek/Views/Home/Index.cshtml]
@@ -70,10 +66,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Aluno Noite/Desktop/Zona Geek/Views/Shared/Layout-Gerenciamento.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXExheW91dC1HZXJlbmNpYW1lbnRvLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = b-70d2es4eum
-
 [C:/Users/Aluno Noite/Desktop/Zona Geek/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-9exxbp266j
+
+[C:/Users/Aluno Noite/Desktop/Zona Geek/Views/Shared/_LayoutCadastro.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXRDYWRhc3Ryby5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = b-f0h0u4h0m8
+
+[C:/Users/Aluno Noite/Desktop/Zona Geek/Views/Shared/_LayoutGerenciamento.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXRHZXJlbmNpYW1lbnRvLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = b-67jfh4caqo

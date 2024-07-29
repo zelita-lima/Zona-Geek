@@ -2,7 +2,7 @@
     Layout = null;
 }
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -22,30 +22,30 @@
 <link rel="stylesheet" href="~/css/login.css">
 
 
-<title>Pagina de Login</title>
+<title>Login Page</title>
 
 <body>
     <!-- Cabeçalho com logo e nome da empresa -->
-    <div style="background-color: #315689; color: white; padding: 10px; text-align: center;">
+    <div style="background-color: steelblue; color: white; padding: 10px; text-align: center;">
         <a href="#home" style="text-decoration: none; color: white; display: inline-flex; align-items: center;">
             <img src="~/images/homelogo.png" alt="MIGHTVR Logo" style="width: 100px; height: 100px; margin-right: 10px;">
             <h1 style="margin: 0; font-size: 36px; color: white;">Zona Geek</h1>
         </a>
     </div>
     <div class="container">
-        <div class="modal-header" style="background-color: #315689; color: white;">
+        <div class="modal-header" style="background-color: steelblue; color: white; border-color: #eea236;">
             <h1 class="modal-title" id="exampleModalLabel">Adicionar Agendamento</h1>
         </div>
 
         <div class="modal-body">
             <form>
-                <p style="color:#00007e">Campos com * Azul são obrigatórios</p>
+                <p style="color:blue">Campos com * Azul são obrigatórios</p>
                 <div class="mb-3 row">
                     <div class="col-md-6">
                         <input id="Nome" type="date" class="form-control" placeholder="Digite o nome do cliente">
                     </div>
                     <div class="col-md-6">
-                        <label style="color:#00007e">*</label>
+                        <label style="color:blue">*</label>
                     </div>
                 </div>
 
@@ -64,40 +64,40 @@
                 </div>
 
                 <!-- Checkboxes de horários com texto branco -->
-                <div class="mb-3 d-flex align-items-center" style="color: black;">
+                <div class="mb-3 d-flex align-items-center" style="color: white;">
                     <input type="checkbox" id="chk08M" class="form-check-input" value="08:00" style="margin-right: 10px;" data-group="horario" disabled>
                     <label class="form-check-label" for="chk08">Atendimento das 8:00</label>
-                    <span id="Span08M" style="color:#00007e;"></span>
+                    <span id="Span08M" style="color:blue;"></span>
                 </div>
 
-                <div class="mb-3 d-flex align-items-center" style="color: black;">
+                <div class="mb-3 d-flex align-items-center" style="color: white;">
                     <input type="checkbox" id="chk10M" class="form-check-input" value="10:00" style="margin-right: 10px;" data-group="horario" disabled>
                     <label class="form-check-label" for="chk10">Atendimento das 10:00</label>
-                    <span id="Span10M" style="color:#00007e;"></span>
+                    <span id="Span10M" style="color:blue"></span>
                 </div>
 
-                <div class="mb-3 d-flex align-items-center" style="color: black;">
+                <div class="mb-3 d-flex align-items-center" style="color: white;">
                     <input type="checkbox" id="chk13M" class="form-check-input" value="13:00" style="margin-right: 10px;" data-group="horario" disabled>
                     <label class="form-check-label" for="chk13">Atendimento das 13:00</label>
-                    <span id="Span13M" style="color:#00007e;"></span>
+                    <span id="Span13M" style="color:blue"></span>
                 </div>
 
-                <div class="mb-3 d-flex align-items-center" style="color: black;">
+                <div class="mb-3 d-flex align-items-center" style="color: white;">
                     <input type="checkbox" id="chk15M" class="form-check-input" value="15:00" style="margin-right: 10px;" data-group="horario" disabled>
                     <label class="form-check-label" for="chk15">Atendimento das 15:00</label>
-                    <span id="Span15M" style="color:#00007e;"></span>
+                    <span id="Span15M" style="color:blue"></span>
                 </div>
 
-                <div class="mb-3 d-flex align-items-center" style="color: black;">
+                <div class="mb-3 d-flex align-items-center" style="color: white;">
                     <input type="checkbox" id="chk17M" class="form-check-input" value="17:00" style="margin-right: 10px;" data-group="horario" disabled>
                     <label class="form-check-label" for="chk17">Atendimento das 17:00</label>
-                    <span id="Span17M" style="color:#00007e;"></span>
+                    <span id="Span17M" style="color:blue"></span>
                 </div>
 
-                <div class="mb-3 d-flex align-items-center" style="color: black;">
+                <div class="mb-3 d-flex align-items-center" style="color: white;">
                     <input type="checkbox" id="chk19M" class="form-check-input" value="19:00" style="margin-right: 10px;" data-group="horario" disabled>
                     <label class="form-check-label" for="chk19">Atendimento das 19:00</label>
-                    <span id="Span19M" style="color:#00007e;"></span>
+                    <span id="Span19M" style="color:blue"></span>
                 </div>
                 <!-- Fim dos checkboxes de horários -->
 
@@ -106,23 +106,13 @@
         </div>
 
         <div class="modal-footer">
-
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <div>
-                    <button type="button" id="send-button2" class="nav-link active btn btn-danger btn-block"
-                            style="flex: 1; margin-left: 5px;" onclick="window.location.href = '/Home/index';">
-                        Voltar
-                    </button>
-                </div>
-            </div>
-            </section>
-            <button type="button" class="btn btn-primary" onclick="InserirUsuario()">Adicionar</button>
+            <button type="button" class="btn btn-secondary" onclick="window.location.href = '/Home/Index';" style=" border: 1px solid black !important;">Voltar</button>
+            <button type="button" class="btn btn-primary" onclick="InserirUsuario()" style=" border: 1px solid black !important;">Adicionar</button>
         </div>
     </div>
 
 
 </body>
-
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>

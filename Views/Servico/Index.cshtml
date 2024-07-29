@@ -1,25 +1,7 @@
 ﻿@{
-    Layout = null;
+    Layout = "/Views/Shared/_LayoutGerenciamento.cshtml";
 }
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
-
-    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/lib/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="~/lib/swiper/swiper-bundle.min.css" rel="stylesheet">
-    <link href="~/lib/boxicons/css/boxicons.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="~/css/index.css">
-
-
-</head>
-
-<body style="background-color: #05102E;">
+<body style="background-color: steelblue;">
 
     <section class="maneger-page-section">
         <div class="container page-maneger" style="background-color: white">
@@ -91,17 +73,14 @@
         <section class="container text-center">
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 <div>
-                    <button type="button" id="send-button2" class="nav-link active btn btn-danger btn-block"
-                            style="flex: 1; margin-left: 5px;" onclick="window.location.href = '/Home/Index';">
-                        Voltar
-                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="window.location.href = '/Home/Index';" style=" border: 1px solid black !important;">Voltar</button>
                 </div>
             </div>
         </section>
         <div class="modal fade" id="EditarServico" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header" style="background-color: #05102e; color: white; border-color: #eea236;">
+                    <div class="modal-header" style="background-color: steelblue; color: white; border-color: #eea236;">
                         <h1 class="modal-title" id="exampleModalLabel">Editar Serviço</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
@@ -138,7 +117,7 @@
              aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header" style="background-color: #05102e; color: white; border-color: #eea236;">
+                    <div class="modal-header" style="background-color: steelblue; color: white; border-color: #eea236;">
                         <h1 class="modal-title" id="exampleModalLabel">Excluir Serviço</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
@@ -170,7 +149,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
 
-                    <div class="modal-header" style="background-color: #05102e; color: white; border-color: #eea236;">
+                    <div class="modal-header" style="background-color: steelblue; color: white; border-color: #eea236;">
                         <h1 class="modal-title" id="exampleModalLabel">Adicionar Serviço</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
@@ -203,13 +182,6 @@
             </div>
         </div>
 
-
-
-        <script src="~/lib/swiper/swiper-bundle.min.js"></script>
-
-        <script src="~/lib/jquery/dist/jquery.min.js"></script>
-
-        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
         <script>
 
             function definirEdt(Serviço, Valor) {
@@ -325,5 +297,3 @@
     </section>
 
 </body>
-
-</html>

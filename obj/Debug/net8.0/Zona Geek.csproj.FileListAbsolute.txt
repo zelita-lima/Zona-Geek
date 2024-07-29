@@ -29,4 +29,5 @@ C:\Users\Aluno Noite\Desktop\Zona Geek\obj\Debug\net8.0\Zona Geek.pdb
 C:\Users\Aluno Noite\Desktop\Zona Geek\obj\Debug\net8.0\Zona Geek.genruntimeconfig.cache
 C:\Users\Aluno Noite\Desktop\Zona Geek\obj\Debug\net8.0\ref\Zona Geek.dll
 C:\Users\Aluno Noite\Desktop\Zona Geek\obj\Debug\net8.0\Zona Geek.sourcelink.json
-C:\Users\Aluno Noite\Desktop\Zona Geek\obj\Debug\net8.0\scopedcss\Views\Shared\Layout-Gerenciamento.cshtml.rz.scp.css
+C:\Users\Aluno Noite\Desktop\Zona Geek\obj\Debug\net8.0\scopedcss\Views\Shared\_LayoutCadastro.cshtml.rz.scp.css
+C:\Users\Aluno Noite\Desktop\Zona Geek\obj\Debug\net8.0\scopedcss\Views\Shared\_LayoutGerenciamento.cshtml.rz.scp.css

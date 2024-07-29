@@ -1,26 +1,6 @@
 ﻿@{
-    Layout = null;
+    Layout = "/Views/Shared/_LayoutGerenciamento.cshtml";
 }
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Documentos</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
-
-    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/lib/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="~/lib/swiper/swiper-bundle.min.css" rel="stylesheet">
-    <link href="~/lib/boxicons/css/boxicons.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="~/css/index.css">
-
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
-
-</head>
-
 <body>
 
 
@@ -28,7 +8,7 @@
         <div class="container page-maneger">
 
             <div class="add-user-button">
-                <h1 class="section-title cliente-title-maneger">Gerenciamento de Agendamento</h1>
+                <h1 class="section-title cliente-title-maneger">Agendamento de Usuarios </h1>
                 <br />
             </div>
 
@@ -44,7 +24,7 @@
                         <!-- Alteração para "text-md-end" para alinhar à direita apenas em telas médias e maiores -->
                         <button class="btn btn-success btn-lg" onclick="" data-bs-toggle="modal"
                                 data-bs-target="#InserirUsuario">
-                            <i class="fa fa-plus"></i> Adicionar Agendamento
+                            <i class="fa fa-plus"></i> Adicionar Agendamento de User
                         </button>
                     </div>
                 </div>
@@ -205,7 +185,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header" style="background-color: #86b2d2; color: white; border-color: #eea236;">
-                        <h3 class="modal-title" id="exampleModalLabel">Excluir Agendamento</h3>
+                        <h3 class="modal-title" id="exampleModalLabel">Excluir User</h3>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -291,7 +271,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header" style="background-color: #86b2d2; color: white; border-color: #eea236;">
-                        <h3 class="modal-title" id="exampleModalLabel">Adicionar Agendamento</h3>
+                        <h3 class="modal-title" id="exampleModalLabel">Editar User</h3>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -310,12 +290,12 @@
                                 <div class="col-md-6">
                                     <select id="Servico" class="form-select">
                                         <option value="" disabled selected hidden>Escolha uma das opções</option>
-                                        <option value="VolumeBrasileiro">Atualizações</option>
-                                        <option value="Volume5D">Cheats</option>
+                                        <option value="VolumeBrasileiro">Atualizaçoes</option>
+                                        <option value="Volume5D">Mods</option>
                                         <option value="EfeitoSirene">Expansões</option>
-                                        <option value="VolumeExpress">Mods</option>
-                                        <option value="HidraGloss">Hacks</option>
-                                        <option value="HidraGloss">Updates</option>
+                                        <option value="VolumeExpress">Hacks</option>
+                                        <option value="HidraGloss">Cheats</option>
+                                        <option value="HidraGloss">Upadtes</option>
                                     </select>
                                 </div>
                             </div>
@@ -589,5 +569,3 @@
     </section>
 
 </body>
-
-</html>
