@@ -1,6 +1,19 @@
+using Microsoft.EntityFrameworkCore;
+using Zona_Geek.ORM;
+using Zona_Geek.Repositorio;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+// Registrar o DbContext se necessário
+builder.Services.AddDbContext<BdZonaGeekContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Registrar o repositório (UsuarioRepositorio)
+builder.Services.AddScoped<UsuarioRepositorio>();  // Ou AddTransient ou AddSingleton dependendo do caso
+
+// Registrar outros serviços, como controllers com views
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
@@ -14,6 +27,7 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
 app.UseStaticFiles();
 
 app.UseRouting();

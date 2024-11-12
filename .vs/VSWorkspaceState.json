@@ -1,10 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Views\\Home",
-    "\\wwwroot",
+    "\\Models",
     "\\wwwroot\\css",
     "\\wwwroot\\images"
   ],
+  "SelectedNode": "\\Models",
   "PreviewInSolutionExplorer": false
 }
