@@ -29,61 +29,60 @@
                 </div>
             </div>
 
-            <div class="table-container" style="max-height: 400px; overflow-y: auto;">
-                <div class="table-responsive">
-                    <table id="TbClientes" class="table" style="width: 100%; border-collapse: collapse;">
-                        <!-- Cabeçalho fixo -->
-                        <thead style="top: 0; background-color: #315689; color: #EAE7DC; z-index: 1;">
-                            <tr>
-                                <th style="border: 1px solid #ddd; padding: 8px; width: 40px">#</th>
-                                <th style="border: 1px solid #ddd; padding: 8px; width: 185px">Nome</th>
-                                <th style="border: 1px solid #ddd; padding: 8px; width: 135px">Senha</th>
-                                <th style="border: 1px solid #ddd; padding: 8px;width: 370px">Email</th>
-                                <th style="border: 1px solid #ddd; padding: 8px; width: 185px">Telefone</th>
-                                <th style="border: 1px solid #ddd; padding: 8px; width: 185px">Tipo de Usuário</th>
-                                <th class="editar" style="border: 1px solid #ddd; padding: 8px;">Editar</th>
-                                <th class="excluir" style="border: 1px solid #ddd; padding: 8px;">Excluir</th>
-                            </tr>
-                        </thead>
+            <div style="max-height: 400px; overflow-y: auto;">
+                <!-- Tabela com cabeçalho fixo -->
+                <table id="TbClientes" class="table" style="width: 100%; border-collapse: collapse; table-layout: fixed;">
+                    <!-- Cabeçalho fixo -->
+                    <thead style="background-color:  #315689; color: #EAE7DC;">
+                        <tr>
+                            <th style="border: 1px solid  #315689; padding: 8px; width: 50px; position: sticky; top: 0; background-color:  #315689; z-index: 2;">#</th>
+                            <th style="border: 1px solid  #315689; padding: 8px; width: 190px; position: sticky; top: 0; background-color:  #315689; z-index: 2;">Nome</th>
+                            <th style="border: 1px solid  #315689; padding: 8px; width: 230px; position: sticky; top: 0; background-color:  #315689; z-index: 2;">Senha</th>
+                            <th style="border: 1px solid  #315689; padding: 8px; width: 312px; position: sticky; top: 0; background-color: #315689; z-index: 2;">Email</th>
+                            <th style="border: 1px solid  #315689; padding: 8px; width: 160px; position: sticky; top: 0; background-color: #315689; z-index: 2;">Telefone</th>
+                            <th style="border: 1px solid  #315689; padding: 8px; width: 170px; position: sticky; top: 0; background-color:  #315689; z-index: 2;">Tipo de Usuário</th>
+                            <th class="editar" style="border: 1px solid  #315689; padding: 8px; position: sticky; top: 0; background-color:  #315689; z-index: 2;">Editar</th>
+                            <th class="excluir" style="border: 1px solid  #315689; padding: 8px; position: sticky; top: 0; background-color:  #315689; z-index: 2;">Excluir</th>
+                        </tr>
+                    </thead>
+                </table>
+
+                <!-- Corpo da tabela rolável -->
+                <div style="max-height: 300px; overflow-y: auto; overflow-x: hidden;">
+                    <table id="TbClientesBody" class="table" style="width: 100%; border-collapse: collapse; table-layout: fixed;">
+                        <tbody>
+                            @foreach (var usuario in Model)
+                            {
+                                <tr>
+                                    <td style="color: #315689; border: 1px solid #ddd; padding: 8px;width: 50px">@usuario.Id</td>
+                                    <td style="color:  #315689; border: 1px solid #ddd; padding: 8px;width: 190px">@usuario.Nome</td>
+                                    <td style="color:  #315689; border: 1px solid #ddd; padding: 8px; width: 230px">@usuario.Senha</td>
+                                    <td style="color: #315689; border: 1px solid #ddd; padding: 8px; width: 312px">@usuario.Email</td>
+                                    <td style="color:  #315689; border: 1px solid #ddd; padding: 8px; width: 160px">@usuario.Telefone</td>
+
+                                    @if (usuario.TipoUsuario == 1)
+                                    {
+                                        <td style="color:  #315689; border: 1px solid #ddd; padding: 8px; width: 170px">Cliente</td>
+                                    }
+                                    else
+                                    {
+                                        <td style="color: #315689; border: 1px solid #ddd; padding: 8px; width: 170px">Administrador</td>
+                                    }
+
+                                    <td class="text-center" style="border: 1px solid #ddd;">
+                                        <button class="btn btn-default" onclick="definirEdt('@usuario.Id', '@usuario.Nome','@usuario.Email', '@usuario.Senha', '@usuario.TipoUsuario', '@usuario.Telefone')" data-bs-toggle="modal" data-bs-target="#EditarUsuario" style="color: #EAE7DC;">
+                                            <i class="fa fa-edit"></i>
+                                        </button>
+                                    </td>
+                                    <td class="text-center" style="border: 1px solid #ddd;">
+                                        <button class="btn btn-default" onclick="definirExc('@usuario.Id', '@usuario.Nome', '@usuario.Email', '@usuario.Telefone')" data-bs-toggle="modal" data-bs-target="#ExcluirUsuario" style="color: #EAE7DC;">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
                     </table>
-
-                    <!-- Corpo da tabela com rolagem -->
-                    <div style="max-height: 300px; overflow-y: auto;">
-                        <table id="TbClientesBody" class="table" style="width: 100%; border-collapse: collapse;">
-                            <tbody>
-                                @foreach (var usuario in Model)
-                                {
-                                    <tr>
-                                        <td style="color: #315689; border: 1px solid #315689; padding: 8px;">@usuario.Id</td>
-                                        <td style="color: #315689; border: 1px solid #315689; padding: 8px;">@usuario.Nome</td>
-                                        <td style="color: #315689; border: 1px solid #315689; padding: 8px;">@usuario.Senha</td>
-                                        <td style="color: #315689; border: 1px solid #315689; padding: 8px;">@usuario.Email</td>
-                                        <td style="color: #315689; border: 1px solid #315689; padding: 8px;">@usuario.Telefone</td>
-
-                                        @if (usuario.TipoUsuario == 1)
-                                        {
-                                            <td style="color: #00007e; border: 1px solid #00007e; padding: 8px;">Cliente</td>
-                                        }
-                                        else
-                                        {
-                                            <td style="color: #00007e; border: 1px solid #00007e; padding: 8px;">Administrador</td>
-                                        }
-
-                                        <td class="text-center" style="border: 1px solid #00007e;">
-                                            <button class="btn btn-default" onclick="definirEdt('@usuario.Id', '@usuario.Nome','@usuario.Email', '@usuario.Senha', '@usuario.TipoUsuario', '@usuario.Telefone')" data-bs-toggle="modal" data-bs-target="#EditarUsuario" style="color: #EAE7DC;">
-                                                <i class="fa fa-edit"></i>
-                                            </button>
-                                        </td>
-                                        <td class="text-center" style="border: 1px solid #00007e;">
-                                            <button class="btn btn-default" onclick="definirExc('@usuario.Id', '@usuario.Nome', '@usuario.Email', '@usuario.Telefone')" data-bs-toggle="modal" data-bs-target="#ExcluirUsuario" style="color: #EAE7DC;">
-                                                <i class="fa fa-trash"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
                 </div>
             </div>
             <!-- Contador de Registros Centralizado com Fonte Maior -->
@@ -252,7 +251,7 @@
                                 </div>
                             </div>      
 
-                            <input type="hidden" id="IdEdt" value="" />
+                            <input type="hidden" id="Id" value="" />
 
                         </form>
                     </div>
