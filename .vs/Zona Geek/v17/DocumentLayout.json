@@ -3,8 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\Aluno Noite\\Desktop\\Zona Geek\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{3206395A-7CB2-49D0-9735-3EFC6608E8AB}|Zona Geek.csproj|c:\\users\\aluno noite\\desktop\\zona geek\\views\\usuario\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{3206395A-7CB2-49D0-9735-3EFC6608E8AB}|Zona Geek.csproj|solutionrelative:views\\usuario\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{3206395A-7CB2-49D0-9735-3EFC6608E8AB}|Zona Geek.csproj|c:\\users\\aluno noite\\desktop\\zona geek\\views\\servico\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3206395A-7CB2-49D0-9735-3EFC6608E8AB}|Zona Geek.csproj|solutionrelative:views\\servico\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3206395A-7CB2-49D0-9735-3EFC6608E8AB}|Zona Geek.csproj|c:\\users\\aluno noite\\desktop\\zona geek\\controllers\\servicocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3206395A-7CB2-49D0-9735-3EFC6608E8AB}|Zona Geek.csproj|solutionrelative:controllers\\servicocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,7 +18,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 1542,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -22,15 +26,28 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ServicoController.cs",
+              "DocumentMoniker": "C:\\Users\\Aluno Noite\\Desktop\\Zona Geek\\Controllers\\ServicoController.cs",
+              "RelativeDocumentMoniker": "Controllers\\ServicoController.cs",
+              "ToolTip": "C:\\Users\\Aluno Noite\\Desktop\\Zona Geek\\Controllers\\ServicoController.cs",
+              "RelativeToolTip": "Controllers\\ServicoController.cs",
+              "ViewState": "AQIAAA0AAAAAAAAAAAAgwDgAAAARAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-18T20:04:44.664Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\Aluno Noite\\Desktop\\Zona Geek\\Views\\Usuario\\Index.cshtml",
-              "RelativeDocumentMoniker": "Views\\Usuario\\Index.cshtml",
-              "ToolTip": "C:\\Users\\Aluno Noite\\Desktop\\Zona Geek\\Views\\Usuario\\Index.cshtml",
-              "RelativeToolTip": "Views\\Usuario\\Index.cshtml",
-              "ViewState": "AQIAABgAAAAAAAAAAAAAAFYAAAASAAAA",
+              "DocumentMoniker": "C:\\Users\\Aluno Noite\\Desktop\\Zona Geek\\Views\\Servico\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Servico\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Aluno Noite\\Desktop\\Zona Geek\\Views\\Servico\\Index.cshtml",
+              "RelativeToolTip": "Views\\Servico\\Index.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAADEBAAAlAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-12T17:46:11.467Z",
+              "WhenOpened": "2024-11-18T18:47:14.765Z",
               "EditorCaption": ""
             }
           ]

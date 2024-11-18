@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using SiteAgendamento.Repositorio;
 using Zona_Geek.ORM;
 using Zona_Geek.Repositorio;
 
@@ -11,8 +12,9 @@ builder.Services.AddDbContext<BdZonaGeekContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Registrar o repositório (UsuarioRepositorio)
-builder.Services.AddScoped<UsuarioRepositorio>();  // Ou AddTransient ou AddSingleton dependendo do caso
-
+builder.Services.AddScoped<UsuarioRepositorio>();
+// Registrar o repositório (UsuarioRepositorio)
+builder.Services.AddScoped<ServicoRepositorio>();
 // Registrar outros serviços, como controllers com views
 builder.Services.AddControllersWithViews();
 
