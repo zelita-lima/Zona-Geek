@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Zona_Geek.Models;
 using Zona_Geek.ORM;
@@ -13,6 +14,42 @@ namespace Zona_Geek.Repositorio
         {
             _context = context;
         }
+        public UsuarioVM VerificarLogin(string email, string senha)
+        {
+            // Verifica se o e-mail e a senha estão presentes no banco de dados
+            var usuario = _context.Usuarios
+                .FirstOrDefault(u => u.Email == email && u.Senha == senha);
+
+            // Se encontrar o usuário, cria um objeto UsuarioVM para retornar
+            if (usuario != null)
+            {
+                var usuarioVM = new UsuarioVM
+                {
+                    Id = usuario.Id,
+                    Nome = usuario.Nome,
+                    Email = usuario.Email,
+                    Telefone = usuario.Telefone,
+                    Senha = usuario.Senha, // Senha pode ser omitida por questões de segurança
+                    TipoUsuario = usuario.TipoUsuario
+                };
+                // Definindo variáveis de ambiente
+                Environment.SetEnvironmentVariable("USUARIO_ID", usuario.Id.ToString());
+                Environment.SetEnvironmentVariable("USUARIO_NOME", usuario.Nome);
+                Environment.SetEnvironmentVariable("USUARIO_EMAIL", usuario.Email);
+                Environment.SetEnvironmentVariable("USUARIO_TELEFONE", usuario.Senha);
+                Environment.SetEnvironmentVariable("USUARIO_TIPO", usuario.TipoUsuario.ToString());
+                return usuarioVM;
+            }
+            // Acessando as variáveis de ambiente
+            /*string id = Environment.GetEnvironmentVariable("USUARIO_ID");
+            string nome = Environment.GetEnvironmentVariable("USUARIO_NOME");
+            string email = Environment.GetEnvironmentVariable("USUARIO_EMAIL");
+            string telefone = Environment.GetEnvironmentVariable("USUARIO_TELEFONE");
+            string tipoUsuario = Environment.GetEnvironmentVariable("USUARIO_TIPO");
+            // Se não encontrar o usuário, retorna null ou uma exceção
+            */
+            return null; // Ou você pode lançar uma exceção, dependendo de sua estratégia
+        }             
         public bool InserirUsuario(string nome, string email, string telefone, string senha, int tipoUsuario)
         {
             try
@@ -35,7 +72,6 @@ namespace Zona_Geek.Repositorio
                 return false;  // Retorna false para indicar falha
             }
         }
-
         public List<UsuarioVM> ListarUsuarios()
         {
             List<UsuarioVM> listFun = new List<UsuarioVM>();
@@ -59,7 +95,6 @@ namespace Zona_Geek.Repositorio
 
             return listFun;
         }
-
         public bool AtualizarUsuario(int id, string nome, string email, string telefone, string senha, int tipoUsuario)
         {
             try
@@ -91,7 +126,6 @@ namespace Zona_Geek.Repositorio
                 return false;
             }
         }
-
         public bool ExcluirUsuario(int id)
         {
             try

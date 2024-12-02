@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 using Zona_Geek.Models;
 using Zona_Geek.ORM;
 
@@ -126,6 +127,38 @@ namespace SiteAgendamento.Repositorio
 
                 // Relança a exceção para ser capturada pelo controlador
                 throw new Exception($"Erro ao excluir o atendimento: {ex.Message}");
+            }
+        }
+
+        public List<AtendimentoVM> ConsultarAgendamento(string datap)
+        {
+            DateOnly data = DateOnly.ParseExact(datap, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            string dataFormatada = data.ToString("yyyy-MM-dd"); // Formato desejado: "yyyy-MM-dd"
+
+            try
+            {
+                // Consulta ao banco de dados, convertendo para o tipo AtendimentoVM
+                var ListarAtendimento = _context.Atendimentos
+                    .Where(a => a.DataAtendimento == DateOnly.Parse(dataFormatada))
+                    .Select(a => new AtendimentoVM
+                    {
+                        // Mapear as propriedades de TbAtendimento para AtendimentoVM
+                        // Suponha que TbAtendimento tenha as propriedades Id, DataAtendimento, e outras:
+                        Id = a.Id,
+                        DtHorarioAgendamento = a.DtHorarioAgendamento,
+                        DataAtendimento = DateOnly.Parse(dataFormatada),
+                        Horario = a.Horario,
+                        Fk_Usuario = a.Fk_Usuario,
+                        Fk_Servico = a.Fk_Servico
+                    })
+                    .ToList(); // Converte para uma lista
+
+                return ListarAtendimento;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao consultar agendamentos: {ex.Message}");
+                return new List<AtendimentoVM>(); // Retorna uma lista vazia em caso de erro
             }
         }
 

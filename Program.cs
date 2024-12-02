@@ -13,12 +13,20 @@ builder.Services.AddDbContext<BdZonaGeekContext>(options =>
 
 // Registrar o repositório (UsuarioRepositorio)
 builder.Services.AddScoped<UsuarioRepositorio>();
-// Registrar o repositório (UsuarioRepositorio)
+// Registrar o repositório (ServicoRepositorio)
 builder.Services.AddScoped<ServicoRepositorio>();
-// Registrar o repositório (UsuarioRepositorio)
+// Registrar o repositório (AtendimentoRepositorio)
 builder.Services.AddScoped<AtendimentoRepositorio>();
 // Registrar outros serviços, como controllers com views
 builder.Services.AddControllersWithViews();
+
+// Adicionar suporte a sessões
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // Define o tempo de expiração da sessão
+    options.Cookie.HttpOnly = true; // Torna o cookie acessível apenas via HTTP
+    options.Cookie.IsEssential = true; // Marca o cookie como essencial
+});
 
 var app = builder.Build();
 
@@ -35,6 +43,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+// Adicionar o uso de sessão
+app.UseSession();  // Adicionando o middleware de sessão
 
 app.UseAuthorization();
 

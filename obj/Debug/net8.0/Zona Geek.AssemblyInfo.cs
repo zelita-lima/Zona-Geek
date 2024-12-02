@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Zona Geek")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3d415595d83d5d3d156ed446a066d68442b073be")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d62a3a9c3e7e37485bc5311235a21239386241ac")]
 [assembly: System.Reflection.AssemblyProductAttribute("Zona Geek")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Zona Geek")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

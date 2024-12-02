@@ -112,6 +112,21 @@ namespace Zona_Geek.Controllers
             }
         }
 
+        public IActionResult ConsultarAgendamento(string data)
+        {
+
+            var agendamento = _atendimentoRepositorio.ConsultarAgendamento(data);
+
+            if (agendamento != null)
+            {
+                return Json(agendamento);
+            }
+            else
+            {
+                return NotFound();
+            }
+
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
