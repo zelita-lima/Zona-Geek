@@ -483,6 +483,20 @@
                 });
             }
 
+            document.getElementById('filtro').addEventListener('input', function () {
+                const filterValue = this.value.toLowerCase(); // Get the input value and convert to lowercase
+                const userItems = document.querySelectorAll('.user-item'); // Select all user items
+
+                userItems.forEach(item => {
+                    const userName = item.textContent.toLowerCase(); // Get the text of the user item and convert to lowercase
+                    if (userName.includes(filterValue)) {
+                        item.style.display = ''; // Show the item if it matches the filter
+                    } else {
+                        item.style.display = 'none'; // Hide the item if it doesn't match
+                    }
+                });
+            });
+
         </script>
 
     </section>

@@ -4,11 +4,11 @@
     {
         public int Id { get; set; }
 
-        public string DtHorarioAgendamento { get; set; } = null!;
+        public DateTime DtHorarioAgendamento { get; set; } 
 
-        public string DataAtendimento { get; set; } = null!;
+        public DateOnly DataAtendimento { get; set; } 
 
-        public string Horario { get; set; } = null!;
+        public TimeOnly Horario { get; set; } 
 
         public int Fk_Usuario { get; set; }
 

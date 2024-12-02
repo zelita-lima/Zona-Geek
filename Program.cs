@@ -15,6 +15,8 @@ builder.Services.AddDbContext<BdZonaGeekContext>(options =>
 builder.Services.AddScoped<UsuarioRepositorio>();
 // Registrar o repositório (UsuarioRepositorio)
 builder.Services.AddScoped<ServicoRepositorio>();
+// Registrar o repositório (UsuarioRepositorio)
+builder.Services.AddScoped<AtendimentoRepositorio>();
 // Registrar outros serviços, como controllers com views
 builder.Services.AddControllersWithViews();
 

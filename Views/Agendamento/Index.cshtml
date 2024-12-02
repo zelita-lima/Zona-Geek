@@ -1,7 +1,7 @@
-﻿@{
+﻿@model IEnumerable<Zona_Geek.Models.ViewAtendimentoVM>
+@{
     Layout = "/Views/Shared/_LayoutGerenciamento.cshtml";
 }
-
 <body>
 
     <section class="maneger-page-section">
@@ -28,52 +28,58 @@
                 </div>
             </div>
 
-            <div class="table-container table-responsive">
-                <table id="TbClientes" class="table">
-                    <colgroup>
-                        <col class="tc-nome">
-                    </colgroup>
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Nome</th>
-                            <th>Senha</th>
-                            <th>Email</th>
-                            <th>Telefone</th>
-                            <th>Tipo de Usuário</th>
-                            <th class="editar">Editar</th>
-                            <th class="excluir">Excluir</th>
-                        </tr>
-                    </thead>
+            <!-- Tabela com cabeçalho fixo -->
+            <table id="TbAtendimentos" class="table" style="width: 100%; border-collapse: collapse; table-layout: fixed;">
+                <thead style="background-color: #315689; color: #EAE7DC;">
+                    <tr>
+                        <th style="border: 1px solid #ddd; padding: 8px; min-width: 50px; position: sticky; top: 0; background-color: #315689">#id</th>
+                        <th style="border: 1px solid #ddd; padding: 8px; min-width: 150px; position: sticky; top: 0; background-color:#315689;">Data/Hora de Atendimento</th>
+                        <th style="border: 1px solid #ddd; padding: 8px; min-width: 150px; position: sticky; top: 0; background-color: #315689;">Data de Atendimento</th>
+                        <th style="border: 1px solid #ddd; padding: 8px; min-width: 150px; position: sticky; top: 0; background-color: #315689;">Hora</th>
+                        <th style="border: 1px solid #ddd; padding: 8px; min-width: 150px; position: sticky; top: 0; background-color: #315689;">Nome</th>
+                        <th style="border: 1px solid #ddd; padding: 8px; min-width: 150px; position: sticky; top: 0; background-color: #315689;">E-mail</th>
+                        <th style="border: 1px solid #ddd; padding: 8px; min-width: 150px; position: sticky; top: 0; background-color: #315689;">Telefone</th>
+                        <th style="border: 1px solid #ddd; padding: 8px; min-width: 150px; position: sticky; top: 0; background-color: #315689;">Tipo de Serviço</th>
+                        <th style="border: 1px solid #ddd; padding: 8px; min-width: 150px; position: sticky; top: 0; background-color: #315689;">Valor</th>
+                        <th class="editar" style="border: 1px solid #ddd; padding: 8px; min-width: 80px; position: sticky; top: 0; background-color: #315689;">Editar</th>
+                        <th class="excluir" style="border: 1px solid #ddd; padding: 8px; min-width: 80px; position: sticky; top: 0; background-color:#315689;">Excluir</th>
+                    </tr>
+                </thead>
+            </table>
+
+            <!-- Corpo da tabela rolável -->
+            <div style="max-height: 300px; overflow-y: auto; overflow-x: auto;">
+                <table id="TbAtendimentosBody" class="table" style="width: 100%; border-collapse: collapse; table-layout: fixed;">
                     <tbody>
-
-                      
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>
-
-                                <span>Administrador</span>
-
-                            </td>
-                            <td class="text-center">
-                                <button class="btn btn-default" onclick="definirEdt" data-bs-toggle="modal" data-bs-target="#EditarUsuario">
-                                    <i class="fa fa-edit"></i>
-                                </button>
-                            </td>
-                            <td class="text-center">
-                                <button class="btn btn-default" onclick="definirExc" data-bs-toggle="modal" data-bs-target="#ExcluirUsuario">
-                                    <i class="fa fa-trash text-danger"></i>
-                                </button>
-                            </td>
-                        </tr>
-
+                        @foreach (var atendimento in Model)
+                        {
+                            <tr>
+                                <td style="color: black border: 1px solid #ddd; padding: 8px; min-width: 50px">@atendimento.Id</td>
+                                <td style="color: black; border: 1px solid #ddd; padding: 8px; min-width: 150px">@atendimento.DtHorarioAgendamento</td>
+                                <td style="color: black; border: 1px solid #ddd; padding: 8px; min-width: 150px">@atendimento.DataAtendimento.ToString("dd/MM/yyyy")</td>
+                                <td style="color: black; border: 1px solid #ddd; padding: 8px; min-width: 150px">@atendimento.Horario.ToString("HH:mm")</td>
+                                <td style="color: black; border: 1px solid #ddd; padding: 8px; min-width: 150px">@atendimento.Nome</td>
+                                <td style="color: black; border: 1px solid #ddd; padding: 8px; min-width: 150px; word-wrap: break-word;">@atendimento.Email</td>
+                                <td style="color: black; border: 1px solid #ddd; padding: 8px; min-width: 150px">@atendimento.Telefone</td>
+                                <td style="color: black; border: 1px solid #ddd; padding: 8px; min-width: 150px">@atendimento.TipoServico</td>
+                                <td style="color: black; border: 1px solid #ddd; padding: 8px; min-width: 150px">@atendimento.Valor.ToString("C")</td>
+                                <td class="text-center" style="border: 1px solid #ddd; min-width: 80px;">
+                                    <button class="btn btn-default" onclick="definirEdt('@atendimento.Id', '@atendimento.Nome', '@atendimento.TipoServico', '@atendimento.Valor')" data-bs-toggle="modal" data-bs-target="#EditarAtendimento" style="color: #EAE7DC;">
+                                        <i class="fa fa-edit"></i>
+                                    </button>
+                                </td>
+                                <td class="text-center" style="border: 1px solid #ddd; min-width: 80px;">
+                                    <button class="btn btn-default" onclick="definirExc('@atendimento.Id', '@atendimento.Nome', '@atendimento.TipoServico', '@atendimento.Valor')" data-bs-toggle="modal" data-bs-target="#ExcluirAtendimento" style="color: #EAE7DC;">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>
 
+-
         </div>
         <!--Butao Voltar-->
 
@@ -241,8 +247,40 @@
                 </div>
             </div>
         </div>
+
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/swiper/swiper-bundle.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/script.js"></script>
       
         <script>
+
+            $(document).ready(function () {
+                // Função para atualizar o contador de registros visíveis
+                function atualizarContador() {
+                    var visibleRows = $('#TbClientesBody tbody tr:visible').length; // Conta as linhas visíveis
+                    $('#registroCount').text(visibleRows); // Atualiza o contador
+                }
+
+                // Quando o usuário digitar no campo de filtro
+                $('#filtro').on('keyup', function () {
+                    var value = $(this).val().toLowerCase(); // Pega o valor do campo de filtro e converte para minúsculas
+
+                    // Filtra as linhas do corpo da tabela
+                    $('#TbClientesBody tbody tr').each(function () {
+                        // Verifica se qualquer célula na linha contém o valor digitado no filtro
+                        var rowText = $(this).text().toLowerCase();
+                        // Exibe ou oculta a linha, dependendo de conter o valor
+                        $(this).toggle(rowText.indexOf(value) > -1);
+                    });
+
+                    // Atualiza o contador após filtrar as linhas
+                    atualizarContador();
+                });
+
+                // Inicializa o contador de registros ao carregar a página
+                atualizarContador();
+            });
 
             function definirEdt(id, Nome, Email, Senha, TipoUsuario, Telefone) {
 
@@ -443,7 +481,32 @@
                 });
             }
 
+            $(document).ready(function () {
+                // Função para atualizar o contador de registros visíveis
+                function atualizarContador() {
+                    var visibleRows = $('#TbAtendimentosBody tbody tr:visible').length; // Conta as linhas visíveis
+                    $('#registroCount').text(visibleRows); // Atualiza o contador
+                }
 
+                // Quando o usuário digitar no campo de filtro
+                $('#filtro').on('keyup', function () {
+                    var value = $(this).val().toLowerCase(); // Pega o valor do campo de filtro e converte para minúsculas
+
+                    // Filtra as linhas do corpo da tabela
+                    $('#TbAtendimentosBody tbody tr').each(function () {
+                        // Verifica se a primeira célula (ID) na linha contém o valor digitado no filtro
+                        var rowId = $(this).find('td').first().text().toLowerCase(); // Obtém o texto da primeira célula (ID)
+                        // Exibe ou oculta a linha, dependendo de conter o valor
+                        $(this).toggle(rowId.indexOf(value) > -1);
+                    });
+
+                    // Atualiza o contador após filtrar as linhas
+                    atualizarContador();
+                });
+
+                // Inicializa o contador de registros ao carregar a página
+                atualizarContador();
+            });
 
         </script>
 

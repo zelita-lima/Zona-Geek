@@ -55,12 +55,12 @@
                                     <td style="color: #315689; border: 1px solid #ddd; padding: 8px; width: 150px">@servico.Valor.ToString("C2")</td>
 
                                     <td class="text-center" style="border: 1px solid #ddd;">
-                                        <button class="btn btn-default" onclick="definirEdt('@servico.id', '@servico.TipoServico', '@servico.Valor')" data-bs-toggle="modal" data-bs-target="#EditarServico" style="color: #EAE7DC;">
+                                        <button class="btn btn-default" onclick="definirEdt('@servico.id', '@servico.TipoServico', '@servico.Valor')" data-bs-toggle="modal" data-bs-target="#EditarServico" style="color: white;">
                                             <i class="fa fa-edit"></i>
                                         </button>
                                     </td>
                                     <td class="text-center" style="border: 1px solid #ddd;">
-                                        <button class="btn btn-default" onclick="definirExc('@servico.id', '@servico.TipoServico')" data-bs-toggle="modal" data-bs-target="#ExcluirServico" style="color: #EAE7DC;">
+                                        <button class="btn btn-default" onclick="definirExc('@servico.id', '@servico.TipoServico')" data-bs-toggle="modal" data-bs-target="#ExcluirServico" style="color: white;">
                                             <i class="fa fa-trash"></i>
                                         </button>
                                     </td>
@@ -90,7 +90,7 @@
                         <p style="color:red">Campos com * vermelho são obrigatórios</p>
                         <div class="mb-3 row">
                             <div class="col-md-6">
-                                @Html.DropDownList("EdtTipoServico", ViewBag.lstTipoServico as SelectList, "Escolha o tipo de Serviço", new { @class = "form-control", @style = "width:230px; background-color: #EAE7DC; color: #333;", required = "required" })
+                                @Html.DropDownList("EdtTipoServico", ViewBag.lstTipoServico as SelectList, "Escolha o tipo de Serviço", new { @class = "form-control", @style = "width:230px; background-color: white; color: #315689;", required = "required" })
                             </div>
                             <div class="col-md-6">
                                 <label style="color:red">*</label>
@@ -155,7 +155,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
 
-                    <div class="modal-header" style="background-color:  #86b2d2;; color: white; border-color: #eea236;">
+                    <div class="modal-header" style="background-color:  #86b2d2;; color: white;">
                         <h1 class="modal-title" id="exampleModalLabel">Adicionar Serviço</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
@@ -165,7 +165,7 @@
                         <p style="color:red">Campos com * vermelho são obrigatórios</p>
                         <div class="mb-3 row">
                             <div class="col-md-6">
-                                @Html.DropDownList("TipoServico", ViewBag.lstTipoServico as SelectList, "Escolha o tipo de Serviço", new { @class = "form-control", @style = "width:230px; background-color: #EAE7DC; color: #333;", required = "required" })
+                                @Html.DropDownList("TipoServico", ViewBag.lstTipoServico as SelectList, "Escolha o tipo de Serviço", new { @class = "form-control", @style = "width:230px; background-color: white; color: #333;", required = "required" })
                             </div>
                             <div class="col-md-6">
                                 <label style="color:red">*</label>
