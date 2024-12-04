@@ -47,29 +47,38 @@
                 <div style="max-height: 300px; overflow-y: auto; overflow-x: hidden;">
                     <table id="TbServicosBody" class="table" style="width: 100%; border-collapse: collapse; table-layout: fixed;">
                         <tbody>
-                            @foreach (var servico in Model)
+                            @if (Model != null && Model.Any())
+                            {
+                                @foreach (var servico in Model)
+                                {
+                                    <tr>
+                                        <td style="color:  #315689; border: 1px solid  #315689; padding: 8px; width: 50px">@servico.id</td>
+                                        <td style="color:  #315689; border: 1px solid  #315689; padding: 8px; width: 220px">@servico.TipoServico</td>
+                                        <td style="color:  #315689; border: 1px solid  #315689; padding: 8px; width: 250px">@servico.Valor.ToString("C")</td> <!-- Formato de moeda -->
+
+                                        <td class="text-center" style="border: 1px solid  #315689; width: 80px;">
+                                            <button class="btn btn-default" onclick="definirEdt('@servico.id', '@servico.TipoServico', '@servico.Valor')" data-bs-toggle="modal" data-bs-target="#EditarServico" style="color:  #315689;">
+                                                <i class="fa fa-edit"></i>
+                                            </button>
+                                        </td>
+                                        <td class="text-center" style="border: 1px solid  #315689; width: 80px;">
+                                            <button class="btn btn-default" onclick="definirExc('@servico.id', '@servico.TipoServico', '@servico.Valor')" data-bs-toggle="modal" data-bs-target="#ExcluirServico" style="color:  #315689;">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
                             {
                                 <tr>
-                                    <td style="color: #315689; border: 1px solid #ddd; padding: 8px; width: 50px">@servico.id</td>
-                                    <td style="color: #315689; border: 1px solid #ddd; padding: 8px; width: 230px">@servico.TipoServico</td>
-                                    <td style="color: #315689; border: 1px solid #ddd; padding: 8px; width: 150px">@servico.Valor.ToString("C2")</td>
-
-                                    <td class="text-center" style="border: 1px solid #ddd;">
-                                        <button class="btn btn-default" onclick="definirEdt('@servico.id', '@servico.TipoServico', '@servico.Valor')" data-bs-toggle="modal" data-bs-target="#EditarServico" style="color: white;">
-                                            <i class="fa fa-edit"></i>
-                                        </button>
-                                    </td>
-                                    <td class="text-center" style="border: 1px solid #ddd;">
-                                        <button class="btn btn-default" onclick="definirExc('@servico.id', '@servico.TipoServico')" data-bs-toggle="modal" data-bs-target="#ExcluirServico" style="color: white;">
-                                            <i class="fa fa-trash"></i>
-                                        </button>
-                                    </td>
+                                    <td colspan="5" style="text-align: center; color:  #315689; padding: 8px;">Nenhum serviço encontrado.</td>
                                 </tr>
                             }
                         </tbody>
                     </table>
                 </div>
-            </div>
+
             <!-- Contador de Registros Centralizado -->
             <div style="text-align: center; color: #315689; margin-top: 10px;">
                 <strong style="font-size: 18px">Total de Serviços: <span id="registroCount">@Model.Count()</span></strong>
@@ -197,6 +206,141 @@
 
     
         <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Função para verificar se o campo foi preenchido e esconder o asterisco
+            function verificarPreenchimento(campo, label) {
+                // Verifica se o campo está preenchido (para input) ou se o select não tem o valor padrão
+                if (campo.value.trim() !== "" || (campo.tagName === "SELECT" && campo.selectedIndex !== 0)) {
+                    label.style.display = 'none'; // Esconde o asterisco
+                } else {
+                    label.style.display = 'inline'; // Exibe o asterisco se o campo estiver vazio
+                }
+            }
+
+            // Função para adicionar os eventos de input e change nos campos
+            function adicionarEventos() {
+                // Campos a serem monitorados
+                const campos = [
+                    { id: '#TipoServico', type: 'select' },  // Campo select
+                    { id: '#Valor', type: 'input' }         // Campo input
+                ];
+
+                campos.forEach(function (campoInfo) {
+                    const campo = document.querySelector(campoInfo.id);
+                    const label = campo.closest('.row').querySelector('label'); // Encontra o label associado ao campo
+
+                    if (campoInfo.type === 'input') {
+                        // Para campos de input, adicionar evento de 'input'
+                        campo.addEventListener('input', function () {
+                            verificarPreenchimento(campo, label);
+                        });
+                    } else if (campoInfo.type === 'select') {
+                        // Para o select, adicionar evento de 'change'
+                        campo.addEventListener('change', function () {
+                            verificarPreenchimento(campo, label);
+                        });
+                    }
+
+                    // Chama a função para inicializar o estado do campo ao carregar a página
+                    verificarPreenchimento(campo, label);
+                });
+            }
+
+            // Inicializa os eventos
+            adicionarEventos();
+
+            // Função para limpar os campos do modal quando for aberto
+            window.limparCamposInserirServico = function () {
+                // Limpar campos de texto
+                document.querySelector('#Valor').value = '';
+                document.querySelector('#TipoServico').selectedIndex = 0;  // Reseta o select para a opção "Escolha o tipo de Serviço"
+
+                // Mostrar novamente os asteriscos
+                const campos = [
+                    { id: '#TipoServico', type: 'select' },
+                    { id: '#Valor', type: 'input' }
+                ];
+
+                campos.forEach(function (campoInfo) {
+                    const campo = document.querySelector(campoInfo.id);
+                    const label = campo.closest('.row').querySelector('label');
+                    label.style.display = 'inline'; // Mostrar asterisco
+                });
+            }
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // Função para verificar se o campo foi preenchido e esconder o asterisco
+            function verificarPreenchimento(campo, label) {
+                if (campo.value.trim() !== "" || (campo.tagName === "SELECT" && campo.selectedIndex !== 0)) {
+                    label.style.display = 'none'; // Esconde o asterisco
+                } else {
+                    label.style.display = 'inline'; // Exibe o asterisco se o campo estiver vazio
+                }
+            }
+
+            // Função para adicionar os eventos de input e change nos campos
+            function adicionarEventos() {
+                // Campos a serem monitorados
+                const campos = [
+                    { id: '#EdtTipoServico', type: 'select' },
+                    { id: '#EdtValor', type: 'input' }
+                ];
+
+                campos.forEach(function (campoInfo) {
+                    const campo = document.querySelector(campoInfo.id);
+                    const label = campo.closest('.row').querySelector('label'); // Encontra o label associado ao campo
+
+                    if (campoInfo.type === 'input') {
+                        // Para campos de input, adicionar evento de 'input'
+                        campo.addEventListener('input', function () {
+                            verificarPreenchimento(campo, label);
+                        });
+                    } else if (campoInfo.type === 'select') {
+                        // Para o select, adicionar evento de 'change'
+                        campo.addEventListener('change', function () {
+                            verificarPreenchimento(campo, label);
+                        });
+                    }
+
+                    // Chama a função para inicializar o estado do campo ao carregar a página
+                    verificarPreenchimento(campo, label);
+                });
+            }
+
+            // Inicializa os eventos
+            adicionarEventos();
+
+            // Função que preenche os campos ao editar o serviço
+            window.definirEdt = function (id, tiposervico, valor) {
+                // Preenche os campos do formulário com os valores recebidos
+                $('#EdtId').val(id);
+                $('#EdtValor').val(valor);
+
+                // Atualiza o tipo de serviço no dropdown
+                if ($('#EdtTipoServico').length > 0) {
+                    $('#EdtTipoServico option').filter(function () {
+                        return $(this).text() === tiposervico;  // Comparando o texto do tipo de serviço
+                    }).prop('selected', true);
+                    $('#EdtTipoServico').trigger('chosen:updated');
+                } else {
+                    console.error("DropDownList 'EdtTipoServico' não encontrado.");
+                }
+
+                // Verifica o preenchimento dos campos e esconde os asteriscos
+                const campos = [
+                    { id: '#EdtTipoServico', type: 'select' },
+                    { id: '#EdtValor', type: 'input' }
+                ];
+
+                // Chama a função de verificação para cada campo ao preencher os dados
+                campos.forEach(function (campoInfo) {
+                    const campo = document.querySelector(campoInfo.id);
+                    const label = campo.closest('.row').querySelector('label');
+                    verificarPreenchimento(campo, label);
+                });
+            }
+        });
 
         function definirEdt(id, tiposervico, valor) {
             console.log("tiposervico recebido:", tiposervico);  // Verifique o valor que está sendo passado para a função

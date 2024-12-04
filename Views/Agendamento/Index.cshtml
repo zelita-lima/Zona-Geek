@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Zona_Geek.Models.ViewAtendimentoVM>
+﻿@model IEnumerable<Zona_Geek.Models.ViewAgendamentoVM>
 @{
     Layout = "/Views/Shared/_LayoutGerenciamento.cshtml";
 }
@@ -21,8 +21,8 @@
                     </div>
                     <div class="col-md-6 text-md-end">
                         <!-- Alteração para "text-md-end" para alinhar à direita apenas em telas médias e maiores -->
-                        <button class="btn btn-success btn-lg" onclick="" data-bs-toggle="modal" data-bs-target="#InserirUsuario">
-                            <i class="fa fa-plus"></i> Adicionar Cliente
+                        <button class="btn btn-success btn-lg" onclick="" data-bs-toggle="modal" data-bs-target="#InserirAgendamento">
+                            <i class="fa fa-plus"></i> Adicionar Agendamento
                         </button>
                     </div>
                 </div>
@@ -30,10 +30,10 @@
 
             <!-- Tabela com cabeçalho fixo -->
             <table id="TbAtendimentos" class="table" style="width: 100%; border-collapse: collapse; table-layout: fixed;">
-                <thead style="background-color: #315689; color: #EAE7DC;">
+                <thead style="background-color: chocolate; color: #EAE7DC;">
                     <tr>
-                        <th style="border: 1px solid #ddd; padding: 8px; min-width: 50px; position: sticky; top: 0; background-color: #315689">#id</th>
-                        <th style="border: 1px solid #ddd; padding: 8px; min-width: 150px; position: sticky; top: 0; background-color:#315689;">Data/Hora de Atendimento</th>
+                        <th style="border: 1px solid #ddd; padding: 8px; min-width: 50px; position: sticky; top: 0; background-color: #315689">#</th>
+                        <th style="border: 1px solid #ddd; padding: 8px; min-width: 150px; position: sticky; top: 0; background-color: #315689;">Data/Hora de Atendimento</th>
                         <th style="border: 1px solid #ddd; padding: 8px; min-width: 150px; position: sticky; top: 0; background-color: #315689;">Data de Atendimento</th>
                         <th style="border: 1px solid #ddd; padding: 8px; min-width: 150px; position: sticky; top: 0; background-color: #315689;">Hora</th>
                         <th style="border: 1px solid #ddd; padding: 8px; min-width: 150px; position: sticky; top: 0; background-color: #315689;">Nome</th>
@@ -42,7 +42,7 @@
                         <th style="border: 1px solid #ddd; padding: 8px; min-width: 150px; position: sticky; top: 0; background-color: #315689;">Tipo de Serviço</th>
                         <th style="border: 1px solid #ddd; padding: 8px; min-width: 150px; position: sticky; top: 0; background-color: #315689;">Valor</th>
                         <th class="editar" style="border: 1px solid #ddd; padding: 8px; min-width: 80px; position: sticky; top: 0; background-color: #315689;">Editar</th>
-                        <th class="excluir" style="border: 1px solid #ddd; padding: 8px; min-width: 80px; position: sticky; top: 0; background-color:#315689;">Excluir</th>
+                        <th class="excluir" style="border: 1px solid #ddd; padding: 8px; min-width: 80px; position: sticky; top: 0; background-color: #315689;">Excluir</th>
                     </tr>
                 </thead>
             </table>
@@ -51,47 +51,41 @@
             <div style="max-height: 300px; overflow-y: auto; overflow-x: auto;">
                 <table id="TbAtendimentosBody" class="table" style="width: 100%; border-collapse: collapse; table-layout: fixed;">
                     <tbody>
-                        @foreach (var atendimento in Model)
+                        @if (Model != null && Model.Any())
+                        {
+                            @foreach (var atendimento in Model)
+                            {
+                                <tr>
+                                    <td style="color:  #315689; border: 1px solid  #315689; padding: 8px; min-width: 50px">@atendimento.Id</td>
+                                    <td style="color:  #315689; border: 1px solid  #315689; padding: 8px; min-width: 150px">@atendimento.DtHorarioAgendamento</td>
+                                    <td style="color:  #315689; border: 1px solid  #315689; padding: 8px; min-width: 150px">@atendimento.DataAtendimento.ToString("dd/MM/yyyy")</td>
+                                    <td style="color:  #315689; border: 1px solid  #315689; padding: 8px; min-width: 150px">@atendimento.Horario.ToString("HH:mm")</td>
+                                    <td style="color:  #315689; border: 1px solid  #315689; padding: 8px; min-width: 150px">@atendimento.Nome</td>
+                                    <td style="color:  #315689; border: 1px solid  #315689; padding: 8px; min-width: 150px; word-wrap: break-word;">@atendimento.Email</td>
+                                    <td style="color: #315689; border: 1px solid  #315689; padding: 8px; min-width: 150px">@atendimento.Telefone</td>
+                                    <td style="color:  #315689; border: 1px solid  #315689; padding: 8px; min-width: 150px">@atendimento.TipoServico</td>
+                                    <td class="text-center" style="border: 1px solid  #315689; min-width: 80px;">
+                                        <button class="btn btn-default" onclick="definirEdt('@atendimento.Id', '@atendimento.Nome', '@atendimento.TipoServico', '@atendimento.Valor')" data-bs-toggle="modal" data-bs-target="#EditarUsuario" style="color:  #315689;">
+                                            <i class="fa fa-edit"></i>
+                                        </button>
+                                    </td>
+                                    <td class="text-center" style="border: 1px solid  #315689; min-width: 80px;">
+                                        <button class="btn btn-default" onclick="definirExc('@atendimento.Id', '@atendimento.Nome', '@atendimento.TipoServico', '@atendimento.Valor')" data-bs-toggle="modal" data-bs-target="#ExcluirUsuario" style="color:  #315689;">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
                         {
                             <tr>
-                                <td style="color: black border: 1px solid #ddd; padding: 8px; min-width: 50px">@atendimento.Id</td>
-                                <td style="color: black; border: 1px solid #ddd; padding: 8px; min-width: 150px">@atendimento.DtHorarioAgendamento</td>
-                                <td style="color: black; border: 1px solid #ddd; padding: 8px; min-width: 150px">@atendimento.DataAtendimento.ToString("dd/MM/yyyy")</td>
-                                <td style="color: black; border: 1px solid #ddd; padding: 8px; min-width: 150px">@atendimento.Horario.ToString("HH:mm")</td>
-                                <td style="color: black; border: 1px solid #ddd; padding: 8px; min-width: 150px">@atendimento.Nome</td>
-                                <td style="color: black; border: 1px solid #ddd; padding: 8px; min-width: 150px; word-wrap: break-word;">@atendimento.Email</td>
-                                <td style="color: black; border: 1px solid #ddd; padding: 8px; min-width: 150px">@atendimento.Telefone</td>
-                                <td style="color: black; border: 1px solid #ddd; padding: 8px; min-width: 150px">@atendimento.TipoServico</td>
-                                <td style="color: black; border: 1px solid #ddd; padding: 8px; min-width: 150px">@atendimento.Valor.ToString("C")</td>
-                                <td class="text-center" style="border: 1px solid #ddd; min-width: 80px;">
-                                    <button class="btn btn-default" onclick="definirEdt('@atendimento.Id', '@atendimento.Nome', '@atendimento.TipoServico', '@atendimento.Valor')" data-bs-toggle="modal" data-bs-target="#EditarAtendimento" style="color: #EAE7DC;">
-                                        <i class="fa fa-edit"></i>
-                                    </button>
-                                </td>
-                                <td class="text-center" style="border: 1px solid #ddd; min-width: 80px;">
-                                    <button class="btn btn-default" onclick="definirExc('@atendimento.Id', '@atendimento.Nome', '@atendimento.TipoServico', '@atendimento.Valor')" data-bs-toggle="modal" data-bs-target="#ExcluirAtendimento" style="color: #EAE7DC;">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </td>
+                                <td colspan="11" style="text-align: center; color: #315689; padding: 8px;">Nenhum atendimento encontrado.</td>
                             </tr>
                         }
                     </tbody>
                 </table>
             </div>
-
--
-        </div>
-        <!--Butao Voltar-->
-
-        <section class="container text-center">
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <div>
-                    <button type="button" id="send-button2" class="nav-link active btn btn-danger btn-block" style="flex: 1; margin-left: 5px;" onclick="window.location.href = '/Home/Index';">
-                        Voltar
-                    </button>
-                </div>
-            </div>
-        </section>
 
         <div class="modal fade" id="EditarUsuario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -188,7 +182,7 @@
             </div>
         </div>
 
-        <div class="modal fade" id="InserirUsuario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="InserirAgendamento" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
 
@@ -199,45 +193,66 @@
 
                     <div class="modal-body">
                         <form>
-                            <p style="color:#00007e">Campos com * A são obrigatórios</p>
+                            <div class="mb-3 d-flex align-items-center">
+                                <input type="hidden" id="TxtId" class="form-check-input" value="10:00" style="margin-right: 10px;" disabled>
+                            </div>
+
+                            <!-- Campo de data -->
+                            <div class="mb-3 d-flex align-items-center">
+                                <input id="data_agdt" type="date" class="form-control" style="width: 300px;" placeholder="Escolha a data do agendamento" oninput="consultarAgendamento()">
+                            </div>
+
+                            <!-- DropDown de Tipo de Serviço -->
                             <div class="mb-3 row">
                                 <div class="col-md-6">
-                                    <input id="Nome" type="text" class="form-control" placeholder="Digite o nome do cliente">
+                                    @Html.DropDownList("TipoServico", ViewBag.lstTipoServico as SelectList, "Escolha o tipo de Serviço", new { @class = "form-control", @style = "width:230px; background-color: #EAE7DC; color: #333;", required = "required" })
                                 </div>
                                 <div class="col-md-6">
-                                    <label style="color:#00007e">*</label>
+                                    <label style="color:darkblue">*</label>
                                 </div>
                             </div>
 
-                            <div class="mb-3 row">
-                                <div class="col-md-6">
-                                    <input id="Senha" type="text" class="form-control" placeholder="Digite o a senha">
-                                </div>
-                                <div class="col-md-6">
-                                    <label style="color:#00007e">*</label>
-                                </div>
-                            </div>
+                            <fieldset>
+                                <legend>Escolha o horário de atendimento:</legend>
 
-                            <div class="mb-3 row">
-                                <div class="col-md-7">
-                                    <input id="Email" type="email" class="form-control" placeholder="Digite o email">
+                                <div class="mb-3 d-flex align-items-center">
+                                    <input type="checkbox" id="chk08" class="form-check-input" value="08:00" style="margin-right: 10px;" data-group="horario" disabled>
+                                    <label class="form-check-label" for="chk08">Atendimento das 8:00</label>
+                                    <span id="Span08" style="color:darkblue;"></span>
                                 </div>
-                                <div class="col-md-5">
-                                    <label style="color:#00007e">*</label>
-                                </div>
-                            </div>
 
-                            <div class="mb-3 row">
-                                <div class="col-md-6">
-                                    <input id="Telefone" type="text" class="form-control" placeholder="Digite o telefone">
+                                <div class="mb-3 d-flex align-items-center">
+                                    <input type="checkbox" id="chk10" class="form-check-input" value="10:00" style="margin-right: 10px;" data-group="horario" disabled>
+                                    <label class="form-check-label" for="chk10">Atendimento das 10:00</label>
+                                    <span id="Span10" style="color:darkblue;"></span>
                                 </div>
-                                <div class="col-md-6">
-                                    <label style="color:#00007e">*</label>
+
+                                <div class="mb-3 d-flex align-items-center">
+                                    <input type="checkbox" id="chk13" class="form-check-input" value="13:00" style="margin-right: 10px;" data-group="horario" disabled>
+                                    <label class="form-check-label" for="chk13">Atendimento das 13:00</label>
+                                    <span id="Span13" style="color:darkblue;"></span>
                                 </div>
-                            </div>
 
-                            <input type="hidden" id="IdEdt" value="" />
+                                <div class="mb-3 d-flex align-items-center">
+                                    <input type="checkbox" id="chk15" class="form-check-input" value="15:00" style="margin-right: 10px;" data-group="horario" disabled>
+                                    <label class="form-check-label" for="chk15">Atendimento das 15:00</label>
+                                    <span id="Span15" style="color:darkblue;"></span>
+                                </div>
 
+                                <div class="mb-3 d-flex align-items-center">
+                                    <input type="checkbox" id="chk17" class="form-check-input" value="17:00" style="margin-right: 10px;" data-group="horario" disabled>
+                                    <label class="form-check-label" for="chk17">Atendimento das 17:00</label>
+                                    <span id="Span17" style="color:darkblue;"></span>
+                                </div>
+
+                                <div class="mb-3 d-flex align-items-center">
+                                    <input type="checkbox" id="chk19" class="form-check-input" value="19:00" style="margin-right: 10px;" data-group="horario" disabled>
+                                    <label class="form-check-label" for="chk19">Atendimento das 19:00</label>
+                                    <span id="Span19" style="color:darkblue;"></span>
+                                </div>
+                            </fieldset>
+
+                            <input type="hidden" id="IdEdt" value="">
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -255,258 +270,306 @@
       
         <script>
 
-            $(document).ready(function () {
-                // Função para atualizar o contador de registros visíveis
-                function atualizarContador() {
-                    var visibleRows = $('#TbClientesBody tbody tr:visible').length; // Conta as linhas visíveis
-                    $('#registroCount').text(visibleRows); // Atualiza o contador
-                }
-
-                // Quando o usuário digitar no campo de filtro
-                $('#filtro').on('keyup', function () {
-                    var value = $(this).val().toLowerCase(); // Pega o valor do campo de filtro e converte para minúsculas
-
-                    // Filtra as linhas do corpo da tabela
-                    $('#TbClientesBody tbody tr').each(function () {
-                        // Verifica se qualquer célula na linha contém o valor digitado no filtro
-                        var rowText = $(this).text().toLowerCase();
-                        // Exibe ou oculta a linha, dependendo de conter o valor
-                        $(this).toggle(rowText.indexOf(value) > -1);
-                    });
-
-                    // Atualiza o contador após filtrar as linhas
-                    atualizarContador();
-                });
-
-                // Inicializa o contador de registros ao carregar a página
-                atualizarContador();
+            // Impede a digitação manual no campo de data
+            document.getElementById('data_agdt').addEventListener('keydown', function (e) {
+                e.preventDefault(); // Bloqueia qualquer entrada do teclado
             });
 
-            function definirEdt(id, Nome, Email, Senha, TipoUsuario, Telefone) {
+            $(document).ready(function () {
+                $('input[type="checkbox"]').click(function () {
+                    var isChecked = $(this).prop("checked");
+                    var groupId = $(this).attr("data-group");
 
-                $('#IdEdt').val(id);
-                $('#EditNome').val(Nome);
-                $('#EditSenha').val(Senha);
-                $('#EditEmail').val(Email);
-                $('#EditTel').val(Telefone);
+                    if (isChecked) {
+                        $('input[type="checkbox"][data-group="' + groupId + '"]').not($(this)).prop("checked", false);
+                    }
+                });
+            });
 
+            function consultarAgendamento() {
+                ativarCheckboxes()
+                limparTextosSpans()
+                desmarcarCheckboxes()
 
-                var senhaValue = "";
-                if (Senha) {
-                    $('#EditSenha').val(Senha);
-                    senhaValue = Senha;
-                }
-
-
-                if ($('#DropTipoUsuarioEdit').length > 0) {
-                    $('#DropTipoUsuarioEdit option').filter(function () {
-                        return $(this).val() === TipoUsuario;
-                    }).prop('selected', true);
-                    $('#DropTipoUsuarioEdit').trigger('chosen:updated');
-                } else {
-                    console.error("DropDownList não encontrado.");
-                }
-            }
-
-            function definirExc(id, Nome, Email, Telefone) {
-                $('#IdExc').val(id);
-                $('#ExcNome').val(Nome);
-                $('#ExcEmail').val(Email);
-                $('#ExcTel').val(Telefone)
-            }
-
-            function InserirUsuario() {
-
-                var nome = $('#Nome').val();
-                var email = $('#Email').val();
-                var senha = $('#Senha').val();
-                var telefone = $('#Telefone').val();
-                var tipoUsuario = $('#DropTipoUsuario option:selected').val();
-
-                if (nome.trim() === "") {
-                    alert("Por favor, preencha o campo Nome.");
-                    return;
-                }
-                if (senha.trim() === "") {
-                    alert("Por favor, preencha o campo Senha.");
-                    return;
-                }
-                if (email.trim() === "") {
-                    alert("Por favor, insira um email válido.");
-                    return;
-                }
-
-                if (tipoUsuario === "Escolha o Tipo de Usuário") {
-                    alert("Por favor, selecione o tipo de usuário.");
-                    return;
-                }
-
-                if (telefone.trim() === "") {
-                    alert("Por favor, insira um número de telefone válido.");
-                    return;
-                }
-
-
-
-                var dados = {
-                    Nome: nome,
-                    Email: email,
-                    Senha: senha,
-                    Telefone: telefone,
-                    TipoUsuario: tipoUsuario
-                };
-
-                // Faça a chamada AJAX
+                var data = $("#data_agdt").val();
                 $.ajax({
-                    url: '/Usuario/InserirUsuario',
+                    type: "GET",
+                    url: "/Agendamento/ConsultarAgendamento",
+                    data: { data: data },
+                    success: function (response) {
+
+                        response.forEach(function (item) {
+                            console.log(item.horario);
+
+                            switch (item.horario) {
+                                case "08:00:00":
+                                    $("#chk08").prop("disabled", true).prop("checked", true);  // Marcar e desabilitar
+                                    $("#Span08").text("Horario Indisponivel");
+                                    break;
+                                case "10:00:00":
+                                    $("#chk10").prop("disabled", true).prop("checked", true);  // Marcar e desabilitar
+                                    $("#Span10").text("Horario Indisponivel");
+                                    break;
+                                case "13:00:00":
+                                    $("#chk13").prop("disabled", true).prop("checked", true);  // Marcar e desabilitar
+                                    $("#Span13").text("Horario Indisponivel");
+                                    break;
+                                case "15:00:00":
+                                    $("#chk15").prop("disabled", true).prop("checked", true);  // Marcar e desabilitar
+                                    $("#Span15").text("Horario Indisponivel");
+                                    break;
+                                case "17:00:00":
+                                    $("#chk17").prop("disabled", true).prop("checked", true);  // Marcar e desabilitar
+                                    $("#Span17").text("Horario Indisponivel");
+                                    break;
+                                case "19:00:00":
+                                    $("#chk19").prop("disabled", true).prop("checked", true);  // Marcar e desabilitar
+                                    $("#Span19").text("Horario Indisponivel");
+                                    break;
+                                default:
+                                    break;
+                            }
+                        });
+                    },
+                    error: function (error) {
+                        // Manipule os erros aqui
+                        console.error("Erro na requisição AJAX:", error);
+                    }
+                });
+            }
+
+            function ativarCheckboxes() {
+                // Seletor para encontrar apenas os checkboxes dentro do modal com o ID "meuModal"
+                var checkboxes = document.querySelectorAll('#InserirAgendamento input[type="checkbox"]');
+
+                // Itera sobre os checkboxes encontrados e ativa-os
+                checkboxes.forEach(function (checkbox) {
+                    checkbox.disabled = false;
+                });
+            }
+
+            function limparTextosSpans() {
+                // Obtém todos os elementos <span> dentro do formulário
+                var spans = document.querySelectorAll('#InserirAgendamento span');
+
+                // Itera sobre os spans e define seu conteúdo como vazio
+                spans.forEach(function (span) {
+                    span.textContent = '';
+                });
+            }
+
+            function desmarcarCheckboxes() {
+                // Obtém todos os elementos <input type="checkbox"> dentro do formulário
+                var checkboxes = document.querySelectorAll('#InserirAgendamento input[type="checkbox"]');
+
+                // Itera sobre os checkboxes e desmarca todos
+                checkboxes.forEach(function (checkbox) {
+                    checkbox.checked = false;
+                });
+            }
+
+            function limparFormulario() {
+                var usuarioId = "@Context.Session.GetString("UsuarioId")";
+                document.getElementById("TxtId").value = usuarioId;
+
+                // Limpar campos de texto
+                document.querySelectorAll('#InserirAgendamento input[type="text"]').forEach(function (input) {
+                    input.value = '';
+                });
+
+                // Limpar campos de seleção
+                document.querySelectorAll('#InserirAgendamento select').forEach(function (select) {
+                    select.selectedIndex = 0;
+                });
+
+                // Desmarcar checkboxes
+
+                // Limpar spans
+                document.querySelectorAll('#InserirAgendamento span').forEach(function (span) {
+                    span.textContent = '';
+                });
+
+                document.querySelectorAll('#InserirAgendamento input[type="checkbox"]').forEach(function (checkbox) {
+                    checkbox.checked = false;
+                    checkbox.disabled = true;
+                });
+
+            }
+
+            function obterDataHoraFormatada() {
+                // Obtém a data e hora atuais
+                var dataHoraAtual = new Date();
+
+                // Formata a data e hora para o formato desejado (por exemplo, "yyyy-MM-dd HH:mm:ss.fff")
+                var dataHoraFormatada = dataHoraAtual.getFullYear() + "-" +
+                    ("0" + (dataHoraAtual.getMonth() + 1)).slice(-2) + "-" +
+                    ("0" + dataHoraAtual.getDate()).slice(-2) + " " +
+                    ("0" + dataHoraAtual.getHours()).slice(-2) + ":" +
+                    ("0" + dataHoraAtual.getMinutes()).slice(-2) + ":" +
+                    ("0" + dataHoraAtual.getSeconds()).slice(-2) + "." +
+                    ("00" + dataHoraAtual.getMilliseconds()).slice(-3);
+
+                // Retorna a data e hora formatada
+                return dataHoraFormatada;
+            }
+
+            function InserirAgendamentos() {
+
+                //var id =
+                var dataC = obterDataHoraFormatada();
+                var data = $("#data_agdt").val();
+                var servico = $("#DropServico").val();
+                var atendimentos = [];
+                if ($("#chk08").prop("checked")) atendimentos.push($("#chk08").val());
+                if ($("#chk10").prop("checked")) atendimentos.push($("#chk10").val());
+                if ($("#chk13").prop("checked")) atendimentos.push($("#chk13").val());
+                if ($("#chk15").prop("checked")) atendimentos.push($("#chk15").val());
+                if ($("#chk17").prop("checked")) atendimentos.push($("#chk17").val());
+                if ($("#chk19").prop("checked")) atendimentos.push($("#chk19").val());
+
+
+                if (!id) {
+                    alert("Por favor, Insira aum Id");
+                    return;
+                }
+
+                if (!dataC) {
+                    alert("Por favor, selecione uma data de cadastro");
+                    return;
+                }
+                if (!data) {
+                    alert("Por favor, selecione uma data para o agendamento.");
+                    return;
+                }
+                if (!servico) {
+                    alert("Por favor, selecione o serviço.");
+                    return;
+                }
+                if (atendimentos.length === 0) {
+                    alert("Por favor, selecione pelo menos um horário para o agendamento.");
+                    return; // Retorna da função se nenhum horário foi selecionado
+                }
+                var dados = {
+                    id: id,
+                    dataC: dataC,
+                    data: data,
+                    servico: servico,
+                    atendimentos: atendimentos
+                };
+                console.log(dados)
+                $.ajax({
+                    url: '/Agendamento/InserirAgendamentos',
                     type: "POST",
                     dataType: "json",
                     data: dados,
-                    success: function (resultado) {
-                        if (resultado.success) {
-                            alert(resultado.message);  // Exibe a mensagem de sucesso
-                            // Fecha o modal
-                            $('#InserirUsuario').modal('hide');
-                            // Recarrega a págInserirUsuarioina
+                    success: function (response) {
+                        if (response.success) {
+                            alert("Agendamento(s) cadastrado(s) com sucesso!");
+                            $('#InserirAgendamento').modal('hide'); // Substitua 'seuModal' pelo ID do seu modal
+                            // Atualizar a página
                             location.reload();
                         } else {
-                            alert(resultado.message);  // Exibe a mensagem de falha
+                            alert("Erro ao cadastrar agendamento(s).");
                         }
                     },
-                    error: function () {
-                        alert('Erro na requisição AJAX.');
+                    error: function (xhr, textStatus, errorThrown) {
+                        alert("Erro ao cadastrar agendamento(s): " + errorThrown);
                     }
                 });
             }
 
-            function AlterarUsuario() {
+            function AlterarAgendamento() {
+
                 var id = $("#IdEdt").val();
-                var nome = $("#EditNome").val();
-                var senha = $("#EditSenha").val();
-                var email = $("#EditEmail").val();
-                var tel = $('#EditTel').val();
-                var tipoCli = $('#DropTipoUsuarioEdit').val(); // Obtém o valor do tipo de cliente, não apenas o texto
-
-                // Validação do campo 'Nome'
-                if (!nome) {
-                    alert("Por favor, preencha o campo Nome.");
+                var servico = $('#DropServicoEdt option:selected').val();
+                var data;
+                var horario;
+                if (!servico != 0) {
+                    alert("Por favor, preencha o campo Tecnica.");
                     return;
                 }
+                if ($('#chkR').prop('checked')) {
+                    data = $("#data_a").val(),
+                        horario = $('#DropHorario option:selected').text()
 
-                // Validação do campo 'Senha'
-                if (!senha) {
-                    alert("Por favor, preencha o campo Senha.");
-                    return;
+                    if (!data) {
+                        alert("Por favor, preencha o campo data.");
+                        return;
+                    }
+                    if (!horario) {
+                        alert("Por favor, preencha o campo horário.");
+                        return;
+                    }
+
+
+
+
+                }
+                else {
+
+                    data = null,
+                        horario = ""
+
                 }
 
-                // Validação do campo 'Email'
-                if (!email) {
-                    alert("Por favor, preencha o campo Email.");
-                    return;
-                }
-
-                // Validação do campo 'Telefone'
-                if (!tel) {
-                    alert("Por favor, preencha o campo Telefone.");
-                    return;
-                }
-
-                // Validação do campo 'Tipo de Cliente'
-                if (!tipoCli) {
-                    alert("Por favor, selecione o Tipo de Cliente.");
-                    return;
-                }
-
-                // Crie um objeto com os dados
                 var dados = {
-                    Id: id,
-                    Nome: nome,
-                    Senha: senha,
-                    Email: email,
-                    Telefone: tel,
-                    TipoUsuario: tipoCli
+                    id: id,
+                    data: data,
+                    servico: servico,
+                    horario: horario
                 };
 
-                // Faça a chamada AJAX para o servidor
+                console.log(dados);
                 $.ajax({
+                    url: '/Agendamento/AlterarAgendamentos',
                     type: "POST",
-                    url: "/Usuario/AlterarUsuario",
-                    contentType: "application/json; charset=utf-8",
-                    data: JSON.stringify(dados),
+                    dataType: "json",
+                    data: dados,
                     success: function (response) {
-                        // Manipule a resposta do servidor
                         if (response.success) {
-                            alert("Cliente alterado com sucesso!");
-                            // Feche o modal de edição se necessário
-                            $('#FormEditar').modal('hide');
-                            // Recarregue a página se necessário
+                            alert("Agendamento(s) Alterados(s) com sucesso!");
+                            $('#EditarAgendamento').modal('hide'); // Substitua 'seuModal' pelo ID do seu modal
+                            // Atualizar a página
                             location.reload();
                         } else {
-                            alert("Falha ao alterar cliente.");
+                            alert("Erro ao alterar agendamento(s).");
                         }
                     },
-                    error: function (error) {
-                        // Manipule erros de requisição AJAX
-                        console.error("Erro na chamada AJAX:", error);
+                    error: function (xhr, textStatus, errorThrown) {
+                        alert("Erro ao cadastrar agendamento(s): " + errorThrown);
                     }
                 });
             }
 
-            function ExcluirUsuario() {
-                // Obtenha o ID do usuário a ser excluído
+            function ExcluirAgendamento() {
+
+
                 var userId = $('#IdExc').val();
 
-                // Faça uma requisição AJAX
                 $.ajax({
                     type: "POST",
-                    url: "/Usuario/ExcluirUsuario", // Substitua "Usuario" pelo nome do seu controller
-                    data: { id: userId },
+                    url: "/Agendamento/ExcluirAgendamento",
                     dataType: "json",
+                    data: { id: userId },
                     success: function (response) {
-                        // A resposta do servidor está em response.success
-                        if (response.success) {
-                            // Feche o modal de exclusão
-                            $('#ExcluirUsuario').modal('hide');
-                            alert("Cliente excluido com sucesso!");
 
-                            // Recarregue a página
+                        if (response.success) {
+
+                            alert("Agendamento excluido com sucesso!");
+                            $('#ExcluirAgendamento').modal('hide');
                             location.reload();
+
                         } else {
+
                             alert("Falha ao excluir usuário.");
                         }
                     },
                     error: function () {
+
                         alert("Erro na requisição AJAX.");
                     }
                 });
             }
-
-            $(document).ready(function () {
-                // Função para atualizar o contador de registros visíveis
-                function atualizarContador() {
-                    var visibleRows = $('#TbAtendimentosBody tbody tr:visible').length; // Conta as linhas visíveis
-                    $('#registroCount').text(visibleRows); // Atualiza o contador
-                }
-
-                // Quando o usuário digitar no campo de filtro
-                $('#filtro').on('keyup', function () {
-                    var value = $(this).val().toLowerCase(); // Pega o valor do campo de filtro e converte para minúsculas
-
-                    // Filtra as linhas do corpo da tabela
-                    $('#TbAtendimentosBody tbody tr').each(function () {
-                        // Verifica se a primeira célula (ID) na linha contém o valor digitado no filtro
-                        var rowId = $(this).find('td').first().text().toLowerCase(); // Obtém o texto da primeira célula (ID)
-                        // Exibe ou oculta a linha, dependendo de conter o valor
-                        $(this).toggle(rowId.indexOf(value) > -1);
-                    });
-
-                    // Atualiza o contador após filtrar as linhas
-                    atualizarContador();
-                });
-
-                // Inicializa o contador de registros ao carregar a página
-                atualizarContador();
-            });
 
         </script>
 

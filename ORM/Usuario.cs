@@ -17,5 +17,5 @@ public partial class Usuario
 
     public int TipoUsuario { get; set; }
 
-    public virtual ICollection<Atendimento> Atendimentos { get; set; } = new List<Atendimento>();
+    public virtual ICollection<Agendamento> Agendamentos { get; set; } = new List<Agendamento>();
 }

@@ -5,25 +5,25 @@ using Zona_Geek.ORM;
 
 namespace SiteAgendamento.Repositorio
 {
-    public class AtendimentoRepositorio
+    public class AgendamentoRepositorio
     {
 
         private BdZonaGeekContext _context;
-        public AtendimentoRepositorio(BdZonaGeekContext context)
+        public AgendamentoRepositorio(BdZonaGeekContext context)
         {
             _context = context;
         }
-        public List<ViewAtendimentoVM> ListarAtendimentos()
+        public List<ViewAgendamentoVM> ListarAgendamentos()
         {
-            List<ViewAtendimentoVM> listAtendimentos = new List<ViewAtendimentoVM>();
+            List<ViewAgendamentoVM> listAgendamentos = new List<ViewAgendamentoVM>();
 
             // Recuperando todos os atendimentos do DbSet
-            var listTb = _context.ViewAtendimentos.ToList();
+            var listTb = _context.ViewAgendamentos.ToList();
 
             // Convertendo os atendimentos de TbAtendimento para AtendimentoVM
             foreach (var item in listTb)
             {
-                var atendimento = new ViewAtendimentoVM
+                var agendamento = new ViewAgendamentoVM
                 {
                     Id = item.Id,
                     DtHorarioAgendamento = item.DtHorarioAgendamento,
@@ -37,17 +37,17 @@ namespace SiteAgendamento.Repositorio
 
                 };
 
-                listAtendimentos.Add(atendimento);
+                listAgendamentos.Add(agendamento);
             }
 
-            return listAtendimentos;
+            return listAgendamentos;
         }
-        public bool InserirAtendimento( int Id, DateTime DtHorarioAgendamento, DateOnly DataAtendimento, TimeOnly Horario, int Fk_Usuario, int Fk_Servico)
+        public bool InserirAgendamento( int Id, DateTime DtHorarioAgendamento, DateOnly DataAtendimento, TimeOnly Horario, int Fk_Usuario, int Fk_Servico)
         {
             try
             {
                 // Criando uma instância do modelo AtendimentoVM
-                Atendimento atendimento = new Atendimento
+                Agendamento agendamento = new Agendamento
                 {
                     Id = Id,
                     DtHorarioAgendamento = DtHorarioAgendamento,
@@ -58,7 +58,7 @@ namespace SiteAgendamento.Repositorio
                 };
 
                 // Supondo que _context.TbServicos seja o DbSet para a entidade de serviços no seu DbContext
-                _context.Atendimentos.Add(atendimento);  // Adiciona o serviço ao contexto
+                _context.Agendamentos.Add(agendamento);  // Adiciona o serviço ao contexto
                 _context.SaveChanges();  // Salva as mudanças no banco de dados
 
                 return true;  // Retorna true para indicar que a operação foi bem-sucedida
@@ -69,18 +69,18 @@ namespace SiteAgendamento.Repositorio
                 return false;  // Retorna false em caso de falha
             }
         }       
-        public bool AtualizarAtendimento(int id, DateTime DtHorarioAgendamento, DateOnly DataAtendimento,TimeOnly Horario, int Fk_Usuario,int Fk_Servico )
+        public bool AtualizarAgendamento(int id, DateTime DtHorarioAgendamento, DateOnly DataAtendimento,TimeOnly Horario, int Fk_Usuario,int Fk_Servico )
         {
             try
             {
                 // Busca o serviço pelo ID
-                var atendimento = _context.Atendimentos.FirstOrDefault(s => s.Id == id);
-                if (atendimento != null)
+                var agendamento = _context.Agendamentos.FirstOrDefault(s => s.Id == id);
+                if (agendamento != null)
                 {
                     // Atualiza os dados do serviço
-                    atendimento.DtHorarioAgendamento = DtHorarioAgendamento;
-                    atendimento.DataAtendimento = DataAtendimento;
-                    atendimento.Horario = Horario;
+                    agendamento.DtHorarioAgendamento = DtHorarioAgendamento;
+                    agendamento.DataAtendimento = DataAtendimento;
+                    agendamento.Horario = Horario;
 
                     // Salva as mudanças no banco de dados
                     _context.SaveChanges();
@@ -95,25 +95,25 @@ namespace SiteAgendamento.Repositorio
             catch (Exception ex)
             {
                 // Em caso de erro, loga a exceção (opcional)
-                Console.WriteLine($"Erro ao atualizar o atendimento com ID {id}: {ex.Message}");
+                Console.WriteLine($"Erro ao atualizar o agendamento com ID {id}: {ex.Message}");
                 return false;
             }
         }
-        public bool ExcluirAtendimento(int id)
+        public bool ExcluirAgendamento(int id)
         {
             try
             {
                 // Busca o serviço pelo ID
-                var atendimento = _context.Atendimentos.FirstOrDefault(s => s.Id == id);
+                var agendamento = _context.Agendamentos.FirstOrDefault(s => s.Id == id);
 
                 // Se o serviço não for encontrado, lança uma exceção personalizada
-                if (atendimento == null)
+                if (agendamento == null)
                 {
-                    throw new KeyNotFoundException("Atendimento não encontrado.");
+                    throw new KeyNotFoundException("Agendamento não encontrado.");
                 }
 
                 // Remove o serviço do banco de dados
-                _context.Atendimentos.Remove(atendimento);
+                _context.Agendamentos.Remove(agendamento);
                 _context.SaveChanges();  // Isso pode lançar uma exceção se houver dependências
 
                 // Se tudo correr bem, retorna true indicando sucesso
@@ -123,24 +123,24 @@ namespace SiteAgendamento.Repositorio
             catch (Exception ex)
             {
                 // Aqui tratamos qualquer erro inesperado e logamos para depuração
-                Console.WriteLine($"Erro ao excluir o atendimento com ID {id}: {ex.Message}");
+                Console.WriteLine($"Erro ao excluir o agendamento com ID {id}: {ex.Message}");
 
                 // Relança a exceção para ser capturada pelo controlador
-                throw new Exception($"Erro ao excluir o atendimento: {ex.Message}");
+                throw new Exception($"Erro ao excluir o agendamento: {ex.Message}");
             }
         }
-
-        public List<AtendimentoVM> ConsultarAgendamento(string datap)
+        public List<AgendamentoVM> ConsultarAgendamento(string datap)
         {
-            DateOnly data = DateOnly.ParseExact(datap, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            DateOnly data = DateOnly.ParseExact(datap, "yyyy-MM-dd", CultureInfo.InvariantCulture);
             string dataFormatada = data.ToString("yyyy-MM-dd"); // Formato desejado: "yyyy-MM-dd"
+            Console.WriteLine(dataFormatada);
 
             try
             {
                 // Consulta ao banco de dados, convertendo para o tipo AtendimentoVM
-                var ListarAtendimento = _context.Atendimentos
+                var ListaAgendamento = _context.Agendamentos
                     .Where(a => a.DataAtendimento == DateOnly.Parse(dataFormatada))
-                    .Select(a => new AtendimentoVM
+                    .Select(a => new AgendamentoVM
                     {
                         // Mapear as propriedades de TbAtendimento para AtendimentoVM
                         // Suponha que TbAtendimento tenha as propriedades Id, DataAtendimento, e outras:
@@ -148,18 +148,36 @@ namespace SiteAgendamento.Repositorio
                         DtHorarioAgendamento = a.DtHorarioAgendamento,
                         DataAtendimento = DateOnly.Parse(dataFormatada),
                         Horario = a.Horario,
-                        Fk_Usuario = a.Fk_Usuario,
-                        Fk_Servico = a.Fk_Servico
+                        Fk_Usuario = a.FkUsuario,
+                        Fk_Servico = a.FkServico
                     })
                     .ToList(); // Converte para uma lista
 
-                return ListarAtendimento;
+                return ListaAgendamento;
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Erro ao consultar agendamentos: {ex.Message}");
-                return new List<AtendimentoVM>(); // Retorna uma lista vazia em caso de erro
+                return new List<AgendamentoVM>(); // Retorna uma lista vazia em caso de erro
             }
+        }
+
+        public List<UsuarioVM> ListarNomesAgendamentos()
+        {
+            // Lista para armazenar os usuários com apenas Id e Nome
+            List<UsuarioVM> listFun = new List<UsuarioVM>();
+
+            // Obter apenas os campos Id e Nome da tabela TbUsuarios
+            var listTb = _context.Usuarios
+                                 .Select(u => new UsuarioVM
+                                 {
+                                     Id = u.Id,
+                                     Nome = u.Nome
+                                 })
+                                 .ToList();
+
+            // Retorna a lista já com os campos filtrados
+            return listTb;
         }
 
     }

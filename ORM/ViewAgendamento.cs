@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Zona_Geek.ORM;
 
-public partial class ViewAtendimento
+public partial class ViewAgendamento
 {
     public int Id { get; set; }
 

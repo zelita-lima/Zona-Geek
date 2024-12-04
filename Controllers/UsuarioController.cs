@@ -61,8 +61,8 @@ namespace Zona_Geek.Controllers
         {
             List<SelectListItem> tipoUsuario = new List<SelectListItem>
              {
-                 new SelectListItem { Value = "0", Text = "Administrador" },
-                 new SelectListItem { Value = "1", Text = "Cliente" }
+                 new SelectListItem { Value = "1", Text = "Administrador" },
+                 new SelectListItem { Value = "0", Text = "Cliente" }
              };
 
             ViewBag.lstTipoUsuario = new SelectList(tipoUsuario, "Value", "Text");

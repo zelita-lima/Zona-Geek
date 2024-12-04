@@ -1,18 +1,20 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using SiteAgendamento.Repositorio;
 using System.Diagnostics;
+using System.Globalization;
 using Zona_Geek.Models;
 
 namespace Zona_Geek.Controllers
 {
     public class AgendamentoController : Controller
     {
-        private readonly AtendimentoRepositorio _atendimentoRepositorio;
+        private readonly AgendamentoRepositorio _agendamentoRepositorio;
         private readonly ILogger<AgendamentoController> _logger;
-        public AgendamentoController(AtendimentoRepositorio agendamentoRepositorio, ILogger<AgendamentoController> logger)
+        public AgendamentoController(AgendamentoRepositorio agendamentoRepositorio, ILogger<AgendamentoController> logger)
         {
-            _atendimentoRepositorio = agendamentoRepositorio;
+            _agendamentoRepositorio = agendamentoRepositorio;
             _logger = logger;
         }
 
@@ -41,18 +43,19 @@ namespace Zona_Geek.Controllers
                   new SelectListItem { Value = "5", Text = "Implementação de ERP" }
               };
 
+
             // Passar a lista para a View usando ViewBag
             ViewBag.lstTipoServico = new SelectList(tipoServico, "Value", "Text");
-            var atendimentos = _atendimentoRepositorio.ListarAtendimentos();
+            var atendimentos = _agendamentoRepositorio.ListarAgendamentos();
             return View(atendimentos);
-        }
 
+        }
         public IActionResult InserirAtendimento(int id, DateTime DtHorarioAgendamento, DateOnly DataAtendimento, TimeOnly Horario, int fk_Usuario, int fk_Servico)
         {
             try
             {
                 // Chama o método do repositório para realizar a inserção no banco de dados
-                var resultado = _atendimentoRepositorio.InserirAtendimento(id, DtHorarioAgendamento, DataAtendimento, Horario, fk_Usuario, fk_Servico);
+                var resultado = _agendamentoRepositorio.InserirAgendamento(id, DtHorarioAgendamento, DataAtendimento, Horario, fk_Usuario, fk_Servico);
 
                 // Verifica o resultado da inserção
                 if (resultado)
@@ -74,7 +77,7 @@ namespace Zona_Geek.Controllers
             try
             {
                 // Chama o método do repositório para atualizar o atendimento
-                var resultado = _atendimentoRepositorio.AtualizarAtendimento(id, DtHorarioAgendamento, DataAtendimento, Horario, fk_Usuario, fk_Servico);
+                var resultado = _agendamentoRepositorio.AtualizarAgendamento(id, DtHorarioAgendamento, DataAtendimento, Horario, fk_Usuario, fk_Servico);
 
                 if (resultado)
                 {
@@ -95,7 +98,7 @@ namespace Zona_Geek.Controllers
             try
             {
                 // Chama o repositório para excluir o atendimento
-                var resultado = _atendimentoRepositorio.ExcluirAtendimento(id);
+                var resultado = _agendamentoRepositorio.ExcluirAgendamento(id);
 
                 if (resultado)
                 {
@@ -111,11 +114,10 @@ namespace Zona_Geek.Controllers
                 return Json(new { success = false, message = "Erro ao processar a solicitação. Detalhes: " + ex.Message });
             }
         }
-
         public IActionResult ConsultarAgendamento(string data)
         {
 
-            var agendamento = _atendimentoRepositorio.ConsultarAgendamento(data);
+            var agendamento = _agendamentoRepositorio.ConsultarAgendamento(data);
 
             if (agendamento != null)
             {
@@ -127,11 +129,6 @@ namespace Zona_Geek.Controllers
             }
 
         }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-    }
+    };
 }
+

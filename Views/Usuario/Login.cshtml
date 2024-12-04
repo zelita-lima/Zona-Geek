@@ -85,9 +85,12 @@
         </div>
     </div>
 </body>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
 
 <script>
+
     $(document).ready(function () {
+        // Função para alternar a visibilidade da senha
         $('#show-hide-password').click(function () {
             var senhaInput = $('#loginPassword');
             var tipoInput = senhaInput.attr('type');
@@ -101,7 +104,16 @@
                 $('#show-hide-password i').removeClass('fa-eye').addClass('fa-eye-slash');
             }
         });
+
+        // Detecta quando o 'Enter' é pressionado no campo de email ou senha
+        $('#loginEmail, #loginPassword').on('keypress', function (e) {
+            if (e.which === 13) {  // Verifica se a tecla pressionada é 'Enter' (código 13)
+                e.preventDefault();  // Previne a ação padrão (para evitar que o formulário seja enviado)
+                ConsultaLogin();  // Chama a função de login
+            }
+        });
     });
+
     function ConsultaLogin() {
         var email = $("#loginEmail").val();
         var senha = $("#loginPassword").val();

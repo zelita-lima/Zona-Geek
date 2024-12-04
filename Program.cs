@@ -16,7 +16,7 @@ builder.Services.AddScoped<UsuarioRepositorio>();
 // Registrar o repositório (ServicoRepositorio)
 builder.Services.AddScoped<ServicoRepositorio>();
 // Registrar o repositório (AtendimentoRepositorio)
-builder.Services.AddScoped<AtendimentoRepositorio>();
+builder.Services.AddScoped<AgendamentoRepositorio>();
 // Registrar outros serviços, como controllers com views
 builder.Services.AddControllersWithViews();
 

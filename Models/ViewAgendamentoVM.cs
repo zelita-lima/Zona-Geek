@@ -1,6 +1,6 @@
 ﻿namespace Zona_Geek.Models
 {
-    public class ViewAtendimentoVM
+    public class ViewAgendamentoVM
     {
         public int Id { get; set; }
 

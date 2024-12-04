@@ -61,7 +61,7 @@
 
                                     @if (usuario.TipoUsuario == 1)
                                     {
-                                        <td style="color:  #315689; border: 1px solid #ddd; padding: 8px; width: 170px">Cliente</td>
+                                        <td style="color:  #315689; border: 1px solid #ddd; padding: 8px; width: 170px">Admnistrador</td>
                                     }
                                     else
                                     {
@@ -179,7 +179,7 @@
                                 <input type="text" id="ExcTel" class="form-control" placeholder="Digite seu telefone..." readonly>
 
                             </div>
-                            <input type="hidden" id="IdExc" class="form-control" placeholder="Digite seu nome..." readonly>
+                            <input type="hidden" id="ExcId" class="form-control" placeholder="Digite seu nome..." readonly>
 
                         </form>
                         <div class="modal-footer">
@@ -270,6 +270,125 @@
 
        
         <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                // Função para remover o asterisco
+                function removerAsterisco(campo) {
+                    var label = campo.closest('.row').querySelector('label');
+
+                    // Verifica se o campo foi preenchido
+                    if (campo.value.trim() !== "") {
+                        label.style.display = 'none'; // Remove o asterisco
+                    } else {
+                        label.style.display = 'inline'; // Exibe o asterisco novamente se o campo estiver vazio
+                    }
+                }
+
+                // Função para aplicar o evento de input em todos os campos
+                function adicionarEventos() {
+                    // Campos de texto
+                    var campos = ['#Nome', '#Senha', '#Email', '#Telefone', '#TipoUsuario'];
+
+                    campos.forEach(function (seletor) {
+                        var campo = document.querySelector(seletor);
+                        if (campo) {
+                            campo.addEventListener('input', function () {
+                                removerAsterisco(campo);
+                            });
+                        }
+                    });
+                }
+
+                // Inicializa os eventos
+                adicionarEventos();
+            });
+
+            document.addEventListener("DOMContentLoaded", function () {
+                // Função para verificar se o campo foi preenchido e esconder o asterisco
+                function verificarPreenchimento(campo, label) {
+                    if (campo.value.trim() !== "" || (campo.tagName === "SELECT" && campo.selectedIndex !== 0)) {
+                        label.style.display = 'none'; // Esconde o asterisco
+                    } else {
+                        label.style.display = 'inline'; // Exibe o asterisco se o campo estiver vazio
+                    }
+                }
+
+                // Função para adicionar os eventos de input e change nos campos
+                function adicionarEventos() {
+                    // Campos a serem monitorados
+                    const campos = [
+                        { id: '#EdtNome', type: 'input' },
+                        { id: '#EdtSenha', type: 'input' },
+                        { id: '#EdtEmail', type: 'input' },
+                        { id: '#EdtTel', type: 'input' },
+                        { id: '#EdtTipoUsuario', type: 'select' }
+                    ];
+
+                    campos.forEach(function (campoInfo) {
+                        const campo = document.querySelector(campoInfo.id);
+                        const label = campo.closest('.row').querySelector('label'); // Encontra o label associado ao campo
+
+                        if (campoInfo.type === 'input') {
+                            // Para campos de input, adicionar evento de 'input'
+                            campo.addEventListener('input', function () {
+                                verificarPreenchimento(campo, label);
+                            });
+                        } else if (campoInfo.type === 'select') {
+                            // Para o select, adicionar evento de 'change'
+                            campo.addEventListener('change', function () {
+                                verificarPreenchimento(campo, label);
+                            });
+                        }
+
+                        // Chama a função para inicializar o estado do campo ao carregar a página
+                        verificarPreenchimento(campo, label);
+                    });
+                }
+
+                // Inicializa os eventos
+                adicionarEventos();
+
+                // Função que preenche os campos ao editar o usuário
+                window.definirEdt = function (id, Nome, Email, Senha, TipoUsuario, Telefone) {
+                    $('#EdtId').val(id);
+                    $('#EdtNome').val(Nome);
+                    $('#EdtSenha').val(Senha);
+                    $('#EdtEmail').val(Email);
+                    $('#EdtTel').val(Telefone);
+
+                    // Preenche o campo de senha, se necessário
+                    var senhaValue = "";
+                    if (Senha) {
+                        $('#EdtSenha').val(Senha);
+                        senhaValue = Senha;
+                    }
+
+                    // Atualiza o tipo de usuário no dropdown
+                    if ($('#EdtTipoUsuario').length > 0) {
+                        $('#EdtTipoUsuario option').filter(function () {
+                            return $(this).val() === TipoUsuario;
+                        }).prop('selected', true);
+                        $('#EdtTipoUsuario').trigger('chosen:updated');
+                    } else {
+                        console.error("DropDownList não encontrado.");
+                    }
+
+                    // Verifica o preenchimento dos campos e esconde os asteriscos
+                    const campos = [
+                        { id: '#EdtNome', type: 'input' },
+                        { id: '#EdtSenha', type: 'input' },
+                        { id: '#EdtEmail', type: 'input' },
+                        { id: '#EdtTel', type: 'input' },
+                        { id: '#EdtTipoUsuario', type: 'select' }
+                    ];
+
+                    // Chama a função de verificação para cada campo ao preencher os dados
+                    campos.forEach(function (campoInfo) {
+                        const campo = document.querySelector(campoInfo.id);
+                        const label = campo.closest('.row').querySelector('label');
+                        verificarPreenchimento(campo, label);
+                    });
+                }
+            });
 
             $(document).ready(function () {
                 // Função para atualizar o contador de registros visíveis
