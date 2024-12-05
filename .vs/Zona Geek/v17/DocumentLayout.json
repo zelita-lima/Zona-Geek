@@ -3,16 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\Aluno Noite\\Desktop\\Zona Geek\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{3206395A-7CB2-49D0-9735-3EFC6608E8AB}|Zona Geek.csproj|c:\\users\\aluno noite\\desktop\\zona geek\\controllers\\agendamentocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3206395A-7CB2-49D0-9735-3EFC6608E8AB}|Zona Geek.csproj|solutionrelative:controllers\\agendamentocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{3206395A-7CB2-49D0-9735-3EFC6608E8AB}|Zona Geek.csproj|c:\\users\\aluno noite\\desktop\\zona geek\\views\\agendamento\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{3206395A-7CB2-49D0-9735-3EFC6608E8AB}|Zona Geek.csproj|solutionrelative:views\\agendamento\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3206395A-7CB2-49D0-9735-3EFC6608E8AB}|Zona Geek.csproj|c:\\users\\aluno noite\\desktop\\zona geek\\views\\shared\\_layoutgerenciamento.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{3206395A-7CB2-49D0-9735-3EFC6608E8AB}|Zona Geek.csproj|solutionrelative:views\\shared\\_layoutgerenciamento.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{3206395A-7CB2-49D0-9735-3EFC6608E8AB}|Zona Geek.csproj|c:\\users\\aluno noite\\desktop\\zona geek\\views\\servico\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3206395A-7CB2-49D0-9735-3EFC6608E8AB}|Zona Geek.csproj|solutionrelative:views\\servico\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3206395A-7CB2-49D0-9735-3EFC6608E8AB}|Zona Geek.csproj|c:\\users\\aluno noite\\desktop\\zona geek\\controllers\\agendamentocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3206395A-7CB2-49D0-9735-3EFC6608E8AB}|Zona Geek.csproj|solutionrelative:controllers\\agendamentocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3206395A-7CB2-49D0-9735-3EFC6608E8AB}|Zona Geek.csproj|c:\\users\\aluno noite\\desktop\\zona geek\\controllers\\servicocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3206395A-7CB2-49D0-9735-3EFC6608E8AB}|Zona Geek.csproj|solutionrelative:controllers\\servicocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,7 +26,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 1525,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -34,41 +38,54 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "_LayoutGerenciamento.cshtml",
-              "DocumentMoniker": "C:\\Users\\Aluno Noite\\Desktop\\Zona Geek\\Views\\Shared\\_LayoutGerenciamento.cshtml",
-              "RelativeDocumentMoniker": "Views\\Shared\\_LayoutGerenciamento.cshtml",
-              "ToolTip": "C:\\Users\\Aluno Noite\\Desktop\\Zona Geek\\Views\\Shared\\_LayoutGerenciamento.cshtml",
-              "RelativeToolTip": "Views\\Shared\\_LayoutGerenciamento.cshtml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "DocumentIndex": 0,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Aluno Noite\\Desktop\\Zona Geek\\Views\\Agendamento\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Agendamento\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Aluno Noite\\Desktop\\Zona Geek\\Views\\Agendamento\\Index.cshtml",
+              "RelativeToolTip": "Views\\Agendamento\\Index.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAFcAAAASAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-12-04T20:20:06.364Z",
+              "WhenOpened": "2024-12-05T19:44:11.662Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AgendamentoController.cs",
+              "DocumentMoniker": "C:\\Users\\Aluno Noite\\Desktop\\Zona Geek\\Controllers\\AgendamentoController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AgendamentoController.cs",
+              "ToolTip": "C:\\Users\\Aluno Noite\\Desktop\\Zona Geek\\Controllers\\AgendamentoController.cs",
+              "RelativeToolTip": "Controllers\\AgendamentoController.cs",
+              "ViewState": "AQIAAAsAAAAAAAAAAAAqwCYAAAAfAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-05T19:22:59.469Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ServicoController.cs",
+              "DocumentMoniker": "C:\\Users\\Aluno Noite\\Desktop\\Zona Geek\\Controllers\\ServicoController.cs",
+              "RelativeDocumentMoniker": "Controllers\\ServicoController.cs",
+              "ToolTip": "C:\\Users\\Aluno Noite\\Desktop\\Zona Geek\\Controllers\\ServicoController.cs",
+              "RelativeToolTip": "Controllers\\ServicoController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACUAAAAiAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-05T18:43:29.575Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
               "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\Aluno Noite\\Desktop\\Zona Geek\\Views\\Agendamento\\Index.cshtml",
-              "RelativeDocumentMoniker": "Views\\Agendamento\\Index.cshtml",
-              "ToolTip": "C:\\Users\\Aluno Noite\\Desktop\\Zona Geek\\Views\\Agendamento\\Index.cshtml",
-              "RelativeToolTip": "Views\\Agendamento\\Index.cshtml",
-              "ViewState": "AQIAAJsAAAAAAAAAAAAYwMwAAABAAAAA",
+              "DocumentMoniker": "C:\\Users\\Aluno Noite\\Desktop\\Zona Geek\\Views\\Servico\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Servico\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Aluno Noite\\Desktop\\Zona Geek\\Views\\Servico\\Index.cshtml",
+              "RelativeToolTip": "Views\\Servico\\Index.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAFkAAABgAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-12-04T20:12:10.803Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "AgendamentoController.cs",
-              "DocumentMoniker": "C:\\Users\\Aluno Noite\\Desktop\\Zona Geek\\Controllers\\AgendamentoController.cs",
-              "RelativeDocumentMoniker": "Controllers\\AgendamentoController.cs",
-              "ToolTip": "C:\\Users\\Aluno Noite\\Desktop\\Zona Geek\\Controllers\\AgendamentoController.cs",
-              "RelativeToolTip": "Controllers\\AgendamentoController.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAADEAAAAmAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-04T20:09:52.882Z",
+              "WhenOpened": "2024-12-05T18:41:14.639Z",
               "EditorCaption": ""
             }
           ]

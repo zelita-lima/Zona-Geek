@@ -115,6 +115,22 @@ namespace SiteAgendamento.Repositorio
                 throw new Exception($"Erro ao excluir o serviço: {ex.Message}");
             }
         }
+        public List<ServicoVM> ListarNomesServicos()
+        {
+            // Recupera os serviços com filtragem e projeção para ServicoVM diretamente no banco de dados
+            var query = _context.Servicos.ToList();
+
+            // Projeta diretamente para ServicoVM e retorna como lista
+            var listServicos = _context.Servicos
+                .Select(s => new ServicoVM
+                {
+                    id = s.Id,
+                    TipoServico = s.TipoServico,
+                })
+                .ToList();
+
+            return listServicos;
+        }
 
     }
 }

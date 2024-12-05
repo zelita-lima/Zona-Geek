@@ -87,46 +87,48 @@
         </div>
         
         </section>
-        <div class="modal fade" id="EditarServico" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header" style="background-color: #86b2d2;; color: white; border-color: #eea236;">
-                        <h1 class="modal-title" id="exampleModalLabel">Editar Serviço</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form>
-                        <p style="color:red">Campos com * vermelho são obrigatórios</p>
-                        <div class="mb-3 row">
-                            <div class="col-md-6">
-                                @Html.DropDownList("EdtTipoServico", ViewBag.lstTipoServico as SelectList, "Escolha o tipo de Serviço", new { @class = "form-control", @style = "width:230px; background-color: white; color: #315689;", required = "required" })
-                            </div>
-                            <div class="col-md-6">
-                                <label style="color:red">*</label>
-                            </div>
-                        </div>
+    <div class="modal fade" id="EditarServico" tabindex="-1" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
 
-                            <div class="mb-3 row">
-                                <div class="col-md-6">
-                                    <input id="EditValor" type="number" class="form-control"
-                                           placeholder="Digite o valor do Serviço">
-                                </div>
-                            <div class="col-md-6">
-                                <label style="color:red">*</label>
-                            </div>
-                            </div>
-                       
-                            <input type="hidden" id="IdEdt" value="" />
-
-                        </form>
+                <div class="modal-header" style="background-color:  #86b2d2;; color: white;">
+                    <h1 class="modal-title" id="exampleModalLabel">Editar Serviço</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="mb-3 row">
+                    <div class="col-md-6">
+                        @Html.DropDownList("EdtTipoServico",
+                                 new SelectList(ViewBag.Servicos, "Value", "Text", null),
+                                 "Escolha o serviço",
+                                 new { @class = "form-control", @style = "width:230px; background-color: white; color: #333;", required = "required" })
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                        <button type="button" class="btn btn-primary" onclick=" AlterarServico()">Salvar</button>
+                    <div class="col-md-6">
+                        <label style="color:red">*</label>
                     </div>
                 </div>
+
+                <div class="mb-3 row">
+                    <div class="col-md-6">
+                        <input id="EdtValor" type="number" class="form-control" placeholder="Digite o Valor">
+                    </div>
+                    <div class="col-md-6">
+                        <label style="color:red">*</label>
+                    </div>
+                </div>
+
+                <input type="hidden" id="EdtId" value="" />x
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-primary" onclick="AlterarServico()">Salvar</button>
+                    <!--onclick para chamar a funcao de alteração-->
+                </div>
+
             </div>
         </div>
+    </div>
 
         <div class="modal fade" id="ExcluirServico" tabindex="-1" aria-labelledby="exampleModalLabel"
              aria-hidden="true">
@@ -140,11 +142,11 @@
                         <form>
                             <div class="mb-3">
                                 <label for="nome">Nome</label>
-                                <input type="text" id="ExcNome" class="form-control" placeholder="Digite o Serviço..."
+                                <input type="text" id="ExcServico" class="form-control" placeholder="Digite o Serviço..."
                                        readonly>
                             </div>
 
-                            <input type="hidden" id="IdExc" class="form-control" placeholder="Digite seu nome..."
+                            <input type="hidden" id="ExcId" class="form-control" placeholder="Digite seu nome..."
                                    readonly>
 
                         </form>
@@ -168,13 +170,12 @@
                         <h1 class="modal-title" id="exampleModalLabel">Adicionar Serviço</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-
-                    <div class="modal-body">
-                        <form>
-                        <p style="color:red">Campos com * vermelho são obrigatórios</p>
                         <div class="mb-3 row">
                             <div class="col-md-6">
-                                @Html.DropDownList("TipoServico", ViewBag.lstTipoServico as SelectList, "Escolha o tipo de Serviço", new { @class = "form-control", @style = "width:230px; background-color: white; color: #333;", required = "required" })
+                                @Html.DropDownList("TipoServico",
+                                         new SelectList(ViewBag.Servicos, "Value", "Text", null),
+                                         "Escolha o serviço",
+                                 new { @class = "form-control", @style = "width:230px; background-color: white; color: #333;", required = "required" })
                             </div>
                             <div class="col-md-6">
                                 <label style="color:red">*</label>
@@ -192,11 +193,10 @@
 
                             <input type="hidden" id="IdEdt" value="" />
 
-                        </form>
-                    </div>
+                        
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                        <button type="button" class="btn btn-primary" onclick="InserirServico()">Adicionar</button>
+                    <button type="button" class="btn btn-primary" onclick="AdicionarServico()">Adicionar</button>
                         <!--onclick para chamar a funcao de alteração-->
                     </div>
                 
@@ -387,62 +387,58 @@
 
         function ExcluirServico() {
             var id = $('#ExcId').val();
-            if (confirm('Você tem certeza que deseja excluir este serviço?')) {
+            // Confirmar antes de excluir
+            if (confirm("Você tem certeza que deseja excluir este serviço?")) {
+                // Fazer a requisição AJAX para excluir o serviço
                 $.ajax({
-                    url: '@Url.Action("ExcluirServico", "Servico")',
+                    url: '/Servico/ExcluirServico',  // Substitua 'SeuController' pelo nome real do seu controller
                     type: 'POST',
                     data: { id: id },
                     success: function (response) {
+                        // Verificar se a exclusão foi bem-sucedida
                         if (response.success) {
-                            // Se a exclusão foi bem-sucedida
-                            alert(response.message); // Exibe a mensagem de sucesso
-                            // Atualize a interface (exemplo: removendo o item da lista ou recarregando a página)
-                            location.reload(); // Recarrega a página para refletir a exclusão (opcional)
+
+                            alert(response.message);  // Exibir mensagem de sucesso
+                            $('#ExcluirServico').modal('hide'); // Exemplo de fechamento de modal
+                            location.reload();  // Opcional: recarrega a página
                         } else {
-                            // Se houver erro na exclusão
-                            alert(response.message); // Exibe a mensagem de erro
+                            alert(response.message);  // Caso haja erro
                         }
                     },
                     error: function (xhr, status, error) {
-                        // Se ocorrer um erro na requisição AJAX
-                        alert('Erro ao processar a solicitação. Tente novamente mais tarde.');
+                        alert("Ocorreu um erro ao tentar excluir o serviço: " + error);
                     }
                 });
             }
         }
 
-        function AtualizarServico() {
-            var id = $('#EdtId').val();
-            var tipoServico = $('#EdtTipoServico option:selected').text();
-            var Valor = $('#EdtValor').val();
+        function AlterarServico() {
 
-            // Objeto com os dados para enviar via AJAX
-            var dados = {
-                tipoServico: tipoServico,
-                Valor: Valor
-            };
+            var id = $('#EdtId').val();
+            var tipoSevico = $('#EdtTipoServico option:selected').text()
+            var valor = $('#EdtValor').val();
+
+            // Fazer a requisição AJAX para atualizar o serviço
             $.ajax({
-                url: '@Url.Action("AtualizarServico", "Servico")',
+                url: '/Servico/AtualizarServico',  // Substitua 'SeuController' pelo nome real do seu controller
                 type: 'POST',
                 data: {
                     id: id,
-                    tipoServico: tipoServico,
-                    valor: Valor
+                    TipoServico: tipoSevico,
+                    Valor: valor
                 },
                 success: function (response) {
+                    // Verificar se a atualização foi bem-sucedida
                     if (response.success) {
-                        // Se a atualização foi bem-sucedida
-                        alert(response.message); // Exibe a mensagem de sucesso
-                        $('#EditarServico').modal('hide'); // Exemplo de fechamento de modal
+                        alert("Serviço " + tipoSevico + " alterado com sucesso!");
+                        $('#EditarServico').modal('hide');
                         location.reload();  // Opcional: recarrega a página
                     } else {
-                        // Se houve erro na atualização
-                        alert(response.message); // Exibe a mensagem de erro
+                        alert(response.message); // Caso haja erro
                     }
                 },
                 error: function (xhr, status, error) {
-                    // Se ocorrer um erro no AJAX
-                    alert('Erro ao processar a solicitação. Tente novamente mais tarde.');
+                    alert("Ocorreu um erro ao tentar atualizar o serviço: " + error);
                 }
             });
         }
@@ -451,6 +447,17 @@
 
             var tipoServico = $('#TipoServico option:selected').text();
             var Valor = $('#Valor').val();
+
+
+            if (tipoServico === "" || tipoServico === "Escolha o tipo de Usuário") {
+                alert("Por favor, selecione o tipo de usuário.");
+                return;
+            }
+            if (Valor.trim() === "") {
+                alert("Por favor, insira um email válido.");
+                return;
+            }
+
 
             // Objeto com os dados para enviar via AJAX
             var dados = {
@@ -471,7 +478,7 @@
                     if (response.success) {
                         alert(response.message);  // Exibe mensagem de sucesso
                         // Se necessário, fecha o modal ou faz outra ação aqui
-                        $('#EditarServico').modal('hide'); // Exemplo de fechamento de modal
+                        $('#InserirServicoModal').modal('hide'); // Exemplo de fechamento de modal
                         location.reload();  // Opcional: recarrega a página
                     } else {
                         alert(response.message);  // Exibe mensagem de erro
@@ -482,7 +489,6 @@
                 }
             });
         }
-              
         </script>
 
     </section>

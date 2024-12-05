@@ -42,33 +42,33 @@ namespace SiteAgendamento.Repositorio
 
             return listAgendamentos;
         }
-        public bool InserirAgendamento( int Id, DateTime DtHorarioAgendamento, DateOnly DataAtendimento, TimeOnly Horario, int Fk_Usuario, int Fk_Servico)
+        // Método para inserir um novo agendamento
+        public bool InserirAgendamento(DateTime dtHoraAgendamento, DateOnly dataAtendimento, TimeOnly horario, int fkUsuarioId, int fkServicoId)
         {
             try
             {
                 // Criando uma instância do modelo AtendimentoVM
-                Agendamento agendamento = new Agendamento
+                var atendimento = new Agendamento
                 {
-                    Id = Id,
-                    DtHorarioAgendamento = DtHorarioAgendamento,
-                    DataAtendimento = DataAtendimento,
-                    Horario = Horario,
-                    FkUsuario = Fk_Usuario ,
-                    FkServico= Fk_Servico 
+                    DtHorarioAgendamento = dtHoraAgendamento,
+                    DataAtendimento = dataAtendimento,
+                    Horario = horario,
+                    FkUsuario = fkUsuarioId,
+                    FkServico = fkServicoId
                 };
 
-                // Supondo que _context.TbServicos seja o DbSet para a entidade de serviços no seu DbContext
-                _context.Agendamentos.Add(agendamento);  // Adiciona o serviço ao contexto
-                _context.SaveChanges();  // Salva as mudanças no banco de dados
+                // Adicionando o atendimento ao contexto
+                _context.Agendamentos.Add(atendimento);
+                _context.SaveChanges(); // Persistindo as mudanças no banco de dados
 
-                return true;  // Retorna true para indicar que a operação foi bem-sucedida
+                return true; // Retorna true indicando sucesso
             }
             catch (Exception ex)
             {
-                // Aqui você pode registrar o erro (ex.Message) ou tratá-lo conforme necessário
-                return false;  // Retorna false em caso de falha
+                // Em caso de erro, pode-se logar a exceção (ex.Message)
+                return false; // Retorna false em caso de erro
             }
-        }       
+        }
         public bool AtualizarAgendamento(int id, DateTime DtHorarioAgendamento, DateOnly DataAtendimento,TimeOnly Horario, int Fk_Usuario,int Fk_Servico )
         {
             try
@@ -161,7 +161,6 @@ namespace SiteAgendamento.Repositorio
                 return new List<AgendamentoVM>(); // Retorna uma lista vazia em caso de erro
             }
         }
-
         public List<UsuarioVM> ListarNomesAgendamentos()
         {
             // Lista para armazenar os usuários com apenas Id e Nome

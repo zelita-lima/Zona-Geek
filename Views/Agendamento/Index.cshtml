@@ -49,7 +49,7 @@
 
             <!-- Corpo da tabela rolável -->
             <div style="max-height: 300px; overflow-y: auto; overflow-x: auto;">
-                <table id="TbAtendimentosBody" class="table" style="width: 100%; border-collapse: collapse; table-layout: fixed;">
+                <table id="TbAgendamentoBody" class="table" style="width: 100%; border-collapse: collapse; table-layout: fixed;">
                     <tbody>
                         @if (Model != null && Model.Any())
                         {
@@ -85,6 +85,11 @@
                         }
                     </tbody>
                 </table>
+            </div>
+
+                        <!-- Contador de Registros Centralizado com Fonte Maior -->
+            <div style="text-align: center; margin-top: 10px;">
+                <strong style="font-size: 18px">Total de Usuários: <span id="registroCount">0</span></strong>
             </div>
 
         <div class="modal fade" id="EditarUsuario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -201,14 +206,27 @@
                             <div class="mb-3 d-flex align-items-center">
                                 <input id="data_agdt" type="date" class="form-control" style="width: 300px;" placeholder="Escolha a data do agendamento" oninput="consultarAgendamento()">
                             </div>
-
-                            <!-- DropDown de Tipo de Serviço -->
-                            <div class="mb-3 row">
+                                                        <div class="mb-3 row">
                                 <div class="col-md-6">
-                                    @Html.DropDownList("TipoServico", ViewBag.lstTipoServico as SelectList, "Escolha o tipo de Serviço", new { @class = "form-control", @style = "width:230px; background-color: #EAE7DC; color: #333;", required = "required" })
+                                    @Html.DropDownList("DropUsuario",
+                                             new SelectList(ViewBag.Usuarios, "Value", "Text", null),
+                                             "Escolha o usuário",
+                                             new { @class = "form-control", @style = "width:230px; background-color: white; color: #333;", required = "required" })
                                 </div>
                                 <div class="col-md-6">
                                     <label style="color:darkblue">*</label>
+                                </div>
+                            </div
+                            <!-- DropDown de Tipo de Serviço -->
+                            <div class="mb-3 row">
+                                <div class="col-md-6">
+                                    @Html.DropDownList("TipoServico",
+                                             new SelectList(ViewBag.lstTipoServico, "Value", "Text", null),
+                                             "Escolha o serviço",
+                                             new { @class = "form-control", @style = "width:230px; background-color: #EAE7DC; color: #333;", required = "required" })
+                                </div>
+                                <div class="col-md-6">
+                                    <label style="color:red">*</label>
                                 </div>
                             </div>
 
@@ -257,7 +275,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                        <button type="button" class="btn btn-primary" onclick="InserirUsuario()">Adicionar</button><!--onclick para chamar a funcao de alteração-->
+                            <button type="button" class="btn btn-primary" onclick="InserirAgendamento()">Adicionar</button><!--onclick para chamar a funcao de alteração-->
                     </div>
                 </div>
             </div>
@@ -269,22 +287,33 @@
         <script src="~/js/script.js"></script>
       
         <script>
+  
+          $(document).ready(function () {
+              // Função para atualizar o contador de registros visíveis
+              function atualizarContador() {
+                  var visibleRows = $('#TbAgendamentoBody tbody tr:visible').length; // Conta as linhas visíveis
+                  $('#registroCount').text(visibleRows); // Atualiza o contador
+              }
 
-            // Impede a digitação manual no campo de data
-            document.getElementById('data_agdt').addEventListener('keydown', function (e) {
-                e.preventDefault(); // Bloqueia qualquer entrada do teclado
-            });
+              // Quando o usuário digitar no campo de filtro
+              $('#filtro').on('keyup', function () {
+                  var value = $(this).val().toLowerCase(); // Pega o valor do campo de filtro e converte para minúsculas
 
-            $(document).ready(function () {
-                $('input[type="checkbox"]').click(function () {
-                    var isChecked = $(this).prop("checked");
-                    var groupId = $(this).attr("data-group");
+                  // Filtra as linhas do corpo da tabela
+                  $('#TbAgendamentoBody tbody tr').each(function () {
+                      // Verifica se qualquer célula na linha contém o valor digitado no filtro
+                      var rowText = $(this).text().toLowerCase();
+                      // Exibe ou oculta a linha, dependendo de conter o valor
+                      $(this).toggle(rowText.indexOf(value) > -1);
+                  });
 
-                    if (isChecked) {
-                        $('input[type="checkbox"][data-group="' + groupId + '"]').not($(this)).prop("checked", false);
-                    }
-                });
-            });
+                  // Atualiza o contador após filtrar as linhas
+                  atualizarContador();
+              });
+
+              // Inicializa o contador de registros ao carregar a página
+              atualizarContador();
+          });
 
             function consultarAgendamento() {
                 ativarCheckboxes()
@@ -413,70 +442,56 @@
                 return dataHoraFormatada;
             }
 
-            function InserirAgendamentos() {
+             function InserirAgendamento() {
 
-                //var id =
-                var dataC = obterDataHoraFormatada();
-                var data = $("#data_agdt").val();
-                var servico = $("#DropServico").val();
-                var atendimentos = [];
-                if ($("#chk08").prop("checked")) atendimentos.push($("#chk08").val());
-                if ($("#chk10").prop("checked")) atendimentos.push($("#chk10").val());
-                if ($("#chk13").prop("checked")) atendimentos.push($("#chk13").val());
-                if ($("#chk15").prop("checked")) atendimentos.push($("#chk15").val());
-                if ($("#chk17").prop("checked")) atendimentos.push($("#chk17").val());
-                if ($("#chk19").prop("checked")) atendimentos.push($("#chk19").val());
+                    // Data from hidden field or any other necessary values
+                    var dataC = obterDataHoraFormatada();  // Assuming this function formats the current date/time.
+                    var data = $("#data_agdt").val();
+                    var usuario = $("#DropUsuario").val();  // Getting value for "DropUsuario"
+                    var tipoServico = $('#TipoServico option:selected').val(); // Getting value for "TipoServico"
+                    var atendimentos = [];
+
+                    // Check if the time slots are selected and push them into the atendimentos array
+                    if ($("#chk08").prop("checked")) atendimentos.push($("#chk08").val());
+                    if ($("#chk10").prop("checked")) atendimentos.push($("#chk10").val());
+                    if ($("#chk13").prop("checked")) atendimentos.push($("#chk13").val());
+                    if ($("#chk15").prop("checked")) atendimentos.push($("#chk15").val());
+                    if ($("#chk17").prop("checked")) atendimentos.push($("#chk17").val());
+                    if ($("#chk19").prop("checked")) atendimentos.push($("#chk19").val());
 
 
-                if (!id) {
-                    alert("Por favor, Insira aum Id");
-                    return;
-                }
 
-                if (!dataC) {
-                    alert("Por favor, selecione uma data de cadastro");
-                    return;
-                }
-                if (!data) {
-                    alert("Por favor, selecione uma data para o agendamento.");
-                    return;
-                }
-                if (!servico) {
-                    alert("Por favor, selecione o serviço.");
-                    return;
-                }
-                if (atendimentos.length === 0) {
-                    alert("Por favor, selecione pelo menos um horário para o agendamento.");
-                    return; // Retorna da função se nenhum horário foi selecionado
-                }
-                var dados = {
-                    id: id,
-                    dataC: dataC,
-                    data: data,
-                    servico: servico,
-                    atendimentos: atendimentos
-                };
-                console.log(dados)
-                $.ajax({
-                    url: '/Agendamento/InserirAgendamentos',
-                    type: "POST",
-                    dataType: "json",
-                    data: dados,
-                    success: function (response) {
-                        if (response.success) {
-                            alert("Agendamento(s) cadastrado(s) com sucesso!");
-                            $('#InserirAgendamento').modal('hide'); // Substitua 'seuModal' pelo ID do seu modal
-                            // Atualizar a página
-                            location.reload();
-                        } else {
-                            alert("Erro ao cadastrar agendamento(s).");
+                    // Collect data for AJAX request
+                    var dados = {
+                        dtHoraAgendamento: dataC,
+                        dataAtendimento: data,
+                        horario: atendimentos,
+                        fkUsuarioId: usuario,
+                        fkServicoId: tipoServico,
+
+                    };
+                    console.log(dados)
+
+                    // Perform the AJAX request
+                    $.ajax({
+                        url: '/Agendamento/InserirAgendamento',
+                        type: "POST",
+                        dataType: "json",
+                        data: dados,
+                        success: function (response) {
+                            if (response.success) {
+                                alert("Agendamento(s) cadastrado(s) com sucesso!");
+                                $('#InserirAgendamento').modal('hide');  // Close the modal
+                                location.reload();  // Reload the page
+                            } else {
+                                alert("Erro ao cadastrar agendamento(s).");
+                            }
+                        },
+                        error: function (xhr, textStatus, errorThrown) {
+                            alert("Erro ao cadastrar agendamento(s): " + errorThrown);
                         }
-                    },
-                    error: function (xhr, textStatus, errorThrown) {
-                        alert("Erro ao cadastrar agendamento(s): " + errorThrown);
-                    }
-                });
-            }
+                    });
+                }
 
             function AlterarAgendamento() {
 
