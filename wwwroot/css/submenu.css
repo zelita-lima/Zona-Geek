@@ -38,8 +38,8 @@
 }
 
     .dropdown-content a:hover {
-        color: #A65F3C;
+        color: #315689;
         background-color: #ddd;
-        border: #A65F3C solid 2px;
+        border: #315689 solid 2px;
         border-radius: 3%;
     }

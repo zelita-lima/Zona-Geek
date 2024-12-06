@@ -69,33 +69,38 @@ namespace SiteAgendamento.Repositorio
                 return false; // Retorna false em caso de erro
             }
         }
-        public bool AtualizarAgendamento(int id, DateTime DtHorarioAgendamento, DateOnly DataAtendimento,TimeOnly Horario, int Fk_Usuario,int Fk_Servico )
+        public bool AlterarAgendamento(int id, string data, int servico, TimeOnly horario)
         {
             try
             {
-                // Busca o serviço pelo ID
-                var agendamento = _context.Agendamentos.FirstOrDefault(s => s.Id == id);
-                if (agendamento != null)
+                Agendamento agt = _context.Agendamentos.Find(id);
+                DateOnly dtHoraAgendamento;
+                if (agt != null)
                 {
-                    // Atualiza os dados do serviço
-                    agendamento.DtHorarioAgendamento = DtHorarioAgendamento;
-                    agendamento.DataAtendimento = DataAtendimento;
-                    agendamento.Horario = Horario;
+                    agt.Id = id;
+                    if (data != null)
+                    {
+                        if (DateOnly.TryParse(data, out dtHoraAgendamento))
+                        {
+                            agt.DataAtendimento = dtHoraAgendamento;
+                        }
+                    }
 
-                    // Salva as mudanças no banco de dados
+                    // Corrigido a verificação do tipo TimeOnly
+                    if (horario != TimeOnly.MinValue)  // Verificando se o horário não é o valor padrão
+                    {
+                        agt.Horario = horario;
+                    }
+
+                    agt.FkServico = servico;
                     _context.SaveChanges();
+                    return true;
+                }
 
-                    return true;  // Retorna verdadeiro se a atualização for bem-sucedida
-                }
-                else
-                {
-                    return false;  // Retorna falso se o serviço não for encontrado
-                }
+                return false;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                // Em caso de erro, loga a exceção (opcional)
-                Console.WriteLine($"Erro ao atualizar o agendamento com ID {id}: {ex.Message}");
                 return false;
             }
         }
@@ -103,30 +108,22 @@ namespace SiteAgendamento.Repositorio
         {
             try
             {
-                // Busca o serviço pelo ID
-                var agendamento = _context.Agendamentos.FirstOrDefault(s => s.Id == id);
 
-                // Se o serviço não for encontrado, lança uma exceção personalizada
-                if (agendamento == null)
+
+                var agt = _context.Agendamentos.Where(a => a.Id == id).FirstOrDefault();
+                if (agt != null)
                 {
-                    throw new KeyNotFoundException("Agendamento não encontrado.");
+                    _context.Agendamentos.Remove(agt);
+
                 }
-
-                // Remove o serviço do banco de dados
-                _context.Agendamentos.Remove(agendamento);
-                _context.SaveChanges();  // Isso pode lançar uma exceção se houver dependências
-
-                // Se tudo correr bem, retorna true indicando sucesso
+                _context.SaveChanges();
                 return true;
-
             }
-            catch (Exception ex)
-            {
-                // Aqui tratamos qualquer erro inesperado e logamos para depuração
-                Console.WriteLine($"Erro ao excluir o agendamento com ID {id}: {ex.Message}");
 
-                // Relança a exceção para ser capturada pelo controlador
-                throw new Exception($"Erro ao excluir o agendamento: {ex.Message}");
+            catch (Exception)
+            {
+
+                return false;
             }
         }
         public List<AgendamentoVM> ConsultarAgendamento(string datap)

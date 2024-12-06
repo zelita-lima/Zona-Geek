@@ -18,7 +18,6 @@ namespace Zona_Geek.Controllers
             _agendamentoRepositorio = agendamentoRepositorio;
             _context = context;
         }
-
         public IActionResult GerencimentoAgendamentoUsuario()
         {
             return View();
@@ -58,6 +57,17 @@ namespace Zona_Geek.Controllers
                 // Passa a lista para o ViewBag para ser utilizada na view
                 ViewBag.Usuarios = selectList;
             }
+            var listaHorario = new List<SelectListItem>
+             {
+                 new SelectListItem { Value = "8", Text = "08:00:00" },
+                 new SelectListItem { Value = "10", Text = "10:00:00" },
+                 new SelectListItem { Value = "13", Text = "13:00:00" },
+                 new SelectListItem { Value = "15", Text = "15:00:00" },
+                 new SelectListItem { Value = "17", Text = "17:00:00" },
+                 new SelectListItem { Value = "19", Text = "19:00:00" }
+             };
+
+            ViewBag.lstHorarios = listaHorario;
             var atendimentos = _agendamentoRepositorio.ListarAgendamentos();
             return View(atendimentos);
 
@@ -85,47 +95,25 @@ namespace Zona_Geek.Controllers
                 return Json(new { success = false, message = "Erro ao processar a solicitação. Detalhes: " + ex.Message });
             }
         }
-        public IActionResult AtualizarAtendimento(int id, DateTime DtHorarioAgendamento, DateOnly DataAtendimento, TimeOnly Horario, int fk_Usuario, int fk_Servico)
+        public IActionResult AlterarAgendamento(int id, string data, int servico, TimeOnly horario)
         {
-            try
-            {
-                // Chama o método do repositório para atualizar o atendimento
-                var resultado = _agendamentoRepositorio.AtualizarAgendamento(id, DtHorarioAgendamento, DataAtendimento, Horario, fk_Usuario, fk_Servico);
 
-                if (resultado)
-                {
-                    return Json(new { success = true, message = "Atendimento atualizado com sucesso!" });
-                }
-                else
-                {
-                    return Json(new { success = false, message = "Erro ao atualizar o atendimento. Verifique se o atendimento existe." });
-                }
-            }
-            catch (Exception ex)
+            var rs = _agendamentoRepositorio.AlterarAgendamento(id, data, servico, horario);
+            if (rs)
             {
-                return Json(new { success = false, message = "Erro ao processar a solicitação. Detalhes: " + ex.Message });
+                return Json(new { success = true });
+            }
+            else
+            {
+                return Json(new { success = false });
             }
         }
-        public IActionResult ExcluirAtendimento(int id)
+        public IActionResult ExcluirAgendamento(int id)
         {
-            try
-            {
-                // Chama o repositório para excluir o atendimento
-                var resultado = _agendamentoRepositorio.ExcluirAgendamento(id);
 
-                if (resultado)
-                {
-                    return Json(new { success = true, message = "Atendimento excluído com sucesso!" });
-                }
-                else
-                {
-                    return Json(new { success = false, message = "Erro ao excluir o atendimento. Verifique se ele está vinculado a outros registros no sistema." });
-                }
-            }
-            catch (Exception ex)
-            {
-                return Json(new { success = false, message = "Erro ao processar a solicitação. Detalhes: " + ex.Message });
-            }
+            var rs = _agendamentoRepositorio.ExcluirAgendamento(id);
+            return Json(new { success = rs });
+
         }
         public IActionResult ConsultarAgendamento(string data)
         {
