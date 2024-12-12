@@ -7,7 +7,6 @@ namespace SiteAgendamento.Repositorio
 {
     public class AgendamentoRepositorio
     {
-
         private BdZonaGeekContext _context;
         public AgendamentoRepositorio(BdZonaGeekContext context)
         {
@@ -174,6 +173,37 @@ namespace SiteAgendamento.Repositorio
 
             // Retorna a lista já com os campos filtrados
             return listTb;
+        }
+        public List<ViewAgendamentoVM> ListarAgendamentosCliente()
+        {
+            // Obtendo o ID do usuário a partir da variável de ambiente
+            string nome = Environment.GetEnvironmentVariable("USUARIO_NOME");
+
+            List<ViewAgendamentoVM> listAtendimentos = new List<ViewAgendamentoVM>();
+
+            // Recuperando todos os agendamentos que correspondem ao ID do usuário
+            var listTb = _context.ViewAgendamentos.Where(x => x.Nome == nome).ToList();
+
+            // Convertendo cada agendamento para ViewAgendamentoVM
+            foreach (var item in listTb)
+            {
+                var atendimento = new ViewAgendamentoVM
+                {
+                    Id = item.Id,
+                    DtHorarioAgendamento = item.DtHorarioAgendamento,
+                    DataAtendimento = item.DataAtendimento,
+                    Horario = item.Horario,
+                    TipoServico = item.TipoServico,
+                    Valor = item.Valor,
+                    Nome = item.Nome,
+                    Email = item.Email,
+                    Telefone = item.Telefone,
+                };
+
+                listAtendimentos.Add(atendimento);
+            }
+
+            return listAtendimentos;
         }
 
     }

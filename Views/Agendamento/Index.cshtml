@@ -48,45 +48,49 @@
                 </thead>
             </table>
 
-            <!-- Corpo da tabela rolável -->
-            <div style="max-height: 300px; overflow-y: auto; overflow-x: auto;">
-                <table id="TbAgendamentoBody" class="table" style="width: 100%; border-collapse: collapse; table-layout: fixed;">
-                    <tbody>
-                        @if (Model != null && Model.Any())
-                        {
-                            @foreach (var atendimento in Model)
-                            {
-                                <tr>
-                                    <td style="color:  #315689; border: 1px solid  #315689; padding: 8px; min-width: 50px">@atendimento.Id</td>
-                                    <td style="color:  #315689; border: 1px solid  #315689; padding: 8px; min-width: 150px">@atendimento.DtHorarioAgendamento</td>
-                                    <td style="color:  #315689; border: 1px solid  #315689; padding: 8px; min-width: 150px">@atendimento.DataAtendimento.ToString("dd/MM/yyyy")</td>
-                                    <td style="color:  #315689; border: 1px solid  #315689; padding: 8px; min-width: 150px">@atendimento.Horario.ToString("HH:mm")</td>
-                                    <td style="color:  #315689; border: 1px solid  #315689; padding: 8px; min-width: 150px">@atendimento.Nome</td>
-                                    <td style="color:  #315689; border: 1px solid  #315689; padding: 8px; min-width: 150px; word-wrap: break-word;">@atendimento.Email</td>
-                                    <td style="color: #315689; border: 1px solid  #315689; padding: 8px; min-width: 150px">@atendimento.Telefone</td>
-                                    <td style="color:  #315689; border: 1px solid  #315689; padding: 8px; min-width: 150px">@atendimento.TipoServico</td>
-                                    <td class="text-center" style="border: 1px solid  #315689; min-width: 80px;">
-                                        <button class="btn btn-default" onclick="definirEdt('@atendimento.Id', '@atendimento.Nome', '@atendimento.Email', '@atendimento.Telefone', '@atendimento.DataAtendimento', '@atendimento.Horario', '@atendimento.TipoServico', '@atendimento.Valor');" data-bs-toggle="modal" data-bs-target="#EditarAgendamento" style="color:  #315689;">
-                                            <i class="fa fa-edit"></i>
-                                        </button>
-                                    </td>
-                                    <td class="text-center" style="border: 1px solid  #315689; min-width: 80px;">
-                                        <button class="btn btn-default" onclick="definirExc('@atendimento.Id', '@atendimento.Nome', '@atendimento.Email', '@atendimento.Telefone', '@atendimento.DataAtendimento', '@atendimento.Horario', '@atendimento.TipoServico', '@atendimento.Valor');"; data-bs-toggle="modal" data-bs-target="#ExcluirUsuario" style="color:  #315689;">
-                                            <i class="fa fa-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            }
-                        }
-                        else
+     
+                 <!-- Corpo da tabela rolável -->
+        <div style="max-height: 300px; overflow-y: auto; overflow-x: auto;">
+            <table id="TbAgendamentoBody" class="table" style="width: 100%; border-collapse: collapse; table-layout: fixed;">
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        @foreach (var atendimento in Model)
                         {
                             <tr>
-                                <td colspan="11" style="text-align: center; color: #315689; padding: 8px;">Nenhum atendimento encontrado.</td>
+                                <td style="color: black; border: 1px solid black; padding: 8px; min-width: 50px">@atendimento.Id</td>
+                                <td style="color: black; border: 1px solid black; padding: 8px; min-width: 150px">@atendimento.DtHorarioAgendamento</td>
+                                <td style="color: black; border: 1px solid black; padding: 8px; min-width: 150px">@atendimento.DataAtendimento.ToString("dd/MM/yyyy")</td>
+                                <td style="color:black; border: 1px solid black; padding: 8px; min-width: 150px">@atendimento.Horario.ToString("HH:mm")</td>
+                                <td style="color: black; border: 1px solid black; padding: 8px; min-width: 150px">@atendimento.Nome</td>
+                                <td style="color: black; border: 1px solid black; padding: 8px; min-width: 150px; word-wrap: break-word;">@atendimento.Email</td>
+                                <td style="color: black; border: 1px solid black; padding: 8px; min-width: 150px">@atendimento.Telefone</td>
+                                <td style="color:black; border: 1px solid black; padding: 8px; min-width: 150px">@atendimento.TipoServico</td>
+                                <td style="color: black; border: 1px solid black; padding: 8px; min-width: 150px">@atendimento.Valor.ToString("C")</td>
+                                <td style="border: 1px solid black;" class="text-center">
+                                    <button class="btn btn-default" onclick="definirEdt('@atendimento.Id', '@atendimento.Nome', '@atendimento.Email', '@atendimento.Telefone', '@atendimento.DataAtendimento', '@atendimento.Horario', '@atendimento.TipoServico', '@atendimento.Valor');" data-bs-toggle="modal" data-bs-target="#EditarAgendamento">
+                                        <i class="fa fa-edit"></i>
+                                    </button>
+                                </td>
+                                <td style="border: 1px solid #ddd;" class="text-center">
+
+                                    <button class="btn btn-default" onclick="definirExc('@atendimento.Id', '@atendimento.Nome', '@atendimento.Email', '@atendimento.Telefone', '@atendimento.DataAtendimento', '@atendimento.Horario', '@atendimento.TipoServico', '@atendimento.Valor');" data-bs-toggle="modal" data-bs-target="#ExcluirAgendamento">
+                                        <i class="fa fa-trash text-danger"></i>
+                                    </button>
+
+                                </td>
                             </tr>
                         }
-                    </tbody>
-                </table>
-         </div>
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="11" style="text-align: center; color: #EAE7DC; padding: 8px;">Nenhum atendimento encontrado.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
 
         <!-- Contador de Registros Centralizado com Fonte Maior -->
         <div style="text-align: center; margin-top: 10px;">
@@ -152,8 +156,9 @@
                             </div>
                         </div>
                         <div id="divCampos" style="border: 2px solid #000; padding: 10px; margin: 10px; display: none;">
+                            	<!-- Campo de data -->
                             <div class="mb-3 d-flex align-items-center">
-                                <input id="data_a" type="date" class="form-control" style="width: 300px;" placeholder="Escolha a data do agendamento" oninput="consultarAgendamentoEdt()">
+                                <input id="data_a" type="date" class="form-control" style="width: 300px;" placeholder="Escolha a data do agendamento" oninput="consultarAgendamentoEdt()" min="{{ today }}">
                             </div>
                             <div class="mb-3 d-flex align-items-center">
                                 @Html.DropDownList("DropHorario", ViewBag.lstHorarios, "Escolha o Horario", new { @class = "chosen-select form-control", @style = "width:420px;" })
@@ -170,7 +175,7 @@
             </div>
         </div>
 
-        <div class="modal fade" id="ExcluirUsuario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="ExcluirAgendamento" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header" style="background-color: #86b2d2; color: white; border-color: #eea236;">
@@ -178,47 +183,47 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form>
-                             <div class="mb-3">
-                                 <label for="nome">Nome</label>
-                                 <input type="text" id="ExcNome" class="form-control" readonly>
+                                             <form>
+                         <div class="mb-3">
+                             <label for="nome">Nome</label>
+                             <input type="text" id="ExcNome" class="form-control" readonly>
 
-                             </div>
-                             <div class="mb-3">
-                                 <label for="email">Email</label>
-                                 <input type="email" id="ExcEmail" class="form-control" readonly>
+                         </div>
+                         <div class="mb-3">
+                             <label for="email">Email</label>
+                             <input type="email" id="ExcEmail" class="form-control" readonly>
 
-                             </div>
-                             <div class="mb-3">
-                                 <label for="telefone">Telefone</label>
-                                 <input type="text" id="ExcTel" class="form-control" readonly>
+                         </div>
+                         <div class="mb-3">
+                             <label for="telefone">Telefone</label>
+                             <input type="text" id="ExcTel" class="form-control" readonly>
 
-                             </div>
+                         </div>
 
-                             <div class="mb-3">
-                                 <label for="telefone">Data do Agendamento</label>
-                                 <input type="text" id="ExcData" class="form-control" readonly>
+                         <div class="mb-3">
+                             <label for="telefone">Data do Agendamento</label>
+                             <input type="text" id="ExcData" class="form-control" readonly>
 
-                             </div>
-                             <div class="mb-3">
-                                 <label for="telefone">Horario</label>
-                                 <input type="text" id="ExcHorario" class="form-control" readonly>
+                         </div>
+                         <div class="mb-3">
+                             <label for="telefone">Horario</label>
+                             <input type="text" id="ExcHorario" class="form-control" readonly>
 
-                             </div>
-                             <div class="mb-3">
-                                 <label for="telefone">Tecnica</label>
-                                 <input type="text" id="ExcTecnica" class="form-control" readonly>
+                         </div>
+                         <div class="mb-3">
+                             <label for="telefone">Tecnica</label>
+                             <input type="text" id="ExcTecnica" class="form-control" readonly>
 
-                             </div>
-                             <div class="mb-3">
-                                 <label for="telefone">Valor</label>
-                                 <input type="text" id="ExcVal" class="form-control" readonly>
+                         </div>
+                         <div class="mb-3">
+                             <label for="telefone">Valor</label>
+                             <input type="text" id="ExcVal" class="form-control" readonly>
 
-                             </div>                            
+                         </div>                            
 
-                             <input type="hidden" id="ExcId" class="form-control" readonly>
+                         <input type="hidden" id="ExcId" class="form-control" readonly>
 
-                         </form>
+                     </form>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                             <button type="button" onclick="ExcluirAgendamento()" class="btn btn-primary">Excluir</button>
@@ -245,10 +250,10 @@
                                 <input type="hidden" id="TxtId" class="form-check-input" value="10:00" style="margin-right: 10px;" disabled>
                             </div>
 
-                            <!-- Campo de data -->
-                            <div class="mb-3 d-flex align-items-center">
-                                <input id="data_agdt" type="date" class="form-control" style="width: 300px;" placeholder="Escolha a data do agendamento" oninput="consultarAgendamento()">
-                            </div>
+                                                   <!-- Campo de data -->
+                        <div class="mb-3 d-flex align-items-center">
+                            <input id="data_agdt" type="date" class="form-control" style="width: 300px;" placeholder="Escolha a data do agendamento" oninput="consultarAgendamento()" min="{{ today }}">
+                        </div>
                                                         <div class="mb-3 row">
                                 <div class="col-md-6">
                                     @Html.DropDownList("DropUsuario",
@@ -330,7 +335,6 @@
         <script src="~/js/script.js"></script>
       
         <script>
-  
                 var listaOriginalHorario;
                 // Impede a digitação manual no campo de data
                 document.getElementById('data_agdt').addEventListener('keydown', function (e) {
@@ -560,7 +564,11 @@
                     checkboxes.forEach(function (checkbox) {
                         checkbox.checked = false;
                     });
-                }                       
+                } 
+                 // Definindo a data mínima como a data atual usando JavaScript
+                document.getElementById('data_agdt').setAttribute('min', new Date().toISOString().split('T')[0]);
+
+                document.getElementById('data_a').setAttribute('min', new Date().toISOString().split('T')[0]);
 
                 function limparFormulario() {
                     var usuarioId = "@Context.Session.GetString("UsuarioId")";

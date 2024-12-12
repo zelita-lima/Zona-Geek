@@ -1,4 +1,6 @@
-﻿@{
+﻿@using System.Text.Json
+@model IEnumerable<Zona_Geek.Models.ViewAgendamentoVM>
+@{
     Layout = "/Views/Shared/_LayoutGerenciamento.cshtml";
 }
 <body>
@@ -7,7 +9,7 @@
         <div class="container page-maneger">
 
             <div class="add-user-button">
-                <h1 class="section-title cliente-title-maneger">Gerenciamento de Usuario</h1>
+                <h1 class="section-title cliente-title-maneger">Agendamento de Usuario</h1>
                 <br />
             </div>
 
@@ -15,541 +17,487 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="input-group mb-4">
-                            <input id="filtro" type="text" class="form-control" placeholder="Pesquisar Produtos..."
-                                   aria-label="Filtrar" aria-describedby="basic-addon2">
+                            <input id="filtro" type="text" class="form-control" placeholder="Pesquisar Produtos..." aria-label="Filtrar" aria-describedby="basic-addon2">
                         </div>
                     </div>
                     <div class="col-md-6 text-md-end">
                         <!-- Alteração para "text-md-end" para alinhar à direita apenas em telas médias e maiores -->
-                        <button class="btn btn-success btn-lg" onclick="" data-bs-toggle="modal"
-                                data-bs-target="#InserirUsuario">
-                            <i class="fa fa-plus"></i> Adicionar User
-                        </button>
+                        <a href="@Url.Action("CadastroAgendamento", "Agendamento")" class="btn btn-success btn-lg" style="background-color:#f0ffff  ; color: black;">
+                            <i class="fa fa-plus"></i> Adicionar Agendamento
+                        </a>
                     </div>
+
                 </div>
             </div>
 
-            <divclass="table-container table-responsive">
-                <table id="TbClientes" class="table">
-                    <colgroup>
-                        <col class="tc-nome">
-                    </colgroup>
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Nome</th>
-                            <th>Email</th>
-                            <th>Telefone</th>
-                            <th>Agendamentos para a data </th>
-                            <th>Tecnicas</th>
-                            <th>Valor</th>
-                            <th>Comfirmação</th>
-                            <th style="color: #000; text-align: center;">Editar</th>
-                            <th style="color: red; text-align: center;">Excluir</th>
-
-                        </tr>
-                    </thead>
-                    <body>
-
-                    <td>Id</td>
-                    <td>Nome</td>
-                    <td>Email</td>
-                    <td>Telefone</td>
-                    <td>AgendarData</td>
-                    <td>Tecnicas</td>
-                    <td>Valor</td>
-                    <td>Comfirmação</td>
-
-                    <td class="text-center">
-                        <button class="btn btn-default"
-                                onclick="definirEdt()"
-                                data-bs-toggle="modal" data-bs-target="#EditarUsuario">
-                            <i class="fa fa-edit"></i>
-                        </button>
-                    </td>
-                    <td class="text-center">
-                        <button class="btn btn-default"
-                                onclick="definirExc()"
-                                data-bs-toggle="modal" data-bs-target="#ExcluirUsuario">
-                            <i class="fa fa-trash text-danger"></i>
-                        </button>
-                    </td>
+            <!-- Tabela com cabeçalho fixo -->
+            <table id="TbAtendimentos" class="table" style="width: 100%; border-collapse: collapse; table-layout: fixed;">
+                <thead style="background-color: chocolate; color: #EAE7DC;">
+                    <tr>
+                        <th style="border: 1px solid #ddd; padding: 8px; min-width: 50px; position: sticky; top: 0; background-color: #315689">#</th>
+                        <th style="border: 1px solid #ddd; padding: 8px; min-width: 150px; position: sticky; top: 0; background-color: #315689;">Data/Hora de Atendimento</th>
+                        <th style="border: 1px solid #ddd; padding: 8px; min-width: 150px; position: sticky; top: 0; background-color: #315689;">Data de Atendimento</th>
+                        <th style="border: 1px solid #ddd; padding: 8px; min-width: 150px; position: sticky; top: 0; background-color: #315689;">Hora</th>
+                        <th style="border: 1px solid #ddd; padding: 8px; min-width: 150px; position: sticky; top: 0; background-color: #315689;">Nome</th>
+                        <th style="border: 1px solid #ddd; padding: 8px; min-width: 150px; position: sticky; top: 0; background-color: #315689;">E-mail</th>
+                        <th style="border: 1px solid #ddd; padding: 8px; min-width: 150px; position: sticky; top: 0; background-color: #315689;">Telefone</th>
+                        <th style="border: 1px solid #ddd; padding: 8px; min-width: 150px; position: sticky; top: 0; background-color: #315689;">Tipo de Serviço</th>
+                        <th style="border: 1px solid #ddd; padding: 8px; min-width: 150px; position: sticky; top: 0; background-color: #315689;">Valor</th>
+                        <th class="editar" style="border: 1px solid #ddd; padding: 8px; min-width: 80px; position: sticky; top: 0; background-color: #315689;">Editar</th>
+                        <th class="excluir" style="border: 1px solid #ddd; padding: 8px; min-width: 80px; position: sticky; top: 0; background-color: #315689;">Excluir</th>
                     </tr>
+                </thead>
+            </table>
+     
+                 <!-- Corpo da tabela rolável -->
+        <div style="max-height: 300px; overflow-y: auto; overflow-x: auto;">
+            <table id="TbAgendamentoBody" class="table" style="width: 100%; border-collapse: collapse; table-layout: fixed;">
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        @foreach (var atendimento in Model)
+                        {
+                            <tr>
+                                <td style="color: black; border: 1px solid black; padding: 8px; min-width: 50px">@atendimento.Id</td>
+                                <td style="color: black; border: 1px solid black; padding: 8px; min-width: 150px">@atendimento.DtHorarioAgendamento</td>
+                                <td style="color: black; border: 1px solid black; padding: 8px; min-width: 150px">@atendimento.DataAtendimento.ToString("dd/MM/yyyy")</td>
+                                <td style="color:black; border: 1px solid black; padding: 8px; min-width: 150px">@atendimento.Horario.ToString("HH:mm")</td>
+                                <td style="color: black; border: 1px solid black; padding: 8px; min-width: 150px">@atendimento.Nome</td>
+                                <td style="color: black; border: 1px solid black; padding: 8px; min-width: 150px; word-wrap: break-word;">@atendimento.Email</td>
+                                <td style="color: black; border: 1px solid black; padding: 8px; min-width: 150px">@atendimento.Telefone</td>
+                                <td style="color:black; border: 1px solid black; padding: 8px; min-width: 150px">@atendimento.TipoServico</td>
+                                <td style="color: black; border: 1px solid black; padding: 8px; min-width: 150px">@atendimento.Valor.ToString("C")</td>
+                                <td style="border: 1px solid black;" class="text-center">
+                                    <button class="btn btn-default" onclick="definirEdt('@atendimento.Id', '@atendimento.Nome', '@atendimento.Email', '@atendimento.Telefone', '@atendimento.DataAtendimento', '@atendimento.Horario', '@atendimento.TipoServico', '@atendimento.Valor');" data-bs-toggle="modal" data-bs-target="#EditarAgendamento">
+                                        <i class="fa fa-edit"></i>
+                                    </button>
+                                </td>
+                                <td style="border: 1px solid #ddd;" class="text-center">
 
-                    </body>
-                </table>
-            </div>
-        <!--Butao Voltar-->
+                                    <button class="btn btn-default" onclick="definirExc('@atendimento.Id', '@atendimento.Nome', '@atendimento.Email', '@atendimento.Telefone', '@atendimento.DataAtendimento', '@atendimento.Horario', '@atendimento.TipoServico', '@atendimento.Valor');" data-bs-toggle="modal" data-bs-target="#ExcluirAgendamento">
+                                        <i class="fa fa-trash text-danger"></i>
+                                    </button>
 
-        <section class="container text-center">
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <div>
-                    <button type="button" id="send-button2" class="nav-link active btn btn-danger btn-block"
-                            style="flex: 1; margin-left: 5px;" onclick="window.location.href = '/Home/Index';">
-                        Voltar
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        <div class="modal fade" id="EditarUsuario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header" style="background-color: #86b2d2; color: white; border-color: #eea236;">
-                        <h3 class="modal-title" id="exampleModalLabel">Editar Cliente</h3>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form>
-                            <p style="color:#00007e">Campos com * Azul são obrigatórios</p>
-                            <div class="mb-3 row">
-                                <div class="col-md-6">
-                                    <input id="EditNome" type="text" class="form-control"
-                                           placeholder="Digite o nome do cliente">
-                                </div>
-                                <div class="col-md-6">
-                                    <label style="color:#00007e">*</label>
-                                </div>
-                            </div>
-
-                            <div class="mb-3 row">
-                                <div class="col-md-6">
-                                    <input id="EditEmail" type="text" class="form-control" placeholder="Digite o email">
-                                </div>
-                                <div class="col-md-6">
-                                    <label style="color:#00007e">*</label>
-                                </div>
-                            </div>
-
-                            <div class="mb-3 row">
-                                <div class="col-md-7">
-                                    <input id="EditTelefone" type="email" class="form-control"
-                                           placeholder="Digite o telefone">
-                                </div>
-                                <div class="col-md-5">
-                                    <label style="color:#00007e">*</label>
-                                </div>
-                            </div>
-
-                            <div class="mb-3 row">
-                                <div class="col-md-6">
-                                    <input id="EditData" type="text" class="form-control" placeholder="Digite a data">
-                                </div>
-                                <div class="col-md-6">
-                                    <label style="color:#00007e">*</label>
-                                </div>
-                            </div>
-                            <div class="mb-3 row">
-                                <div class="col-md-6">
-                                    <input id="EditTecn" type="text" class="form-control"
-                                           placeholder="Digite a Tecnica">
-                                </div>
-                                <div class="col-md-6">
-                                    <label style="color:#00007e">*</label>
-                                </div>
-                            </div>
-                            <div class="mb-3 row">
-                                <div class="col-md-6">
-                                    <input id="EditVlue" type="text" class="form-control" placeholder="Digite o Valor">
-                                </div>
-                                <div class="col-md-6">
-                                    <label style="color:#00007e">*</label>
-                                </div>
-                            </div>
-                            <div class="mb-3 row">
-                                <div class="col-md-6">
-                                    <input id="EditConfirmção" type="text" class="form-control"
-                                           placeholder="Digite a Comfirmação">
-                                </div>
-                                <div class="col-md-6">
-                                    <label style="color:#00007e">*</label>
-                                </div>
-                            </div>
-                            <input type="hidden" id="IdEdt" value="" />
-
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                        <button type="button" class="btn btn-primary" onclick=" AlterarUsuario()">Salvar</button>
-                    </div>
-                </div>
-            </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="11" style="text-align: center; color: #EAE7DC; padding: 8px;">Nenhum atendimento encontrado.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         </div>
 
-        <div class="modal fade" id="ExcluirUsuario" tabindex="-1" aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header" style="background-color: #86b2d2; color: white; border-color: #eea236;">
-                        <h3 class="modal-title" id="exampleModalLabel">Excluir User</h3>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form>
-                            <p style="color:#00007e">Campos com * Azul são obrigatórios</p>
-                            <div class="mb-3 row">
-                                <div class="col-md-6">
-                                    <input id="EditNome" type="text" class="form-control"
-                                           placeholder="Digite o nome do cliente">
-                                </div>
-                                <div class="col-md-6">
-                                    <label style="color:#00007e">*</label>
-                                </div>
-                            </div>
-
-                            <div class="mb-3 row">
-                                <div class="col-md-6">
-                                    <input id="EditEmail" type="text" class="form-control" placeholder="Digite o email">
-                                </div>
-                                <div class="col-md-6">
-                                    <label style="color:#00007e">*</label>
-                                </div>
-                            </div>
-
-                            <div class="mb-3 row">
-                                <div class="col-md-7">
-                                    <input id="EditTelefone" type="email" class="form-control"
-                                           placeholder="Digite o telefone">
-                                </div>
-                                <div class="col-md-5">
-                                    <label style="color:#00007e">*</label>
-                                </div>
-                            </div>
-
-                            <div class="mb-3 row">
-                                <div class="col-md-6">
-                                    <input id="EditData" type="text" class="form-control" placeholder="Digite a data">
-                                </div>
-                                <div class="col-md-6">
-                                    <label style="color:#00007e">*</label>
-                                </div>
-                            </div>
-                            <div class="mb-3 row">
-                                <div class="col-md-6">
-                                    <input id="EditTecn" type="text" class="form-control"
-                                           placeholder="Digite a Tecnica">
-                                </div>
-                                <div class="col-md-6">
-                                    <label style="color:#00007e">*</label>
-                                </div>
-                            </div>
-                            <div class="mb-3 row">
-                                <div class="col-md-6">
-                                    <input id="EditVlue" type="text" class="form-control" placeholder="Digite o Valor">
-                                </div>
-                                <div class="col-md-6">
-                                    <label style="color:#00007e">*</label>
-                                </div>
-                            </div>
-                            <div class="mb-3 row">
-                                <div class="col-md-6">
-                                    <input id="EditConfirmção" type="text" class="form-control"
-                                           placeholder="Digite a Comfirmação">
-                                </div>
-                                <div class="col-md-6">
-                                    <label style="color:#00007e">*</label>
-                                </div>
-                            </div>
-                            <input type="hidden" id="IdEdt" value="" />
-
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                        <button type="button" class="btn btn-primary" onclick=" AlterarUsuario()">Salvar</button>
-                    </div>
-                </div>
+        <!-- Contador de Registros Centralizado com Fonte Maior -->
+        <div style="text-align: center; margin-top: 10px;">
+                <strong style="font-size: 18px">Total de Usuários: <span id="registroCount">0</span></strong>
             </div>
-        </div>
 
-        <div class="modal fade" id="InserirUsuario" tabindex="-1" aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
+        <div class="modal fade" id="EditarAgendamento" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header" style="background-color: #86b2d2; color: white; border-color: #eea236;">
-                        <h3 class="modal-title" id="exampleModalLabel">Editar User</h3>
+                        <h1 class="modal-title" id="exampleModalLabel">Editar Cliente</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <form>
+                        <div class="mb-3">
+                            <label for="nome">Nome</label>
+                            <input type="text" id="EdtNome" class="form-control" readonly>
+
+                        </div>
+                        <div class="mb-3">
+                            <label for="email">Email</label>
+                            <input type="email" id="EdtEmail" class="form-control" readonly>
+
+                        </div>
+                        <div class="mb-3">
+                            <label for="telefone">Telefone</label>
+                            <input type="text" id="EdtTel" class="form-control" readonly>
+
+                        </div>
+                        <div class="mb-3">
+                            <label for="telefone">Data do agendamento</label>
+                            <input type="text" id="EdtData" class="form-control" readonly>
+
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="telefone">Horario</label>
+                            <input type="text" id="EdtHorario" class="form-control" readonly>
+
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="telefone">Valor</label>
+                            <input type="text" id="EdtVal" class="form-control" readonly>
+                        </div>                            
+                         <div class="mb-3 row">
+                             <div class="col-md-6">
+                                 <div class="d-flex align-items-center">
+                                     <label for="telefone" class="me-2">Tipo de Serviço</label>
+                                     <label style="color:red">*</label>
+                                 </div>
+                                 @Html.DropDownList("EdtTipoServico",
+                                          new SelectList(ViewBag.lstTipoServico, "Value", "Text", null),
+                                          "Escolha o serviço",
+                                          new { @class = "form-control", @style = "width:450px; background-color: #EAE7DC; color: #333;", required = "required" })
+                             </div>                                
+                         </div>
+                        <div class="mb-3">
                             <div class="mb-3 d-flex align-items-center">
-                                <input type="hidden" id="TxtIdM" class="form-check-input" value="10:00"
-                                       style="margin-right: 10px;" disabled>
+                                <input type="checkbox" id="chkR" value="08:00" class="form-check-input" style="margin-right: 10px;">
+                                <label for="chkR" class="form-check-label ms-2">Reagendamento</label>
                             </div>
-
+                        </div>
+                        <div id="divCampos" style="border: 2px solid #000; padding: 10px; margin: 10px; display: none;">
                             <div class="mb-3 d-flex align-items-center">
-                                <input id="data_agdtM" type="date" class="form-control" style="width: 300px;"
-                                       placeholder="Escolha a data do agendamento"
-                                       oninput="consultarAgendamentoM();consultarAgendamentoManutencaoM()">
+                              <input id="data_a" type="date" class="form-control" style="width: 300px;" placeholder="Escolha a data do agendamento" oninput="consultarAgendamentoEdt()" min="{{ today }}">
                             </div>
-                            <div class="mb-3 row">
-                                <div class="col-md-6">
-                                    <select id="Servico" class="form-select">
-                                        <option value="" disabled selected hidden>Escolha uma das opções</option>
-                                        <option value="VolumeBrasileiro">Atualizaçoes</option>
-                                        <option value="Volume5D">Mods</option>
-                                        <option value="EfeitoSirene">Expansões</option>
-                                        <option value="VolumeExpress">Hacks</option>
-                                        <option value="HidraGloss">Cheats</option>
-                                        <option value="HidraGloss">Upadtes</option>
-                                    </select>
-                                </div>
+                            <div class="mb-3 d-flex align-items-center">
+                                @Html.DropDownList("DropHorario", ViewBag.lstHorarios, "Escolha o Horario", new { @class = "chosen-select form-control", @style = "width:420px;" })
                             </div>
-                            <!-- Checkboxes de horários com texto branco -->
-                            <div class="mb-3 d-flex align-items-center" style="color: black;">
-                                <input type="checkbox" id="chk08M" class="form-check-input" value="08:00" style="margin-right: 10px;" data-group="horario">
-                                <label class="form-check-label" for="chk08M">Atendimento das 8:00</label>
-                                <span id="Span08M" style="color:blue;"></span>
-                            </div>
-
-                            <div class="mb-3 d-flex align-items-center" style="color: black;">
-                                <input type="checkbox" id="chk10M" class="form-check-input" value="10:00" style="margin-right: 10px;" data-group="horario">
-                                <label class="form-check-label" for="chk10M">Atendimento das 10:00</label>
-                                <span id="Span10M" style="color:blue;"></span>
-                            </div>
-
-                            <div class="mb-3 d-flex align-items-center" style="color: black;">
-                                <input type="checkbox" id="chk13M" class="form-check-input" value="13:00" style="margin-right: 10px;" data-group="horario">
-                                <label class="form-check-label" for="chk13M">Atendimento das 13:00</label>
-                                <span id="Span13M" style="color:blue;"></span>
-                            </div>
-
-                            <div class="mb-3 d-flex align-items-center" style="color: black;">
-                                <input type="checkbox" id="chk15M" class="form-check-input" value="15:00" style="margin-right: 10px;" data-group="horario">
-                                <label class="form-check-label" for="chk15M">Atendimento das 15:00</label>
-                                <span id="Span15M" style="color:blue;"></span>
-                            </div>
-
-                            <div class="mb-3 d-flex align-items-center" style="color: black;">
-                                <input type="checkbox" id="chk17M" class="form-check-input" value="17:00" style="margin-right: 10px;" data-group="horario">
-                                <label class="form-check-label" for="chk17M">Atendimento das 17:00</label>
-                                <span id="Span17M" style="color:blue;"></span>
-                            </div>
-
-                            <div class="mb-3 d-flex align-items-center" style="color: black;">
-                                <input type="checkbox" id="chk19M" class="form-check-input" value="19:00" style="margin-right: 10px;" data-group="horario">
-                                <label class="form-check-label" for="chk19M">Atendimento das 19:00</label>
-                                <span id="Span19M" style="color:blue;"></span>
-                            </div>
-
-                            <input type="hidden" id="IdEdt" value="">
-                        </form>
+                        </div>
+                        <input type="hidden" id="EdtId" class="form-control" readonly>
+                    </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                        <button type="button" class="btn btn-primary"
-                                onclick="InserirAgendamentoManutencao()">
-                            Adicionar
-                        </button>
+                        <button type="button" class="btn btn-primary" onclick="AlterarAgendamento()">Salvar</button>
                     </div>
                 </div>
             </div>
         </div>
-       
-        <script>
 
-            function definirEdt(id, Nome, Email, Senha, TipoUsuario, Telefone) {
+        <div class="modal fade" id="ExcluirAgendamento" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: #86b2d2; color: white; border-color: black;">
+                        <h1 class="modal-title" id="exampleModalLabel">Excluir Cliente</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                                             <form>
+                         <div class="mb-3">
+                             <label for="nome">Nome</label>
+                             <input type="text" id="ExcNome" class="form-control" readonly>
 
-                $('#IdEdt').val(id);
-                $('#EditNome').val(Nome);
-                $('#EditSenha').val(Senha);
-                $('#EditEmail').val(Email);
-                $('#EditTel').val(Telefone);
+                         </div>
+                         <div class="mb-3">
+                             <label for="email">Email</label>
+                             <input type="email" id="ExcEmail" class="form-control" readonly>
 
+                         </div>
+                         <div class="mb-3">
+                             <label for="telefone">Telefone</label>
+                             <input type="text" id="ExcTel" class="form-control" readonly>
 
-                var senhaValue = "";
-                if (Senha) {
-                    $('#EditSenha').val(Senha);
-                    senhaValue = Senha;
+                         </div>
+
+                         <div class="mb-3">
+                             <label for="telefone">Data do Agendamento</label>
+                             <input type="text" id="ExcData" class="form-control" readonly>
+
+                         </div>
+                         <div class="mb-3">
+                             <label for="telefone">Horario</label>
+                             <input type="text" id="ExcHorario" class="form-control" readonly>
+
+                         </div>
+                         <div class="mb-3">
+                             <label for="telefone">Tecnica</label>
+                             <input type="text" id="ExcTecnica" class="form-control" readonly>
+
+                         </div>
+                         <div class="mb-3">
+                             <label for="telefone">Valor</label>
+                             <input type="text" id="ExcVal" class="form-control" readonly>
+
+                         </div>                            
+
+                         <input type="hidden" id="ExcId" class="form-control" readonly>
+
+                     </form>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                            <button type="button" onclick="ExcluirAgendamento()" class="btn btn-primary">Excluir</button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/swiper/swiper-bundle.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/script.js"></script>
+      
+  <script>
+         var listaOriginalHorario;
+           
+        $(document).ready(function () {
+            $('input[type="checkbox"]').click(function () {
+                var isChecked = $(this).prop("checked");
+                var groupId = $(this).attr("data-group");
+
+                if (isChecked) {
+                    $('input[type="checkbox"][data-group="' + groupId + '"]').not($(this)).prop("checked", false);
                 }
+            });
+        });
 
+        function definirExc(id, Nome, Email, Telefone, Data, Horario, Tecnica, Val) {
 
-                if ($('#DropTipoUsuarioEdit').length > 0) {
-                    $('#DropTipoUsuarioEdit option').filter(function () {
-                        return $(this).val() === TipoUsuario;
-                    }).prop('selected', true);
-                    $('#DropTipoUsuarioEdit').trigger('chosen:updated');
-                } else {
-                    console.error("DropDownList não encontrado.");
+            $('#ExcId').val(id);
+            $('#ExcNome').val(Nome);
+            $('#ExcEmail').val(Email);
+            $('#ExcTel').val(Telefone)
+            $('#ExcData').val(Data)
+            $('#ExcHorario').val(Horario)
+            $('#ExcTecnica').val(Tecnica)
+            $('#ExcVal').val(Val)
+
+        }
+
+        function definirEdt(id, Nome, Email, Telefone, Data, Horario, Tecnica, Val, Conf) {
+
+            $('#EdtId').val(id);
+            $('#EdtNome').val(Nome);
+            $('#EdtEmail').val(Email);
+            $('#EdtTel').val(Telefone);
+            $('#EdtData').val(Data);
+            $('#EdtHorario').val(Horario);
+            $('#EdtVal').val(Val);
+
+            $('#EdtTipoServico option').each(function () {
+                if ($(this).text() === Tecnica) {
+                    $(this).prop('selected', true);
                 }
+            });
+        }
+
+        $(document).ready(function () {
+            $('#EditarAgendamento').on('show.bs.modal', function () {
+                $('#chkR').prop('checked', false);
+                $('#divCampos').hide();
+            });
+        });
+
+        $(document).ready(function () {
+
+            listaOriginalHorario = @Html.Raw(JsonSerializer.Serialize(ViewBag.lstHorarios));
+            document.getElementById('divCampos').style.display = 'none';
+
+            // Adiciona o ouvinte de evento ao checkbox
+            document.getElementById('chkR').addEventListener('change', function () {
+                var display = this.checked ? 'block' : 'none';
+                document.getElementById('divCampos').style.display = display;
+            });
+        });
+
+        $(document).ready(function () {
+            // Função para atualizar o contador de registros visíveis
+            function atualizarContador() {
+                var visibleRows = $('#TbAgendamentoBody tbody tr:visible').length; // Conta as linhas visíveis
+                $('#registroCount').text(visibleRows); // Atualiza o contador
             }
 
-            function definirExc(id, Nome, Email, Telefone) {
-                $('#IdExc').val(id);
-                $('#ExcNome').val(Nome);
-                $('#ExcEmail').val(Email);
-                $('#ExcTel').val(Telefone)
-            }
+            // Quando o usuário digitar no campo de filtro
+            $('#filtro').on('keyup', function () {
+                var value = $(this).val().toLowerCase(); // Pega o valor do campo de filtro e converte para minúsculas
 
-            function InserirUsuario() {
-
-                var nome = $('#Nome').val();
-                var email = $('#Email').val();
-                var senha = $('#Senha').val();
-                var telefone = $('#Telefone').val();
-                var tipoUsuario = $('#DropTipoUsuario option:selected').val();
-
-                if (nome.trim() === "") {
-                    alert("Por favor, preencha o campo Nome.");
-                    return;
-                }
-                if (senha.trim() === "") {
-                    alert("Por favor, preencha o campo Senha.");
-                    return;
-                }
-                if (email.trim() === "") {
-                    alert("Por favor, insira um email válido.");
-                    return;
-                }
-
-                if (tipoUsuario === "Escolha o Tipo de Usuário") {
-                    alert("Por favor, selecione o tipo de usuário.");
-                    return;
-                }
-
-                if (telefone.trim() === "") {
-                    alert("Por favor, insira um número de telefone válido.");
-                    return;
-                }
-
-
-
-                var dados = {
-                    Nome: nome,
-                    Email: email,
-                    Senha: senha,
-                    Telefone: telefone,
-                    TipoUsuario: tipoUsuario
-                };
-
-                // Faça a chamada AJAX
-                $.ajax({
-                    url: '/Usuario/InserirUsuario',
-                    type: "POST",
-                    dataType: "json",
-                    data: dados,
-                    success: function (resultado) {
-                        if (resultado.success) {
-                            alert(resultado.message);  // Exibe a mensagem de sucesso
-                            // Fecha o modal
-                            $('#InserirUsuario').modal('hide');
-                            // Recarrega a págInserirUsuarioina
-                            location.reload();
-                        } else {
-                            alert(resultado.message);  // Exibe a mensagem de falha
-                        }
-                    },
-                    error: function () {
-                        alert('Erro na requisição AJAX.');
-                    }
+                // Filtra as linhas do corpo da tabela
+                $('#TbAgendamentoBody tbody tr').each(function () {
+                    // Verifica se qualquer célula na linha contém o valor digitado no filtro
+                    var rowText = $(this).text().toLowerCase();
+                    // Exibe ou oculta a linha, dependendo de conter o valor
+                    $(this).toggle(rowText.indexOf(value) > -1);
                 });
+
+                // Atualiza o contador após filtrar as linhas
+                atualizarContador();
+            });
+
+            // Inicializa o contador de registros ao carregar a página
+            atualizarContador();
+        });
+
+        function atualizarDropDownHorario(lista) {
+
+            $("#DropHorario").empty();
+            $.each(lista, function (index, item) {
+                $("#DropHorario").append($("<option></option>")
+                    .attr("value", item.Value)
+                    .text(item.Text));
+            });
+        }
+          
+        function consultarAgendamentoEdt() {
+
+            var data = $("#data_a").val();
+
+            // Resetar o DropDownList para a lista original
+            if (listaOriginalHorario) {
+                atualizarDropDownHorario(listaOriginalHorario);
             }
 
-            function AlterarUsuario() {
-                var id = $("#IdEdt").val();
-                var nome = $("#EditNome").val();
-                var senha = $("#EditSenha").val();
-                var email = $("#EditEmail").val();
-                var tel = $('#EditTel').val();
-                var tipoCli = $('#DropTipoUsuarioEdit').val(); // Obtém o valor do tipo de cliente, não apenas o texto
-
-                // Validação do campo 'Nome'
-                if (!nome) {
-                    alert("Por favor, preencha o campo Nome.");
-                    return;
-                }
-
-                // Validação do campo 'Senha'
-                if (!senha) {
-                    alert("Por favor, preencha o campo Senha.");
-                    return;
-                }
-
-                // Validação do campo 'Email'
-                if (!email) {
-                    alert("Por favor, preencha o campo Email.");
-                    return;
-                }
-
-                // Validação do campo 'Telefone'
-                if (!tel) {
-                    alert("Por favor, preencha o campo Telefone.");
-                    return;
-                }
-
-                // Validação do campo 'Tipo de Cliente'
-                if (!tipoCli) {
-                    alert("Por favor, selecione o Tipo de Cliente.");
-                    return;
-                }
-
-                // Crie um objeto com os dados
-                var dados = {
-                    Id: id,
-                    Nome: nome,
-                    Senha: senha,
-                    Email: email,
-                    Telefone: tel,
-                    TipoUsuario: tipoCli
-                };
-
-                // Faça a chamada AJAX para o servidor
-                $.ajax({
-                    type: "POST",
-                    url: "/Usuario/AlterarUsuario",
-                    contentType: "application/json; charset=utf-8",
-                    data: JSON.stringify(dados),
-                    success: function (response) {
-                        // Manipule a resposta do servidor
-                        if (response.success) {
-                            alert("Cliente alterado com sucesso!");
-                            // Feche o modal de edição se necessário
-                            $('#FormEditar').modal('hide');
-                            // Recarregue a página se necessário
-                            location.reload();
-                        } else {
-                            alert("Falha ao alterar cliente.");
+            $.ajax({
+                type: "GET",
+                url: "/Agendamento/ConsultarAgendamento",
+                data: { data: data },
+                success: function (response) {
+                    response.forEach(function (item) {
+                        switch (item.horario) {
+                            case "08:00:00":
+                                $("#DropHorario option[value='8']").remove();
+                                break;
+                            case "10:00:00":
+                                $("#DropHorario option[value='10']").remove();
+                                break;
+                            case "13:00:00":
+                                $("#DropHorario option[value='13']").remove();
+                                break;
+                            case "15:00:00":
+                                $("#DropHorario option[value='15']").remove();
+                                break;
+                            case "17:00:00":
+                                $("#DropHorario option[value='17']").remove();
+                                break;
+                            case "19:00:00":
+                                $("#DropHorario option[value='19']").remove();
+                                break;
+                            default:
+                                break;
                         }
-                    },
-                    error: function (error) {
-                        // Manipule erros de requisição AJAX
-                        console.error("Erro na chamada AJAX:", error);
-                    }
-                });
+                    });
+                },
+                error: function (error) {
+                    // Manipule os erros aqui
+                    console.error("Erro na requisição AJAX:", error);
+                }
+            });
+        }
+        
+        function obterDataHoraFormatada() {
+            // Obtém a data e hora atuais
+            var dataHoraAtual = new Date();
+
+            // Formata a data e hora para o formato desejado (por exemplo, "yyyy-MM-dd HH:mm:ss.fff")
+            var dataHoraFormatada = dataHoraAtual.getFullYear() + "-" +
+                ("0" + (dataHoraAtual.getMonth() + 1)).slice(-2) + "-" +
+                ("0" + dataHoraAtual.getDate()).slice(-2) + " " +
+                ("0" + dataHoraAtual.getHours()).slice(-2) + ":" +
+                ("0" + dataHoraAtual.getMinutes()).slice(-2) + ":" +
+                ("0" + dataHoraAtual.getSeconds()).slice(-2) + "." +
+                ("00" + dataHoraAtual.getMilliseconds()).slice(-3);
+
+            // Retorna a data e hora formatada
+            return dataHoraFormatada;
+        }            
+
+        function AlterarAgendamento() {
+
+            var id = $("#EdtId").val();
+            var servico = $('#EdtTipoServico option:selected').val();
+            var data;
+            var horario;
+            if (!servico != 0) {
+                alert("Por favor, preencha o campo Tecnica.");
+                return;
             }
+            if ($('#chkR').prop('checked')) {
+                data = $("#data_a").val(),
+                    horario = $('#DropHorario option:selected').text()
 
-            function ExcluirUsuario() {
-                // Obtenha o ID do usuário a ser excluído
-                var userId = $('#IdExc').val();
+                if (!data) {
+                    alert("Por favor, preencha o campo data.");
+                    return;
+                }
+                if (!horario) {
+                    alert("Por favor, preencha o campo horário.");
+                    return;
+                }
 
-                // Faça uma requisição AJAX
-                $.ajax({
-                    type: "POST",
-                    url: "/Usuario/ExcluirUsuario", // Substitua "Usuario" pelo nome do seu controller
-                    data: { id: userId },
-                    dataType: "json",
-                    success: function (response) {
-                        // A resposta do servidor está em response.success
-                        if (response.success) {
-                            // Feche o modal de exclusão
-                            $('#ExcluirUsuario').modal('hide');
-                            alert("Cliente excluido com sucesso!");
 
-                            // Recarregue a página
-                            location.reload();
-                        } else {
-                            alert("Falha ao excluir usuário.");
-                        }
-                    },
-                    error: function () {
-                        alert("Erro na requisição AJAX.");
-                    }
-                });
+
+
             }
+            else {
 
+                data = null,
+                    horario = ""
+
+            }
+            var dados = {
+                id: id,
+                data: data,
+                servico: servico,
+                horario: horario
+            };
+
+            console.log(dados);
+            $.ajax({
+                url: '/Agendamento/AlterarAgendamento',
+                type: "POST",
+                dataType: "json",
+                data: dados,
+                success: function (response) {
+                    if (response.success) {
+                        alert("Agendamento(s) Alterados(s) com sucesso!");
+                        $('#EditarAgendamento').modal('hide'); // Substitua 'seuModal' pelo ID do seu modal
+                        // Atualizar a página
+                        location.reload();
+                    } else {
+                        alert("Erro ao alterar agendamento(s).");
+                    }
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    alert("Erro ao cadastrar agendamento(s): " + errorThrown);
+                }
+            });
+        }
+
+        function ExcluirAgendamento() {
+
+
+            var userId = $('#ExcId').val();
+
+            $.ajax({
+                type: "POST",
+                url: "/Agendamento/ExcluirAgendamento",
+                dataType: "json",
+                data: { id: userId },
+                success: function (response) {
+
+                    if (response.success) {
+
+                        alert("Agendamento excluido com sucesso!");
+                        $('#ExcluirAgendamento').modal('hide');
+                        location.reload();
+
+                    } else {
+
+                        alert("Falha ao excluir usuário.");
+                    }
+                },
+                error: function () {
+
+                    alert("Erro na requisição AJAX.");
+                }
+            });
+        }
         </script>
-
+            <script>
+                // Definindo a data mínima como a data atual usando JavaScript
+                document.getElementById('data_a').setAttribute('min', new Date().toISOString().split('T')[0]);
+            </script>
     </section>
 
 </body>

@@ -240,7 +240,13 @@
     <section class="service" id="service">
 
         <div class="heading">
-            <h2>Meus <span>Serviços</span></h2>
+            <h2>Nossos <span>Serviços</span></h2>
+        </div>
+        <br />
+        <div class="d-flex justify-content-center">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="background-color: #f0ffff; border-color: #f0ffff; color: black">
+                Agendar
+            </button>
         </div>
 
         <div class="box-container">
@@ -615,9 +621,9 @@
 
             <div class="contact-info">
 
-                <h3>get in touch</h3>
+                <h3>Nos Contate</h3>
 
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                <p>Meios de contato</p>
 
                 <div class="info-item">
                     <h4>Numero:</h4>
@@ -666,7 +672,7 @@
                 <input type="email" name="email" class="box" id="email" placeholder="email" required />
                 <input type="text" name="subject" class="box" id="subject" placeholder="subject" required />
                 <textarea cols="30" rows="10" name="comment" id="comment" class="box" placeholder="message"></textarea>
-                <button type="submit" class="btn" name="submit" id="submit">send message</button>
+                <button type="submit" class="btn" name="submit" id="submit">Mande mensagem</button>
 
                 <span class="alert" id="msg"></span>
 
@@ -686,7 +692,7 @@
         </div>
 
         <div class="content">
-            <p>created by <span>AS_Designs</span> | all rights reserved</p>
+            <p>Criado por: <span>Zelita Lima</span> | direitos autorais de Zls</p>
         </div>
     </footer>
     <!-------------------- Footer Area (End) -------------------->
@@ -713,12 +719,17 @@
     <!---------------- Custom Script ---------------->
     <!-- Typed Script -->
     <script>
-        var typed = new Typed('.typing-text', {
-
-            strings: ['Web developer', 'web designer', 'photographer', 'graphic designer'],
-            typeSpeed: 120,
-            loop: true
-        });
+        function verificarUsuarioLogado() {
+            var usuarioId = '@Environment.GetEnvironmentVariable("USUARIO_ID")'; // Variável do ambiente passada pelo backend
+            console.log(usuarioId)
+            if (usuarioId !== "") { // Verifica se o usuário está logado
+                // Se o usuário estiver logado, redireciona para a página de agendamento
+                window.location.href = "/Agendamento/Cadastro_Agendamento";
+            } else {
+                // Se não estiver logado, redireciona para a página de login
+                window.location.href = "/Usuario/Login";
+            }
+        }
     </script>
 
     <!-- Contact-Form Script -->
