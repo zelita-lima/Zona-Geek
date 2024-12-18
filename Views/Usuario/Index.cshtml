@@ -3,7 +3,40 @@
 @{
     Layout = "~/Views/Shared/_LayoutGerenciamento.cshtml";
 }
+<style>
+    /* Estilo para o overlay (fundo escuro) */
+    #overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); /* Cor escura com transparência */
+        z-index: 9998; /* Colocar abaixo do loader */
+        display: none; /* Inicialmente escondido */
+    }
+
+    /* Estilo para o loader */
+    #loader {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 15px 30px;
+        background-color: rgba(0, 0, 0, 0.7); /* Fundo escuro para o loader */
+        color: white;
+        border-radius: 5px;
+        font-size: 16px;
+        z-index: 9999; /* Colocar acima do overlay */
+        display: none; /* Inicialmente escondido */
+    }
+</style>
 <body>
+    <!-- Overlay e Loader -->
+    <div id="overlay" style="display: none;"></div>
+    <div id="loader" style="display: none;">
+        <i class="fa fa-spinner fa-spin"></i> Carregando...
+    </div>
     <section class="maneger-page-section">
         <div class="container page-maneger">
 
@@ -267,8 +300,8 @@
         <script src="~/lib/swiper/swiper-bundle.min.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
         <script src="~/js/script.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- Adiciona o SweetAlert2 -->
 
-       
         <script>
             document.addEventListener("DOMContentLoaded", function () {
                 // Função para remover o asterisco
@@ -283,26 +316,6 @@
                     }
                 }
 
-                // Função para aplicar o evento de input em todos os campos
-                function adicionarEventos() {
-                    // Campos de texto
-                    var campos = ['#Nome', '#Senha', '#Email', '#Telefone', '#TipoUsuario'];
-
-                    campos.forEach(function (seletor) {
-                        var campo = document.querySelector(seletor);
-                        if (campo) {
-                            campo.addEventListener('input', function () {
-                                removerAsterisco(campo);
-                            });
-                        }
-                    });
-                }
-
-                // Inicializa os eventos
-                adicionarEventos();
-            });
-
-            document.addEventListener("DOMContentLoaded", function () {
                 // Função para verificar se o campo foi preenchido e esconder o asterisco
                 function verificarPreenchimento(campo, label) {
                     if (campo.value.trim() !== "" || (campo.tagName === "SELECT" && campo.selectedIndex !== 0)) {
@@ -328,12 +341,10 @@
                         const label = campo.closest('.row').querySelector('label'); // Encontra o label associado ao campo
 
                         if (campoInfo.type === 'input') {
-                            // Para campos de input, adicionar evento de 'input'
                             campo.addEventListener('input', function () {
                                 verificarPreenchimento(campo, label);
                             });
                         } else if (campoInfo.type === 'select') {
-                            // Para o select, adicionar evento de 'change'
                             campo.addEventListener('change', function () {
                                 verificarPreenchimento(campo, label);
                             });
@@ -346,113 +357,10 @@
 
                 // Inicializa os eventos
                 adicionarEventos();
-
-                // Função que preenche os campos ao editar o usuário
-                window.definirEdt = function (id, Nome, Email, Senha, TipoUsuario, Telefone) {
-                    $('#EdtId').val(id);
-                    $('#EdtNome').val(Nome);
-                    $('#EdtSenha').val(Senha);
-                    $('#EdtEmail').val(Email);
-                    $('#EdtTel').val(Telefone);
-
-                    // Preenche o campo de senha, se necessário
-                    var senhaValue = "";
-                    if (Senha) {
-                        $('#EdtSenha').val(Senha);
-                        senhaValue = Senha;
-                    }
-
-                    // Atualiza o tipo de usuário no dropdown
-                    if ($('#EdtTipoUsuario').length > 0) {
-                        $('#EdtTipoUsuario option').filter(function () {
-                            return $(this).val() === TipoUsuario;
-                        }).prop('selected', true);
-                        $('#EdtTipoUsuario').trigger('chosen:updated');
-                    } else {
-                        console.error("DropDownList não encontrado.");
-                    }
-
-                    // Verifica o preenchimento dos campos e esconde os asteriscos
-                    const campos = [
-                        { id: '#EdtNome', type: 'input' },
-                        { id: '#EdtSenha', type: 'input' },
-                        { id: '#EdtEmail', type: 'input' },
-                        { id: '#EdtTel', type: 'input' },
-                        { id: '#EdtTipoUsuario', type: 'select' }
-                    ];
-
-                    // Chama a função de verificação para cada campo ao preencher os dados
-                    campos.forEach(function (campoInfo) {
-                        const campo = document.querySelector(campoInfo.id);
-                        const label = campo.closest('.row').querySelector('label');
-                        verificarPreenchimento(campo, label);
-                    });
-                }
             });
 
-            $(document).ready(function () {
-                // Função para atualizar o contador de registros visíveis
-                function atualizarContador() {
-                    var visibleRows = $('#TbClientesBody tbody tr:visible').length; // Conta as linhas visíveis
-                    $('#registroCount').text(visibleRows); // Atualiza o contador
-                }
-
-                // Quando o usuário digitar no campo de filtro
-                $('#filtro').on('keyup', function () {
-                    var value = $(this).val().toLowerCase(); // Pega o valor do campo de filtro e converte para minúsculas
-
-                    // Filtra as linhas do corpo da tabela
-                    $('#TbClientesBody tbody tr').each(function () {
-                        // Verifica se qualquer célula na linha contém o valor digitado no filtro
-                        var rowText = $(this).text().toLowerCase();
-                        // Exibe ou oculta a linha, dependendo de conter o valor
-                        $(this).toggle(rowText.indexOf(value) > -1);
-                    });
-
-                    // Atualiza o contador após filtrar as linhas
-                    atualizarContador();
-                });
-
-                // Inicializa o contador de registros ao carregar a página
-                atualizarContador();
-            });
-
-            function definirEdt(id, Nome, Email, Senha, TipoUsuario, Telefone) {
-
-                $('#EdtId').val(id);
-                $('#EdtNome').val(Nome);
-                $('#EdtSenha').val(Senha);
-                $('#EdtEmail').val(Email);
-                $('#EdtTel').val(Telefone);
-
-
-                var senhaValue = "";
-                if (Senha) {
-                    $('#EditSenha').val(Senha);
-                    senhaValue = Senha;
-                }
-
-
-                if ($('#EdtTipoUsuario').length > 0) {
-                    $('#EdtTipoUsuario option').filter(function () {
-                        return $(this).val() === TipoUsuario;
-                    }).prop('selected', true);
-                    $('#EdtTipoUsuario').trigger('chosen:updated');
-                } else {
-                    console.error("DropDownList não encontrado.");
-                }
-            }
-
-            function definirExc(id, Nome, Email, Telefone) {
-
-                $('#ExcId').val(id);
-                $('#ExcNome').val(Nome);
-                $('#ExcEmail').val(Email);
-                $('#ExcTel').val(Telefone)
-            }
-
+            // Função para inserir um novo usuário
             function InserirUsuario() {
-
                 var nome = $('#Nome').val();
                 var email = $('#Email').val();
                 var senha = $('#Senha').val();
@@ -482,6 +390,10 @@
                     return;
                 }
 
+                // Show the overlay and loader
+                $("#overlay").show();  // Exibir o overlay escuro
+                $("#loader").show();   // Exibir o loader
+
                 var dados = {
                     Nome: nome,
                     Email: email,
@@ -490,94 +402,59 @@
                     TipoUsuario: tipoUsuario
                 };
 
-                console.log(dados)
                 // Faça a chamada AJAX
                 $.ajax({
-                    url: '/Usuario/InserirUsuario',
+                    url: '@Url.Action("InserirUsuario", "Usuario")',
                     type: "POST",
                     dataType: "json",
                     data: dados,
                     success: function (resultado) {
+                        // Hide the overlay and loader after the response
+                        $("#overlay").hide();
+                        $("#loader").hide();
                         if (resultado.success) {
-                            alert(resultado.message);  // Exibe a mensagem de sucesso
-                            // Fecha o modal
-                            $('#InserirUsuario').modal('hide');
-                            // Recarrega a págInserirUsuarioina
-                            location.reload();
+                            Swal.fire({
+                                position: "top-end",
+                                icon: 'success',
+                                title: 'Sucesso',
+                                text: 'Usuário cadastrado com sucesso!',
+                                confirmButtonText: 'OK'
+                            }).then(function () {
+                                // Fecha o modal
+                                $('#InserirUsuario').modal('hide');
+                                // Recarrega a página
+                                location.reload();
+                            });
                         } else {
-                            alert(resultado.message);  // Exibe a mensagem de falha
+                            Swal.fire({
+                                position: "top-end",
+                                icon: 'error',
+                                title: 'Erro',
+                                text: resultado.message,
+                                confirmButtonText: 'OK'
+                            });
                         }
                     },
                     error: function () {
-                        alert('Erro na requisição AJAX.');
+                        Swal.fire({
+                            position: "top-end",
+                            icon: 'error',
+                            title: 'Erro',
+                            text: 'Ocorreu um erro ao processar a solicitação.',
+                            confirmButtonText: 'OK'
+                        });
                     }
                 });
             }
 
-            function AtualizarUsuario() {
-
-                var id = $('#EdtId').val();
-                var nome = $('#EdtNome').val() || ''; // Garante que a variável não seja undefined ou null
-                var email = $('#EdtEmail').val() || ''; // Garante que a variável não seja undefined ou null
-                var senha = $('#EdtSenha').val() || ''; // Garante que a variável não seja undefined ou null
-                var telefone = $('#EdtTel').val() || ''; // Garante que a variável não seja undefined ou null
-                var tipoUsuario = $('#EdtTipoUsuario option:selected').val() || ''; // Garante que a variável não seja undefined ou null
-
-                // Valida os dados
-                if (nome.trim() === "") {
-                    alert("Por favor, preencha o campo Nome.");
-                    return;
-                }
-                if (senha.trim() === "") {
-                    alert("Por favor, preencha o campo Senha.");
-                    return;
-                }
-                if (email.trim() === "") {
-                    alert("Por favor, insira um email válido.");
-                    return;
-                }
-                if (tipoUsuario === "" || tipoUsuario === "Escolha o Tipo de Usuário") {
-                    alert("Por favor, selecione o tipo de usuário.");
-                    return;
-                }
-                if (telefone.trim() === "") {
-                    alert("Por favor, insira um número de telefone válido.");
-                    return;
-                }
-
-                var dados = {
-                    Id: id, // ID do usuário a ser atualizado
-                    Nome: nome,
-                    Email: email,
-                    Senha: senha,
-                    Telefone: telefone,
-                    TipoUsuario: tipoUsuario
-                };
-
-                // Requisição AJAX para atualizar o usuário
-                $.ajax({
-                    url: '/Usuario/AtualizarUsuario',  // URL para a ação de atualizar no servidor
-                    type: "POST",
-                    dataType: "json",
-                    data: dados,
-                    success: function (resultado) {
-                        if (resultado.success) {
-                            alert(resultado.message);  // Exibe a mensagem de sucesso
-                            $('#InserirUsuario').modal('hide'); // Fecha o modal de inserção/atualização
-                            location.reload(); // Recarrega a página para refletir as alterações
-                        } else {
-                            alert(resultado.message);  // Exibe a mensagem de falha
-                        }
-                    },
-                    error: function () {
-                        alert('Erro na requisição AJAX.');
-                    }
-                });
-            }
-
+            // Função para excluir o usuário
             function ExcluirUsuario() {
                 var id = $('#ExcId').val();  // Pega o valor do ID do campo hidden
                 console.log("ID a ser excluído: ", id);  // Verifique se o ID está sendo corretamente recuperado
+
+                // Show the overlay and loader
+                $("#overlay").show();  // Exibir o overlay escuro
+                $("#loader").show();   // Exibir o loader
 
                 var dados = { Id: id };  // Dados a enviar para o servidor (ID do usuário)
 
@@ -588,32 +465,65 @@
                     dataType: "json",
                     data: dados,
                     success: function (resultado) {
+                        // Hide the overlay and loader after the response
+                        $("#overlay").hide();
+                        $("#loader").hide();
                         // Verifica se a resposta contém sucesso ou falha
                         if (resultado.success) {
-                            alert(resultado.message);  // Exibe a mensagem de sucesso
-                            location.reload(); // Recarrega a página para refletir as mudanças
+                            Swal.fire({
+                                position: "top-end",
+                                icon: 'success',
+                                title: 'Sucesso',
+                                text: 'Usuário excluído com sucesso!',
+                                confirmButtonText: 'OK'
+                            }).then(function () {
+                                // Fecha o modal
+                                $('#ExcluirUsuario').modal('hide');
+                                // Recarrega a página
+                                location.reload();
+                            });
                         } else {
-                            alert("Esse usuario possui relacionamento com atendimento e não pode ser excluido");  // Exibe a mensagem de falha
+                            Swal.fire({
+                                position: "top-end",
+                                icon: 'error',
+                                title: 'Erro',
+                                text: resultado.message,
+                                confirmButtonText: 'OK'
+                            });
                         }
                     },
                     error: function () {
-                        alert('Erro na requisição AJAX.');  // Caso haja algum erro na requisição AJAX
+                        Swal.fire({
+                            position: "top-end",
+                            icon: 'error',
+                            title: 'Erro',
+                            text: 'Ocorreu um erro ao processar a solicitação.',
+                            confirmButtonText: 'OK'
+                        });
                     }
                 });
             }
 
-            document.getElementById('filtro').addEventListener('input', function () {
-                const filterValue = this.value.toLowerCase(); // Get the input value and convert to lowercase
-                const userItems = document.querySelectorAll('.user-item'); // Select all user items
+            // Função para atualizar o contador de registros visíveis
+            function atualizarContador() {
+                var visibleRows = $('#TbClientesBody tbody tr:visible').length; // Conta as linhas visíveis
+                $('#registroCount').text(visibleRows); // Atualiza o contador
+            }
 
-                userItems.forEach(item => {
-                    const userName = item.textContent.toLowerCase(); // Get the text of the user item and convert to lowercase
-                    if (userName.includes(filterValue)) {
-                        item.style.display = ''; // Show the item if it matches the filter
-                    } else {
-                        item.style.display = 'none'; // Hide the item if it doesn't match
-                    }
+            // Filtragem da tabela
+            $('#filtro').on('keyup', function () {
+                var value = $(this).val().toLowerCase(); // Pega o valor do campo de filtro e converte para minúsculas
+
+                // Filtra as linhas do corpo da tabela
+                $('#TbClientesBody tbody tr').each(function () {
+                    // Verifica se qualquer célula na linha contém o valor digitado no filtro
+                    var rowText = $(this).text().toLowerCase();
+                    // Exibe ou oculta a linha, dependendo de conter o valor
+                    $(this).toggle(rowText.indexOf(value) > -1);
                 });
+
+                // Atualiza o contador após filtrar as linhas
+                atualizarContador();
             });
 
         </script>

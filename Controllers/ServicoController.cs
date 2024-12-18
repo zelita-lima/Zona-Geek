@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SiteAgendamento.Repositorio;
@@ -15,6 +16,7 @@ namespace Zona_Geek.Controllers
             _servicoRepositorio = servicoRepositorio;
             _logger = logger;
         }
+        [Authorize]
         public IActionResult Index()
         {
             // Chama o método ListarNomesAgendamentos para obter a lista de usuários

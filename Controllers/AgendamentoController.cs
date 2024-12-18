@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -68,6 +69,7 @@ namespace Zona_Geek.Controllers
             return View(atendimentos);
 
         }
+        [Authorize]
         public IActionResult CadastroAgendamento()
         {
             var servicos = new ServicoRepositorio(_context);
@@ -87,6 +89,7 @@ namespace Zona_Geek.Controllers
 
             return View();
         }
+        [Authorize]
         public IActionResult Index()
         {
             var servicos = new ServicoRepositorio(_context);
@@ -158,8 +161,8 @@ namespace Zona_Geek.Controllers
         }
         public IActionResult InserirAgendamentoCliente(DateTime dtHoraAgendamento, DateOnly dataAtendimento, TimeOnly horario, int fkUsuarioId, int fkServicoId)
         {
-            string id = Environment.GetEnvironmentVariable("USUARIO_ID");
-            int IdUsuario = Int32.Parse(id);
+            int IdUsuario = HttpContext.Session.GetInt32("USUARIO_ID") ?? 0;
+            
             try
             {
                 // Chama o método do repositório que realiza a inserção no banco de dados

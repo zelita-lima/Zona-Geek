@@ -720,7 +720,7 @@
     <!-- Typed Script -->
     <script>
         function verificarUsuarioLogado() {
-            var usuarioId = '@Environment.GetEnvironmentVariable("USUARIO_ID")'; // Variável do ambiente passada pelo backend
+            var usuarioId = '@Context.Session.GetInt32("USUARIO_ID")'; // Variável do ambiente passada pelo backend
             console.log(usuarioId)
             if (usuarioId !== "") { // Verifica se o usuário está logado
                 // Se o usuário estiver logado, redireciona para a página de agendamento

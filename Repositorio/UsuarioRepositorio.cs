@@ -10,10 +10,13 @@ namespace Zona_Geek.Repositorio
     {
 
         private BdZonaGeekContext _context;
-        public UsuarioRepositorio(BdZonaGeekContext context)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public UsuarioRepositorio(BdZonaGeekContext context, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
+            _httpContextAccessor = httpContextAccessor;
         }
+
         public UsuarioVM VerificarLogin(string email, string senha)
         {
             // Verifica se o e-mail e a senha estão presentes no banco de dados
@@ -32,24 +35,25 @@ namespace Zona_Geek.Repositorio
                     Senha = usuario.Senha, // Senha pode ser omitida por questões de segurança
                     TipoUsuario = usuario.TipoUsuario
                 };
-                // Definindo variáveis de ambiente
-                Environment.SetEnvironmentVariable("USUARIO_ID", usuario.Id.ToString());
-                Environment.SetEnvironmentVariable("USUARIO_NOME", usuario.Nome);
-                Environment.SetEnvironmentVariable("USUARIO_EMAIL", usuario.Email);
-                Environment.SetEnvironmentVariable("USUARIO_TELEFONE", usuario.Senha);
-                Environment.SetEnvironmentVariable("USUARIO_TIPO", usuario.TipoUsuario.ToString());
+                // Armazenando informações do usuário na sessão
+                _httpContextAccessor.HttpContext.Session.SetInt32("USUARIO_ID", usuario.Id);
+                _httpContextAccessor.HttpContext.Session.SetString("USUARIO_NOME", usuario.Nome);
+                _httpContextAccessor.HttpContext.Session.SetString("USUARIO_EMAIL", usuario.Email);
+                _httpContextAccessor.HttpContext.Session.SetString("USUARIO_TELEFONE", usuario.Telefone);
+                _httpContextAccessor.HttpContext.Session.SetString("USUARIO_TIPO", usuario.TipoUsuario.ToString());
                 return usuarioVM;
             }
-            // Acessando as variáveis de ambiente
-            /*string id = Environment.GetEnvironmentVariable("USUARIO_ID");
-            string nome = Environment.GetEnvironmentVariable("USUARIO_NOME");
-            string email = Environment.GetEnvironmentVariable("USUARIO_EMAIL");
-            string telefone = Environment.GetEnvironmentVariable("USUARIO_TELEFONE");
-            string tipoUsuario = Environment.GetEnvironmentVariable("USUARIO_TIPO");
-            // Se não encontrar o usuário, retorna null ou uma exceção
-            */
+
+            //Acessando todas as variáveis de sessão
+            //int usuarioId = _httpContextAccessor.HttpContext.Session.GetInt32("USUARIO_ID") ?? 0;
+            //string usuarioNome = _httpContextAccessor.HttpContext.Session.GetString("USUARIO_NOME") ?? "Nome não encontrado";
+            //string usuarioEmail = _httpContextAccessor.HttpContext.Session.GetString("USUARIO_EMAIL") ?? "Email não encontrado";
+            //string usuarioTelefone = _httpContextAccessor.HttpContext.Session.GetString("USUARIO_TELEFONE") ?? "Telefone não encontrado";
+            //string usuarioTipo = _httpContextAccessor.HttpContext.Session.GetString("USUARIO_TIPO") ?? "Tipo não encontrado";
+            //Se não encontrar o usuário, retorna null ou uma exceção
+
             return null; // Ou você pode lançar uma exceção, dependendo de sua estratégia
-        }             
+        }
         public bool InserirUsuario(string nome, string email, string telefone, string senha, int tipoUsuario)
         {
             try

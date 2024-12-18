@@ -1,56 +1,71 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using SiteAgendamento.Repositorio;
-using Zona_Geek.ORM;
 using Zona_Geek.Repositorio;
+using Zona_Geek.ORM;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
-// Registrar o DbContext se necessário
+// Registrar o DbContext
 builder.Services.AddDbContext<BdZonaGeekContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Registrar o repositório (UsuarioRepositorio)
+// Registrar os repositórios
 builder.Services.AddScoped<UsuarioRepositorio>();
-// Registrar o repositório (ServicoRepositorio)
 builder.Services.AddScoped<ServicoRepositorio>();
-// Registrar o repositório (AtendimentoRepositorio)
 builder.Services.AddScoped<AgendamentoRepositorio>();
-// Registrar outros serviços, como controllers com views
-builder.Services.AddControllersWithViews();
+
+// Registrar o IHttpContextAccessor para acessar o HttpContext dentro de repositórios
+builder.Services.AddHttpContextAccessor();
 
 // Adicionar suporte a sessões
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromMinutes(30); // Define o tempo de expiração da sessão
-    options.Cookie.HttpOnly = true; // Torna o cookie acessível apenas via HTTP
-    options.Cookie.IsEssential = true; // Marca o cookie como essencial
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // Defina o tempo de expiração da sessão
+    options.Cookie.HttpOnly = true; // Garante que o cookie de sessão não seja acessível via JavaScript
+    options.Cookie.IsEssential = true; // O cookie é essencial para a operação do site
 });
+
+// Adicionar suporte a autenticação com cookies
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Usuario/Login";  // Caminho para a página de login
+        options.LogoutPath = "/Usuario/Logout";  // Caminho para a página de logout
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(30);  // Tempo de expiração do cookie
+    });
+
+// Registrar outros serviços, como controllers com views
+builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configurar o pipeline de requisição HTTP
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
-
 app.UseStaticFiles();
 
+// Adicionar o middleware de sessão
+app.UseSession();
+
+// Colocar a ordem correta dos middlewares de autenticação e autorização
 app.UseRouting();
 
-// Adicionar o uso de sessão
-app.UseSession();  // Adicionando o middleware de sessão
+// Middleware de autenticação: permite identificar quem é o usuário
+app.UseAuthentication();  // Coloque antes de UseAuthorization()
 
-app.UseAuthorization();
+// Middleware de autorização: verifica se o usuário tem permissão para acessar a rota
+app.UseAuthorization();   // Deve ser chamado depois de UseAuthentication()
 
+// Configurar as rotas dos controllers
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+// Rodar a aplicação
 app.Run();
